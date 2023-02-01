@@ -12,3 +12,4 @@ package-lock.json
 package-jquery.json.back
 npm-debug.log
 yarn-error.log
+/logs
