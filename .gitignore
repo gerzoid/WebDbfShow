@@ -1,0 +1,14 @@
+.vs
+**/wwwroot/dist/
+**/wwwroot/lib/
+**/bin
+**/obj
+/.idea
+**/node_modules/
+/public
+/vendor
+composer.lock
+package-lock.json
+package-jquery.json.back
+npm-debug.log
+yarn-error.log
