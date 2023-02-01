@@ -1,6 +1,8 @@
 
+using Contracts;
 using Entities;
 using Microsoft.EntityFrameworkCore;
+using Repository;
 using Serilog;
 
 namespace WebDBFShow
@@ -33,6 +35,7 @@ namespace WebDBFShow
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("WebDBFShow"));
             });
 
+            builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
 
             var app = builder.Build();
 

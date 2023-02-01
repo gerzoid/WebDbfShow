@@ -1,4 +1,6 @@
-﻿using Entities.Models;
+﻿using Contracts;
+using Entities;
+using Entities.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,10 +10,15 @@ using System.Threading.Tasks;
 
 namespace Repository
 {
-    public class FilesRepository : Repository<Files>
+    public class FilesRepository : Repository<Files>, IFilesRepository
     {
         public FilesRepository(DbContext context) : base(context)
         {
+        }
+
+        public IEnumerable<Files> GetFiles()
+        {
+            return Get();
         }
     }
 }

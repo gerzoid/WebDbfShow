@@ -3,13 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebDBFShow", "WebDBFShow\WebDBFShow.csproj", "{8022E2B3-25B3-4916-A57D-CB3D302FCE65}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebDBFShow", "WebDBFShow\WebDBFShow.csproj", "{8022E2B3-25B3-4916-A57D-CB3D302FCE65}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "Contracts\Contracts.csproj", "{0F294688-B6A1-4E46-BE8C-72CD5933D89C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contracts", "Contracts\Contracts.csproj", "{0F294688-B6A1-4E46-BE8C-72CD5933D89C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8BB7859B-8186-49DD-87F8-B8709F52B4DE} = {8BB7859B-8186-49DD-87F8-B8709F52B4DE}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entities.csproj", "{8BB7859B-8186-49DD-87F8-B8709F52B4DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entities.csproj", "{8BB7859B-8186-49DD-87F8-B8709F52B4DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{60A4CF6D-601A-4F42-814F-93C232D10667}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Repository\Repository.csproj", "{60A4CF6D-601A-4F42-814F-93C232D10667}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

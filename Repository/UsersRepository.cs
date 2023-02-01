@@ -1,4 +1,6 @@
-﻿using Entities.Models;
+﻿using Contracts;
+using Entities;
+using Entities.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,10 +10,15 @@ using System.Threading.Tasks;
 
 namespace Repository
 {
-    public class UsersRepository : Repository<Users>
+    public class UsersRepository : Repository<Users>, IUsersRepository
     {
-        public UsersRepository(DbContext context) : base(context)
+        public UsersRepository(DatabaseContext context) : base(context)
         {
+        }
+
+        public IEnumerable<Users> GetUsers()
+        {
+            return Get();
         }
     }
 }
