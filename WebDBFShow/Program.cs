@@ -1,4 +1,6 @@
 
+using Entities;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 namespace WebDBFShow
@@ -26,6 +28,11 @@ namespace WebDBFShow
             builder.Logging.AddSerilog(logger);
             builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
 
+            builder.Services.AddDbContext<DatabaseContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("WebDBFShow"));
+            });
+
 
             var app = builder.Build();
 
@@ -37,7 +44,6 @@ namespace WebDBFShow
             }
 
             app.UseHttpsRedirection();
-
             app.UseAuthorization();
 
 
