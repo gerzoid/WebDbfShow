@@ -19,6 +19,7 @@ namespace WebDBFShow.Controllers
         [HttpGet]
         public ActionResult Get()
         {
+            throw new NotImplementedException();
             return Ok(_manager.UsersRepository.GetUsers());
         }
     }

@@ -4,6 +4,7 @@ using Entities;
 using Microsoft.EntityFrameworkCore;
 using Repository;
 using Serilog;
+using WebDBFShow.Extensions;
 
 namespace WebDBFShow
 {
@@ -38,6 +39,9 @@ namespace WebDBFShow
             builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
 
             var app = builder.Build();
+
+            //Глобальный Exception Handler
+            //app.ConfigureExceptionHandler(app.Logger);
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
