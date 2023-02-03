@@ -10,5 +10,7 @@ namespace Contracts
     public interface IFilesRepository
     {
         public IEnumerable<Files> GetFiles();
+        public void CreateFile(Files file);
+
     }
 }

@@ -14,6 +14,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entiti
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Repository\Repository.csproj", "{60A4CF6D-601A-4F42-814F-93C232D10667}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbfReader", "DbfReader\DbfReader.csproj", "{EFC280B2-06A1-448F-9C39-88CB8C09B23F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +38,10 @@ Global
 		{60A4CF6D-601A-4F42-814F-93C232D10667}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60A4CF6D-601A-4F42-814F-93C232D10667}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{60A4CF6D-601A-4F42-814F-93C232D10667}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFC280B2-06A1-448F-9C39-88CB8C09B23F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFC280B2-06A1-448F-9C39-88CB8C09B23F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFC280B2-06A1-448F-9C39-88CB8C09B23F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFC280B2-06A1-448F-9C39-88CB8C09B23F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

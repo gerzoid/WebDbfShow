@@ -15,6 +15,10 @@ namespace Repository
         public UsersRepository(DatabaseContext context) : base(context)
         {
         }
+        public void Create(Users user)
+        {
+            base.Create(user);
+        }
 
         public IEnumerable<Users> GetUsers()
         {

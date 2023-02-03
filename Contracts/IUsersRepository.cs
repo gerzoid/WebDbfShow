@@ -9,6 +9,7 @@ namespace Contracts
 {
     public interface IUsersRepository
     {
+        public void Create(Users user);
         public IEnumerable<Users> GetUsers();
     }
 }

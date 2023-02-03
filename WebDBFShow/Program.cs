@@ -1,5 +1,7 @@
 
 using Contracts;
+using Contracts.DBF;
+using Dbf;
 using Entities;
 using Microsoft.EntityFrameworkCore;
 using Repository;
@@ -17,7 +19,6 @@ namespace WebDBFShow
             // Add services to the container.
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
@@ -37,6 +38,8 @@ namespace WebDBFShow
             });
 
             builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
+            builder.Services.AddScoped<IDbfReader, DbfReader>();
+
 
             var app = builder.Build();
 
@@ -46,9 +49,13 @@ namespace WebDBFShow
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
+                //Глобальный Exception Handler
+                app.ConfigureExceptionHandler(app.Logger);
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.UseCookiePolicy();
 
             app.UseHttpsRedirection();
             app.UseAuthorization();

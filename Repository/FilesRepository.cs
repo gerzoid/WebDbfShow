@@ -16,9 +16,16 @@ namespace Repository
         {
         }
 
+        public void CreateFile(Files file)
+        {
+            Create(file);
+        }
+
         public IEnumerable<Files> GetFiles()
         {
             return Get();
         }
+
+
     }
 }
