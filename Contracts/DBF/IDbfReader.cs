@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Entities.Dto;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace Contracts.DBF
 {
     public interface IDbfReader
     {
-        public int OpenFile(string filename);
+        public DbfInfo OpenFile(string filename);
     }
 }

@@ -1,11 +1,12 @@
 
 using Contracts;
 using Contracts.DBF;
-using Dbf;
+using DbfFile;
 using Entities;
 using Microsoft.EntityFrameworkCore;
 using Repository;
 using Serilog;
+using System.Text;
 using WebDBFShow.Extensions;
 
 namespace WebDBFShow
@@ -17,6 +18,8 @@ namespace WebDBFShow
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();

@@ -1,6 +1,6 @@
 ﻿using Contracts;
 using Contracts.DBF;
-using Dbf;
+using DbfFile;
 using Entities.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -35,8 +35,9 @@ namespace WebDBFShow.Controllers
                 Name = "test",
             });
             _manager.Save();*/
-            var t =  _reader.OpenFile(@"c:\1\tarrab.dbf");
-            return Ok(_manager.FilesRepository.GetFiles());
+            var t =  _reader.OpenFile(@"c:\1\test.dbf");
+            return Ok(t);
+            //return Ok(_manager.FilesRepository.GetFiles());
             //return Ok(_manager.UsersRepository.GetUsers());
         }
     }
