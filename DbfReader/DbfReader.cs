@@ -1,6 +1,7 @@
 ﻿using Contracts.DBF;
 using DbfShowLib.DBF;
 using Entities.Dto;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace DbfFile
@@ -15,7 +16,17 @@ namespace DbfFile
             Dbf dbf = new Dbf();
             dbf.OpenFile(@"c:\\1\test.dbf");
 
-            return null;
+            info.CountColumns = dbf.CountColumns;
+            info.CountRows = dbf.CountRows;
+            info.Columns = new Column[info.CountColumns];
+
+            for (int i = 0; i < dbf.CountColumns; i++)
+            {
+                var col = new Column() { Name = dbf.GetColumnName(i), Type = dbf.GetColumnType(i), Size = dbf.GetColumnSize(i) };
+                info.Columns[i] = col;
+            }
+            
+            return info;
             using (Stream fos = File.Open(filename, FileMode.OpenOrCreate, FileAccess.ReadWrite))
             {
 
