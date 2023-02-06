@@ -16,10 +16,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Repository\Re
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DbfReader", "DbfReader\DbfReader.csproj", "{EFC280B2-06A1-448F-9C39-88CB8C09B23F}"
 	ProjectSection(ProjectDependencies) = postProject
-		{6D931BBD-E331-4A20-90E8-FF7BB2A46E8F} = {6D931BBD-E331-4A20-90E8-FF7BB2A46E8F}
+		{BF4E6E08-97C3-46FC-96E8-2946EA240799} = {BF4E6E08-97C3-46FC-96E8-2946EA240799}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dBASE.NET", "dBASE.NET\dBASE.NET\dBASE.NET.csproj", "{6D931BBD-E331-4A20-90E8-FF7BB2A46E8F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DbfShowLib", "..\DbfShowLib\DbfShowLib\DbfShowLib.csproj", "{BF4E6E08-97C3-46FC-96E8-2946EA240799}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,10 +47,10 @@ Global
 		{EFC280B2-06A1-448F-9C39-88CB8C09B23F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EFC280B2-06A1-448F-9C39-88CB8C09B23F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EFC280B2-06A1-448F-9C39-88CB8C09B23F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6D931BBD-E331-4A20-90E8-FF7BB2A46E8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6D931BBD-E331-4A20-90E8-FF7BB2A46E8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6D931BBD-E331-4A20-90E8-FF7BB2A46E8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6D931BBD-E331-4A20-90E8-FF7BB2A46E8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF4E6E08-97C3-46FC-96E8-2946EA240799}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF4E6E08-97C3-46FC-96E8-2946EA240799}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF4E6E08-97C3-46FC-96E8-2946EA240799}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF4E6E08-97C3-46FC-96E8-2946EA240799}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

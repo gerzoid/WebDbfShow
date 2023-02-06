@@ -1,11 +1,7 @@
 ﻿using Contracts.DBF;
-using dBASE.NET;
+using DbfShowLib.DBF;
 using Entities.Dto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace DbfFile
 {
@@ -16,16 +12,14 @@ namespace DbfFile
             DbfInfo info = new DbfInfo();
             info.Name = filename;
 
-            Dbf reader = new Dbf();
-            reader.Read(filename);
+            Dbf dbf = new Dbf();
+            dbf.OpenFile(@"c:\\1\test.dbf");
 
-
+            return null;
             using (Stream fos = File.Open(filename, FileMode.OpenOrCreate, FileAccess.ReadWrite))
             {
-                dBASE.NET.Dbf reader2 = new dBASE.NET.Dbf();
-                reader.Read(fos);
 
-                info.CountColumns = reader.Fields.Count();
+                /*info.CountColumns = reader.Fields.Count();
                 info.Columns = new Column[info.CountColumns];
                 info.CountRows = reader.Records.Count();
                 for (int i = 0; i < reader.Fields.Count(); i++)
@@ -34,7 +28,7 @@ namespace DbfFile
                     info.Columns[i] = col;
                 }
                 var t = reader.Records;
-                return info;
+                return info;*/
             }
         }
     }
