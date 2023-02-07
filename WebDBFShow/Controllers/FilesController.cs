@@ -20,16 +20,19 @@ namespace WebDBFShow.Controllers
 
         [HttpPost]
         [EnableCors("Policy1")]
-        public ActionResult Upload([FromForm] FileModel file)
+        public async Task<ActionResult> Upload([FromForm] FileModel file)
         {
             try
             {
-                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", file.FileName);
+                //string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload", file.FileName);
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload", Guid.NewGuid().ToString() +Path.GetExtension(file.FileName));
                 using (Stream stream = new FileStream(path, FileMode.Create))
                 {
-                    file.FormFile.CopyTo(stream);
+                    await file.FormFile.CopyToAsync(stream);
                 }
-                return StatusCode(StatusCodes.Status201Created);
+                var info = _reader.OpenFile(path);
+
+                return StatusCode(StatusCodes.Status201Created, info);
             }
             catch(Exception E)
             {
@@ -41,7 +44,7 @@ namespace WebDBFShow.Controllers
         
         
         [HttpGet]
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             var t = _reader.OpenFile(@"c:\1\test.dbf");
             return Ok(t);

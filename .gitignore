@@ -1,4 +1,5 @@
 .vs
+**/wwwroot/upload/
 **/wwwroot/dist/
 **/wwwroot/lib/
 **/bin

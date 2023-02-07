@@ -8,13 +8,13 @@ namespace DbfFile
 {
     public class DbfReader : IFileDbReader
     {
-        public DbfInfo OpenFile(string filename)
+        public DbfInfo OpenFile(string fileName)
         {
             DbfInfo info = new DbfInfo();
-            info.Name = filename;
+            info.Name = Path.GetFileName(fileName);
 
             Dbf dbf = new Dbf();
-            dbf.OpenFile(@"c:\\1\test.dbf");
+            dbf.OpenFile(fileName);
 
             info.CountColumns = dbf.CountColumns;
             info.CountRows = dbf.CountRows;
@@ -27,7 +27,7 @@ namespace DbfFile
                 info.Columns[i] = col;
             }
             dbf.Close();
-            var tt = GetRow(1);
+            //var tt = GetRow(1);
             return info;
         }
 
