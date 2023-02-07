@@ -2,7 +2,7 @@
 
 namespace Contracts.DBF
 {
-    public interface IDbfReader
+    public interface IFileDbReader
     {
         public DbfInfo OpenFile(string filename);
     }

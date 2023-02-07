@@ -4,6 +4,7 @@ using Contracts.DBF;
 using DbfFile;
 using Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Net.Http.Headers;
 using Repository;
 using Serilog;
 using System.Text;
@@ -25,6 +26,16 @@ namespace WebDBFShow
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("Policy1", policy =>
+                {
+                    policy.AllowAnyOrigin()
+                    .WithMethods("POST", "GET", "PUT", "DELETE")
+                    .AllowAnyHeader();
+                });
+            });
+
             //Логи
             var logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(builder.Configuration)
@@ -41,10 +52,11 @@ namespace WebDBFShow
             });
 
             builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
-            builder.Services.AddScoped<IDbfReader, DbfReader>();
-
-
+            builder.Services.AddScoped<IFileDbReader, DbfReader>();
+           
             var app = builder.Build();
+
+            app.UseCors();
 
             //Глобальный Exception Handler
             //app.ConfigureExceptionHandler(app.Logger);
@@ -59,10 +71,9 @@ namespace WebDBFShow
             }
 
             app.UseCookiePolicy();
-
+            
             app.UseHttpsRedirection();
             app.UseAuthorization();
-
 
             app.MapControllers();
 

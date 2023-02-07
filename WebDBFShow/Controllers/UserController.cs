@@ -13,11 +13,9 @@ namespace WebDBFShow.Controllers
     public class UsersController : ControllerBase
     {
         IRepositoryManager _manager;
-        IDbfReader _reader;
-        public UsersController(IRepositoryManager manager, IDbfReader reader)
+        public UsersController(IRepositoryManager manager)
         {
             _manager = manager;
-            _reader = reader;
         }
         
         [HttpGet]
@@ -35,8 +33,8 @@ namespace WebDBFShow.Controllers
                 Name = "test",
             });
             _manager.Save();*/
-            var t =  _reader.OpenFile(@"c:\1\test.dbf");
-            return Ok(t);
+
+            return Ok();
             //return Ok(_manager.FilesRepository.GetFiles());
             //return Ok(_manager.UsersRepository.GetUsers());
         }

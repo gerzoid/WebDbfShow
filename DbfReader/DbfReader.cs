@@ -6,7 +6,7 @@ using System.Text;
 
 namespace DbfFile
 {
-    public class DbfReader : IDbfReader
+    public class DbfReader : IFileDbReader
     {
         public DbfInfo OpenFile(string filename)
         {
