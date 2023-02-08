@@ -29,17 +29,16 @@ import { ref } from 'vue';
     v-model:fileList="fileList"
     name="file"
     :multiple="true"
-    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+    action="https://localhost:7036/api/Files"
     @change="handleChange"
-    @drop="handleDrop"
-  >
+    @drop="handleDrop">
+
     <p class="ant-upload-drag-icon">
       <inbox-outlined></inbox-outlined>
     </p>
-    <p class="ant-upload-text">Click or drag file to this area to upload</p>
+    <p class="ant-upload-text">Щелкните мышкой или перетащите файл в эту область для его загрузки</p>
     <p class="ant-upload-hint">
-      Support for a single or bulk upload. Strictly prohibit from uploading company data or other
-      band files
+      Поддерживаются dbf, csv файлы и txt с разделителями (аналог csv)
     </p>
   </a-upload-dragger>
 </template>
