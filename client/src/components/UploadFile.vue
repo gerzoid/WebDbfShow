@@ -1,37 +1,38 @@
 <script setup>
 
 import { InboxOutlined } from '@ant-design/icons-vue';
+import axios from 'axios'
 import { message } from 'ant-design-vue';
 import { ref } from 'vue';
 
-    var fileList =  ref([]);
+  var fileList =  ref([]);
+  
+  var uploadFiles = ({ onSuccess, onError, file })=>
+  {
+    console.log(file);
+    var formData = new FormData();
+      formData.append('formfile', file);
+      formData.append('filename', file.name);
 
-    var handleDrop= e => {
-        console.log(e);
-    };
-
-   var handleChange = info => {
-      const status = info.file.status;
-      if (status !== 'uploading') {
-        console.log(info.file, info.fileList);
-      }
-      if (status === 'done') {
-        message.success(`${info.file.name} file uploaded successfully.`);
-      } else if (status === 'error') {
-        message.error(`${info.file.name} file upload failed.`);
-      }
-    };
-
+      axios.post('http://localhost:5149/api/Files', formData, {
+        headers: {
+          'Content-Type' : 'multipart/form-data'
+        }
+      }).then((data)=>{
+        onSuccess(null, file);
+        console.log(data.data.name);
+      });
+  }
 </script>
 
 <template>
+ 
  <a-upload-dragger
     v-model:fileList="fileList"
     name="file"
-    :multiple="true"
-    action="https://localhost:7036/api/Files"
-    @change="handleChange"
-    @drop="handleDrop">
+    accept=".dbf"
+    :multiple="false"
+    :customRequest="uploadFiles">
 
     <p class="ant-upload-drag-icon">
       <inbox-outlined></inbox-outlined>
