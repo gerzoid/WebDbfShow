@@ -15,6 +15,7 @@ import UploadFile from './components/UploadFile.vue'
           :style="{ lineHeight: '64px' }"
         >
           <a-menu-item key="1">Файл</a-menu-item>
+          <a-menu-item key="2">Правка</a-menu-item>
         </a-menu>
       </a-layout-header>
       <a-layout-content id='content'>
@@ -39,7 +40,7 @@ import UploadFile from './components/UploadFile.vue'
   #components-layout-demo-top .logo {
     float: left;
     width: 100%;
-    height: 31px;
+    height: 32px;
     margin: 16px 24px 16px 0;
     background: rgba(255, 255, 255, 0.3);
   }
