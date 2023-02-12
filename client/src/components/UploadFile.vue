@@ -5,28 +5,28 @@ import axios from 'axios'
 import { message } from 'ant-design-vue';
 import { ref } from 'vue';
 
-  var fileList =  ref([]);
-  
-  var uploadFiles = ({ onSuccess, onError, file })=>
-  {
-    console.log(file);
-    var formData = new FormData();
-      formData.append('formfile', file);
-      formData.append('filename', file.name);
+const emit = defineEmits(['upload-completed']);
 
-      axios.post('http://localhost:5149/api/Files', formData, {
-        headers: {
-          'Content-Type' : 'multipart/form-data'
-        }
-      }).then((data)=>{
-        onSuccess(null, file);
-        console.log(data.data.name);
-      });
-  }
+var fileList =  ref([]);
+
+var uploadFiles = ({ onSuccess, onError, file })=>
+{
+  var formData = new FormData();
+    formData.append('formfile', file);
+    formData.append('filename', file.name);
+    axios.post('http://localhost:5149/api/Files', formData, {
+      headers: {
+        'Content-Type' : 'multipart/form-data'
+      }
+    }).then((data)=>{
+      onSuccess(null, file);
+      emit('upload-completed', data.data);
+    });
+}
 </script>
 
 <template>
- 
+
  <a-upload-dragger
     v-model:fileList="fileList"
     name="file"

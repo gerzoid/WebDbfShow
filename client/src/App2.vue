@@ -1,7 +1,13 @@
 <script setup>
 import { defineComponent, ref } from 'vue';
 import UploadFile from './components/UploadFile.vue'
-    var selectedKeys= ref(['2']);
+import Dbfshow from './components/DbfShow.vue'
+var columns = ref([]);
+var selectedKeys= ref(['2']);
+
+var onUploadCompleted =(data)=>{
+  columns.value = data.columns;
+}
 </script>
 
 <template>
@@ -20,8 +26,9 @@ import UploadFile from './components/UploadFile.vue'
       </a-layout-header>
       <a-layout-content id='content'>
         <div class="subcontent">
+            <dbfshow :columns="columns"></dbfshow>
             <div class="upload">
-                <upload-file></upload-file>
+                <upload-file @upload-completed="onUploadCompleted"></upload-file>
             </div>
         </div>
       </a-layout-content>
