@@ -2,36 +2,52 @@
 
 import { HotTable } from '@handsontable/vue3';
 import axios from 'axios'
+import { useFileStore } from '../stores/filestore'
+import { storeToRefs } from 'pinia'
 import 'handsontable/dist/handsontable.full.min.css';
-import { ref, watch  } from 'vue';
+import { ref, watch, toRaw, onMounted  } from 'vue';
 
-const props = defineProps(['info']);
+const fileStore = useFileStore();
 
-var hot = ref();
-var data= [];
+var hot = ref(null);
 
-let fileName=ref('');
+var dataRow= ref([]);
+
+var settings = ref({
+  licenseKey: 'non-commercial-and-evaluation',
+  columns: toRaw(fileStore.fileInfo.columns),
+  stretchH: 'all',
+})
+
+onMounted(()=>{
+  //console.log(hot.value.hotInstance.loadData(['1','2','4']));
+});
+
+//Не работает так как v-if на компоненте, а не v-show
+/*const { fileName } = storeToRefs(fileStore)
+watch(fileName, () => {
+  settings.columns = toRaw(fileStore.fileInfo.columns);
+  console.log('some changed', fileName)
+})*/
 
 function getData(){
   const data = new FormData();
-  data.append('FileName', this.filename);
+  data.append('FileName', fileStore.fileInfo.name);
   data.append('PageSize', 10);
   data.append('Page', 1);
-  axios.post('http://localhost:5149/api/Files/getData', data).then(({ data })=>{
-       data = data.data;
+  axios.post('http://localhost:5149/api/Files/getData', data)
+    .then(result=>{
+      dataRow = result; 
+      hot.value.hotInstance.loadData(result);
   });
 }
 
-var settings = {
-  licenseKey: 'non-commercial-and-evaluation',
-  columns: props.info.columns,
-  stretchH: 'all',
-}
+getData();
 
 </script>
 
 <template>
-  <hot-table ref='hot' :data="data" :rowHeaders="true" :colHeaders="true" :settings="settings"></hot-table>
+  <hot-table ref='hot' :data="dataRow" :rowHeaders="true" :colHeaders="true" :settings="settings"></hot-table>
 </template>
 
 <style scoped>

@@ -1,19 +1,18 @@
 <script setup>
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, watch } from 'vue';
 import UploadFile from './components/UploadFile.vue'
 import Dbfshow from './components/DbfShow.vue'
-import { useDbfShow } from './stores/filestore'
+import { storeToRefs } from 'pinia'
+import { useFileStore } from './stores/filestore'
 
-var fileInfo = ref([]);
 var selectedKeys= ref(['2']);
-const fileState = useDbfShow();
+const fileStore = useFileStore();
 
 let isLoaded =ref(false);
 
 var onUploadCompleted =(data)=>{
-  fileInfo.value = data;
-  fileState.saveFileName(data.FileName);  
-  console.log(fileState.getFilename);
+  fileStore.fileInfo = data;
+  fileStore.fileName = data.name;
   isLoaded.value = true;
 }
 </script>
@@ -35,7 +34,7 @@ var onUploadCompleted =(data)=>{
       <a-layout-content id='content'>
         <div class="subcontent">
             <!---<dbfshow v-if="isLoaded==true" :info="fileInfo"></dbfshow>-->
-            <dbfshow v-if="isLoaded==true" :info="fileInfo"></dbfshow>
+            <dbfshow v-if="isLoaded==true"></dbfshow>
             <div v-else class="upload">
                 <upload-file @upload-completed="onUploadCompleted"></upload-file>
             </div>

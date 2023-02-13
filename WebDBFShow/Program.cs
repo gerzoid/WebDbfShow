@@ -31,7 +31,8 @@ namespace WebDBFShow
                 options.AddPolicy("Policy1", policy =>
                 {
                     policy.AllowAnyOrigin()
-                    .WithMethods("POST", "GET", "PUT", "DELETE")
+                    .AllowAnyMethod()
+                    //.WithMethods("POST", "GET", "PUT", "DELETE")
                     .AllowAnyHeader();
                 });
             });

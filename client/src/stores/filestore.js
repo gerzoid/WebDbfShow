@@ -1,8 +1,9 @@
 import { defineStore } from 'pinia'
 
-export const useDbfShow = defineStore('dbfshow', {
+export const useFileStore = defineStore('fileStore', {
     state: () => ({
-      fileName: '',
+      fileInfo: [],
+      fileName: 'test.dbf',
       pageSize: 10,
       page:1,
       isLoading: false,

@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-import { useDbfShow } from './stores/filestore';
+import { useFileStore } from './stores/filestore';
 import './style.css'
 import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';

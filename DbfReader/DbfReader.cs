@@ -69,17 +69,5 @@ namespace DbfFile
             }
             return rows;
         }
-
-        public string[] GetRow(int indexRow)
-        {            
-            Dbf dbf = new Dbf();
-            dbf.OpenFile(@"c:\\1\test.dbf");
-            string[] row = new string[dbf.CountColumns];
-            for (int i = 0; i < dbf.CountColumns; i++)
-            {
-                row[i] = dbf.GetValue(i, indexRow);
-            }
-            return row;
-        }
     }
 }
