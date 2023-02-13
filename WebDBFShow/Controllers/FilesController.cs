@@ -39,9 +39,15 @@ namespace WebDBFShow.Controllers
                 Console.WriteLine(E.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
-
         }
         
+        [HttpPost]
+        [Route("getdata")]
+        public async Task<ActionResult> GetData(QueryGetData data)
+        {
+            var result = _reader.GetData(data);
+            return Ok(result);
+        }
         
         [HttpGet]
         public async Task<ActionResult> Index()

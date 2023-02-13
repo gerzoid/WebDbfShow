@@ -1,22 +1,72 @@
 <script setup>
+import { defineComponent, ref } from 'vue';
 import UploadFile from './components/UploadFile.vue'
+import Dbfshow from './components/DbfShow.vue'
+
+var fileInfo = ref([]);
+var selectedKeys= ref(['2']);
+
+let isLoaded =ref(false);
+
+var onUploadCompleted =(data)=>{
+  fileInfo.value = data;
+  isLoaded.value = true;
+}
 </script>
 
 <template>
-  <UploadFile></UploadFile>
-</template>
+    <a-layout class="layout">
+      <a-layout-header>
+        <div class="logo" />
+        <a-menu
+          v-model:selectedKeys="selectedKeys"
+          theme="dark"
+          mode="horizontal"
+          :style="{ lineHeight: '64px' }"
+        >
+          <a-menu-item key="1">Файл</a-menu-item>
+          <a-menu-item key="2">Правка</a-menu-item>
+        </a-menu>
+      </a-layout-header>
+      <a-layout-content id='content'>
+        <div class="subcontent">
+            <!---<dbfshow v-if="isLoaded==true" :info="fileInfo"></dbfshow>-->
+            <dbfshow v-if="isLoaded==true" :info="fileInfo"></dbfshow>
+            <div v-else class="upload">
+                <upload-file @upload-completed="onUploadCompleted"></upload-file>
+            </div>
+        </div>
+      </a-layout-content>
+      <a-layout-footer style="text-align: center">
+        jobtools.ru ©2023
+      </a-layout-footer>
+    </a-layout>
+  </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
+  <style>
+  .site-layout-content {
+    min-height: 280px;
+    padding: 24px;
+    background: #fff;
+  }
+  #components-layout-demo-top .logo {
+    float: left;
+    width: 100%;
+    height: 32px;
+    margin: 16px 24px 16px 0;
+    background: rgba(255, 255, 255, 0.3);
+  }
+  .ant-row-rtl #components-layout-demo-top .logo {
+    float: right;
+    margin: 16px 0 16px 24px;
+  }
+
+  .upload{
+    max-width: 50%;
+    margin: 0 auto;
+  }
+
+  [data-theme='dark'] .site-layout-content {
+    background: #141414;
+  }
+  </style>
