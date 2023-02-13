@@ -2,14 +2,18 @@
 import { defineComponent, ref } from 'vue';
 import UploadFile from './components/UploadFile.vue'
 import Dbfshow from './components/DbfShow.vue'
+import { useDbfShow } from './stores/filestore'
 
 var fileInfo = ref([]);
 var selectedKeys= ref(['2']);
+const fileState = useDbfShow();
 
 let isLoaded =ref(false);
 
 var onUploadCompleted =(data)=>{
   fileInfo.value = data;
+  fileState.saveFileName(data.FileName);  
+  console.log(fileState.getFilename);
   isLoaded.value = true;
 }
 </script>

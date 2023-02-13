@@ -1,7 +1,10 @@
 import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+import { useDbfShow } from './stores/filestore';
 import './style.css'
 import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
 import App from './App.vue'
 
-createApp(App).use(Antd).mount('#app');
+let Pinia = createPinia();
+createApp(App).use(Pinia).use(Antd).mount('#app');
