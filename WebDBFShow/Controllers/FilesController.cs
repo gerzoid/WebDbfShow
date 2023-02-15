@@ -20,12 +20,13 @@ namespace WebDBFShow.Controllers
         }
 
         [HttpPost]
-        [EnableCors("Policy1")]
+        [EnableCors("Policy1")]        
+        [RequestSizeLimit(10_000_000)]
+        //[RequestFormLimits(ValueLengthLimit = int.MaxValue, MultipartBodyLengthLimit = int.MaxValue)]
         public async Task<ActionResult> Upload([FromForm] FileModel file)
         {
             try
             {
-                //string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload", file.FileName);
                 string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload", Guid.NewGuid().ToString() +Path.GetExtension(file.FileName));
                 using (Stream stream = new FileStream(path, FileMode.Create))
                 {
@@ -40,8 +41,7 @@ namespace WebDBFShow.Controllers
                 Console.WriteLine(E.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
-        }
-        
+        }        
         [HttpPost]
         [EnableCors("Policy1")]
         [Route("getdata")]

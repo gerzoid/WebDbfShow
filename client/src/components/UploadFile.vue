@@ -21,7 +21,9 @@ var uploadFiles = ({ onSuccess, onError, file })=>
     }).then((data)=>{
       onSuccess(null, file);
       emit('upload-completed', data.data);
-    });
+    }).catch(e=>{
+    message.error(e);
+  });
 }
 </script>
 

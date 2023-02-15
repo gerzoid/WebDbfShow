@@ -3,6 +3,8 @@ import { defineComponent, ref, watch } from 'vue';
 import UploadFile from './components/UploadFile.vue'
 import Dbfshow from './components/DbfShow.vue'
 import { storeToRefs } from 'pinia'
+import { message} from 'ant-design-vue';
+import { showNotification } from './plugins/notification'
 import { useFileStore } from './stores/filestore'
 
 var selectedKeys= ref(['2']);
@@ -14,6 +16,7 @@ var onUploadCompleted =(data)=>{
   fileStore.fileInfo = data;
   fileStore.fileName = data.name;
   isLoaded.value = true;
+  showNotification('success', 'Загрузка файлов', 'Файл успешно загружен')
 }
 </script>
 

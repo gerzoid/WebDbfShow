@@ -33,13 +33,15 @@ watch(fileName, () => {
 function getData(){
   const data = new FormData();
   data.append('FileName', fileStore.fileInfo.name);
-  data.append('PageSize', 10);
+  data.append('PageSize', 60);
   data.append('Page', 1);
   axios.post('http://localhost:5149/api/Files/getData', data)
     .then(result=>{
       dataRow = result; 
       console.log(result.data);
       hot.value.hotInstance.loadData(result.data);
+  }).catch(e=>{
+    console.log(e);
   });
 }
 

@@ -52,35 +52,17 @@ namespace DbfFile
             }
         }
 
-        public IEnumerable<KeyValue[]> GetData(QueryGetData data)
-        {
-            Dbf dbf = new Dbf();
-            
-            dbf.OpenFile(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload", data.FileName));
-
-            IEnumerable<KeyValue[]> rows = new List<KeyValue[]>();
-
-            for (int indexRow = 0; indexRow < data.PageSize; indexRow++)
-            {
-                KeyValue[] values = new KeyValue[dbf.CountColumns];
-                for (int i = 0; i < dbf.CountColumns; i++)
-                {
-                    values[i] = new() { Value = dbf.GetValue(i, indexRow), Key = "none" };
-                }
-                ((List<KeyValue[]>)rows).Add(values);
-            }
-            return rows;
-        }
-
-        public IEnumerable<Dictionary<string, object>> GetData2(QueryGetData data)
+        public IEnumerable<Dictionary<string, object>> GetData(QueryGetData data)
         {
             Dbf dbf = new Dbf();
 
             dbf.OpenFile(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload", data.FileName));
 
             IEnumerable<Dictionary<string, object>> rows = new List<Dictionary<string, object>>();
-
-            for (int indexRow = 0; indexRow < data.PageSize; indexRow++)
+            int countReturnRecords = data.PageSize;
+            countReturnRecords = countReturnRecords > dbf.CountRows ? dbf.CountRows : countReturnRecords;
+                        
+            for (int indexRow = 0; indexRow < countReturnRecords; indexRow++)
             {
                 Dictionary<string, object> values = new Dictionary<string, object>();
                 for (int i = 0; i < dbf.CountColumns; i++)
