@@ -1,25 +1,29 @@
 <script setup>
-
-import { HotTable } from '@handsontable/vue3';
-import axios from 'axios'
-import { useFileStore } from '../stores/filestore'
-import { storeToRefs } from 'pinia'
-import 'handsontable/dist/handsontable.full.min.css';
-import { ref, watch, toRaw, onMounted  } from 'vue';
+import { HotTable } from "@handsontable/vue3";
+import axios from "axios";
+import { useFileStore } from "../stores/filestore";
+import { storeToRefs } from "pinia";
+import "handsontable/dist/handsontable.full.min.css";
+import { ref, watch, toRaw, onMounted } from "vue";
 
 const fileStore = useFileStore();
 
 var hot = ref(null);
 
-var dataRow= ref([]);
+var dataRow = ref([]);
 
 var settings = ref({
-  licenseKey: 'non-commercial-and-evaluation',
+  licenseKey: "non-commercial-and-evaluation",
   columns: toRaw(fileStore.fileInfo.columns),
-  stretchH: 'all',
-})
+  rowHeaders: true,
+  colHeaders: true,
+  width: "100%",
+  height: "100%",
+  manualColumnResize: true,
+  stretchH: "all",
+});
 
-onMounted(()=>{
+onMounted(() => {
   //console.log(hot.value.hotInstance.loadData(['1','2','4']));
 });
 
@@ -30,36 +34,42 @@ watch(fileName, () => {
   console.log('some changed', fileName)
 })*/
 
-function getData(){
+function getData() {
   const data = new FormData();
-  data.append('FileName', fileStore.fileInfo.name);
-  data.append('PageSize', 60);
-  data.append('Page', 1);
-  axios.post('http://localhost:5149/api/Files/getData', data)
-    .then(result=>{
-      dataRow = result; 
-      console.log(result.data);
+  data.append("FileName", fileStore.fileInfo.name);
+  data.append("PageSize", 60);
+  data.append("Page", 1);
+  axios
+    .post("http://localhost:5149/api/Files/getData", data)
+    .then((result) => {
+      dataRow = result;
       hot.value.hotInstance.loadData(result.data);
-  }).catch(e=>{
-    console.log(e);
-  });
+    })
+    .catch((e) => {
+      console.log(e);
+    });
 }
 
 getData();
-
 </script>
 
 <template>
-  <hot-table ref='hot' :data="dataRow" :rowHeaders="true" :colHeaders="true" :settings="settings"></hot-table>
+  <hot-table
+    ref="hot"
+    :data="dataRow"
+    :rowHeaders="true"
+    :colHeaders="true"
+    :settings="settings"
+  ></hot-table>
 </template>
 
 <style scoped>
-    .upload-dbf{
-        width:400px;
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        background-color: white;
-        padding-top: 50px;
-    }
+.upload-dbf {
+  width: 400px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: white;
+  padding-top: 50px;
+}
 </style>

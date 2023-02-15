@@ -36,13 +36,15 @@ var onUploadCompleted =(data)=>{
       </a-layout-header>
       <a-layout-content id='content'>
         <div class="subcontent">
-            <!---<dbfshow v-if="isLoaded==true" :info="fileInfo"></dbfshow>-->
             <dbfshow v-if="isLoaded==true"></dbfshow>
             <div v-else class="upload">
                 <upload-file @upload-completed="onUploadCompleted"></upload-file>
             </div>
         </div>
       </a-layout-content>
+      <a-layout-content id='dopinfo'>
+      <div>Колонок:  </div>
+    </a-layout-content>
       <a-layout-footer style="text-align: center">
         jobtools.ru ©2023
       </a-layout-footer>

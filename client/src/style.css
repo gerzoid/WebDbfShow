@@ -2,7 +2,7 @@
   height:100%;
 }
 
-#content{
+#content, #dopinfo{
   padding: 0 50px;
 }
 .layout{
@@ -11,5 +11,6 @@
 .subcontent{
   background: #fff;
   padding: 24px;
-  height:100%;  
+  height:100%;
+  /*overflow: overlay;*/
 }
