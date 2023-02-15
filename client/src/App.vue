@@ -1,5 +1,6 @@
 <script setup>
 import { defineComponent, ref, watch, onMounted } from 'vue';
+import Pagination from './components/Pagination.vue'
 import UploadFile from './components/UploadFile.vue'
 import Dbfshow from './components/DbfShow.vue'
 import { storeToRefs } from 'pinia'
@@ -57,9 +58,11 @@ function onClick(e){
             <div v-else class="upload">
                 <upload-file @upload-completed="onUploadCompleted"></upload-file>
             </div>
+            <pagination v-if="fileStore.isLoading==true"></pagination>
         </div>
       </a-layout-content>
       <a-layout-content v-if="fileStore.isLoading==true" id='dopinfo'>
+
       <div><b>Колонок:</b>  {{ fileStore.fileInfo.countColumns }} <b>Строк:</b> {{ fileStore.fileInfo.countRows }} <b>Кодировка:</b> {{ fileStore.fileInfo.codePage }} <b>Формат:</b> {{ fileStore.fileInfo.version }}</div>
     </a-layout-content>
       <a-layout-footer style="text-align: center">

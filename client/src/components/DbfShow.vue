@@ -12,7 +12,10 @@ const fileStore = useFileStore();
 var hot = ref(null);
 registerAllModules();
 
-var dataRow = ref([]);
+function onModifyRowData(row){
+  console.log('dsdddd');
+};
+
 
 var settings = ref({
   licenseKey: "non-commercial-and-evaluation",
@@ -23,30 +26,27 @@ var settings = ref({
   height: "100%",
   manualColumnResize: true,
   stretchH: "all",
+  modifyRowData : "onModifyRowData"
 });
 
 onMounted(() => {
   //console.log(hot.value.hotInstance.loadData(['1','2','4']));
 });
 
-//Не работает так как v-if на компоненте, а не v-show
-/*const { fileName } = storeToRefs(fileStore)
-watch(fileName, () => {
-  settings.columns = toRaw(fileStore.fileInfo.columns);
-  console.log('some changed', fileName)
-})*/
+watch(()=>([fileStore.page, fileStore.pageSize]), () => {
+  getData();  
+})
+
 
 function getData() {
   const data = new FormData();
   data.append("FileName", fileStore.fileInfo.name);
-  data.append("PageSize", 60);
-  data.append("Page", 1);
+  data.append("PageSize", fileStore.pageSize);
+  data.append("Page", fileStore.page);
   axios
     .post("http://localhost:5149/api/Files/getData", data)
     .then((result) => {
-      dataRow = result;
       hot.value.hotInstance.updateData(result.data);
-      //hot.value.hotInstance.loadData(result.data);
     })
     .catch((e) => {
       console.log(e);
@@ -59,7 +59,6 @@ getData();
 <template>
   <hot-table
     ref="hot"
-    :data="dataRow"
     :rowHeaders="true"
     :colHeaders="true"
     :settings="settings"

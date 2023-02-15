@@ -10,7 +10,12 @@
 }
 .subcontent{
   background: #fff;
-  padding: 24px;
+  padding-top:20px;
+  padding-bottom: 40px;
   height:100%;
   /*overflow: overlay;*/
+}
+.ant-pagination{
+  text-align: center;
+  padding-top: 4px;
 }

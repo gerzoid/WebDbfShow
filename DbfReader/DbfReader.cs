@@ -59,10 +59,13 @@ namespace DbfFile
             dbf.OpenFile(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload", data.FileName));
 
             IEnumerable<Dictionary<string, object>> rows = new List<Dictionary<string, object>>();
-            int countReturnRecords = data.PageSize;
-            countReturnRecords = countReturnRecords > dbf.CountRows ? dbf.CountRows : countReturnRecords;
+
+            int startRow = data.PageSize * (data.Page-1);
+            startRow = startRow>= dbf.CountRows ? dbf.CountRows : startRow;
+
+            int endRow =  startRow+data.PageSize > dbf.CountRows ? dbf.CountRows : startRow + data.PageSize;
                         
-            for (int indexRow = 0; indexRow < countReturnRecords; indexRow++)
+            for (int indexRow = startRow; indexRow < endRow; indexRow++)
             {
                 Dictionary<string, object> values = new Dictionary<string, object>();
                 for (int i = 0; i < dbf.CountColumns; i++)
