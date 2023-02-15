@@ -4,11 +4,13 @@ import axios from "axios";
 import { useFileStore } from "../stores/filestore";
 import { storeToRefs } from "pinia";
 import "handsontable/dist/handsontable.full.min.css";
+import { registerAllModules } from 'handsontable/registry';
 import { ref, watch, toRaw, onMounted } from "vue";
 
 const fileStore = useFileStore();
 
 var hot = ref(null);
+registerAllModules();
 
 var dataRow = ref([]);
 
@@ -19,8 +21,8 @@ var settings = ref({
   colHeaders: true,
   width: "100%",
   height: "100%",
+  autoColumnSize: {syncLimit: 300},
   manualColumnResize: true,
-  manualRowResize: true,
   minSpareRows: 1,
   stretchH: "all",
 });
@@ -45,7 +47,8 @@ function getData() {
     .post("http://localhost:5149/api/Files/getData", data)
     .then((result) => {
       dataRow = result;
-      hot.value.hotInstance.loadData(result.data);
+      hot.value.hotInstance.updateData(result.data);
+      //hot.value.hotInstance.loadData(result.data);
     })
     .catch((e) => {
       console.log(e);
