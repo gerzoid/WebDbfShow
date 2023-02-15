@@ -21,9 +21,7 @@ var settings = ref({
   colHeaders: true,
   width: "100%",
   height: "100%",
-  autoColumnSize: {syncLimit: 300},
   manualColumnResize: true,
-  minSpareRows: 1,
   stretchH: "all",
 });
 

@@ -7,7 +7,7 @@ import { message} from 'ant-design-vue';
 import { showNotification } from './plugins/notification'
 import { useFileStore } from './stores/filestore'
 
-var selectedKeys= ref(['2']);
+var selectedKeys= ref([]);
 const fileStore = useFileStore();
 
 let isLoaded =ref(false);
@@ -30,8 +30,21 @@ var onUploadCompleted =(data)=>{
           mode="horizontal"
           :style="{ lineHeight: '64px' }"
         >
-          <a-menu-item key="1">Файл</a-menu-item>
-          <a-menu-item key="2">Правка</a-menu-item>
+      <a-sub-menu key="sub1">
+          <template #icon>
+              <setting-outlined />
+          </template>
+          <template selected #title>Файл</template>
+          <a-menu-item key="1">Закрыть</a-menu-item>
+          <a-menu-item disabled key="1-1">Структура файла</a-menu-item>
+          <a-menu-item disabled key="1-2">Экспорт</a-menu-item>
+          <!--<a-menu-item-group title="Item 2">
+            <a-menu-item key="setting:3">Option 3</a-menu-item>
+            <a-menu-item key="setting:4">Option 4</a-menu-item>
+          </a-menu-item-group> --->
+          </a-sub-menu>
+          <a-menu-item disabled key="2">Правка</a-menu-item>
+          <a-menu-item disabled key="3">Статистика</a-menu-item>
         </a-menu>
       </a-layout-header>
       <a-layout-content id='content'>
