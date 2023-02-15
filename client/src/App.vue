@@ -1,5 +1,5 @@
 <script setup>
-import { defineComponent, ref, watch } from 'vue';
+import { defineComponent, ref, watch, onMounted } from 'vue';
 import UploadFile from './components/UploadFile.vue'
 import Dbfshow from './components/DbfShow.vue'
 import { storeToRefs } from 'pinia'
@@ -10,13 +10,19 @@ import { useFileStore } from './stores/filestore'
 var selectedKeys= ref([]);
 const fileStore = useFileStore();
 
-let isLoaded =ref(false);
-
 var onUploadCompleted =(data)=>{
   fileStore.fileInfo = data;
   fileStore.fileName = data.name;
-  isLoaded.value = true;
+  fileStore.isLoading = true;
   showNotification('success', 'Загрузка файлов', 'Файл успешно загружен')
+}
+
+function onClick(e){
+  switch(e.key)
+  {
+    case 'close': fileStore.closeFile();
+        break;
+  }
 }
 </script>
 
@@ -29,15 +35,13 @@ var onUploadCompleted =(data)=>{
           theme="dark"
           mode="horizontal"
           :style="{ lineHeight: '64px' }"
+          @click="onClick"
         >
-      <a-sub-menu key="sub1">
-          <template #icon>
-              <setting-outlined />
-          </template>
+      <a-sub-menu key="1">
           <template selected #title>Файл</template>
-          <a-menu-item key="1">Закрыть</a-menu-item>
-          <a-menu-item disabled key="1-1">Структура файла</a-menu-item>
-          <a-menu-item disabled key="1-2">Экспорт</a-menu-item>
+          <a-menu-item key="close">Закрыть</a-menu-item>
+          <a-menu-item disabled key="struct">Структура файла</a-menu-item>
+          <a-menu-item disabled key="export">Экспорт</a-menu-item>
           <!--<a-menu-item-group title="Item 2">
             <a-menu-item key="setting:3">Option 3</a-menu-item>
             <a-menu-item key="setting:4">Option 4</a-menu-item>
@@ -49,13 +53,13 @@ var onUploadCompleted =(data)=>{
       </a-layout-header>
       <a-layout-content id='content'>
         <div class="subcontent">
-            <dbfshow v-if="isLoaded==true"></dbfshow>
+            <dbfshow v-if="fileStore.isLoading==true"></dbfshow>
             <div v-else class="upload">
                 <upload-file @upload-completed="onUploadCompleted"></upload-file>
             </div>
         </div>
       </a-layout-content>
-      <a-layout-content v-if="isLoaded==true" id='dopinfo'>
+      <a-layout-content v-if="fileStore.isLoading==true" id='dopinfo'>
       <div><b>Колонок:</b>  {{ fileStore.fileInfo.countColumns }} <b>Строк:</b> {{ fileStore.fileInfo.countRows }} <b>Кодировка:</b> {{ fileStore.fileInfo.codePage }} <b>Формат:</b> {{ fileStore.fileInfo.version }}</div>
     </a-layout-content>
       <a-layout-footer style="text-align: center">
