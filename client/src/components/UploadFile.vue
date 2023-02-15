@@ -4,16 +4,19 @@ import { InboxOutlined } from '@ant-design/icons-vue';
 import axios from 'axios'
 import { message } from 'ant-design-vue';
 import { ref } from 'vue';
+import { useFileStore } from '../stores/filestore'
 
 const emit = defineEmits(['upload-completed']);
 
 var fileList =  ref([]);
+const fileStore = useFileStore();
 
 var uploadFiles = ({ onSuccess, onError, file })=>
 {
   var formData = new FormData();
     formData.append('formfile', file);
     formData.append('filename', file.name);
+    fileStore.originalFileName = file.name;
     axios.post('http://localhost:5149/api/Files', formData, {
       headers: {
         'Content-Type' : 'multipart/form-data'

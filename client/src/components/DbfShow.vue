@@ -20,6 +20,8 @@ var settings = ref({
   width: "100%",
   height: "100%",
   manualColumnResize: true,
+  manualRowResize: true,
+  minSpareRows: 1,
   stretchH: "all",
 });
 

@@ -42,8 +42,8 @@ var onUploadCompleted =(data)=>{
             </div>
         </div>
       </a-layout-content>
-      <a-layout-content id='dopinfo'>
-      <div>Колонок:  </div>
+      <a-layout-content v-if="isLoaded==true" id='dopinfo'>
+      <div><b>Колонок:</b>  {{ fileStore.fileInfo.countColumns }} <b>Строк:</b> {{ fileStore.fileInfo.countRows }} <b>Кодировка:</b> {{ fileStore.fileInfo.codePage }} <b>Формат:</b> {{ fileStore.fileInfo.version }}</div>
     </a-layout-content>
       <a-layout-footer style="text-align: center">
         jobtools.ru ©2023
