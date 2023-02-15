@@ -38,7 +38,8 @@ function getData(){
   axios.post('http://localhost:5149/api/Files/getData', data)
     .then(result=>{
       dataRow = result; 
-      hot.value.hotInstance.loadData(result);
+      console.log(result.data);
+      hot.value.hotInstance.loadData(result.data);
   });
 }
 

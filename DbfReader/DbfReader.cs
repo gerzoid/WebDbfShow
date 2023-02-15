@@ -2,6 +2,7 @@
 using DbfShowLib.DBF;
 using Entities.Dto;
 using Entities.Models;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -19,13 +20,13 @@ namespace DbfFile
 
             info.CountColumns = dbf.CountColumns;
             info.CountRows = dbf.CountRows;
-            info.Columns = new ColumnHandsonTable[info.CountColumns];
+            info.Columns = new Column[info.CountColumns];
             info.CodePage = dbf.CodePage.codePage;
             info.Version = dbf.GetVersion();
             for (int i = 0; i < dbf.CountColumns; i++)
             {
 
-                var col = new ColumnHandsonTable() { Data = dbf.GetColumnName(i), Title= dbf.GetColumnName(i), Type = TypeMapping(dbf.GetColumnType(i)), Width = dbf.GetColumnSize(i)*10 };
+                var col = new Column() { Name = dbf.GetColumnName(i), Title= dbf.GetColumnName(i), Type = TypeMapping(dbf.GetColumnType(i)), Size = dbf.GetColumnSize(i)*10 };
                 //var col = new Column() { Name = dbf.GetColumnName(i), Type = dbf.GetColumnType(i), Size = dbf.GetColumnSize(i) };
                 info.Columns[i] = col;
             }
@@ -51,23 +52,45 @@ namespace DbfFile
             }
         }
 
-        public IEnumerable<string[]> GetData(QueryGetData data)
+        public IEnumerable<KeyValue[]> GetData(QueryGetData data)
         {
             Dbf dbf = new Dbf();
             
             dbf.OpenFile(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload", data.FileName));
 
-            IEnumerable<string[]> rows = new List<string[]>();
+            IEnumerable<KeyValue[]> rows = new List<KeyValue[]>();
+
             for (int indexRow = 0; indexRow < data.PageSize; indexRow++)
             {
-                string[] row = new string[dbf.CountColumns];
+                KeyValue[] values = new KeyValue[dbf.CountColumns];
                 for (int i = 0; i < dbf.CountColumns; i++)
                 {
-                    row[i] = dbf.GetValue(i, indexRow);
+                    values[i] = new() { Value = dbf.GetValue(i, indexRow), Key = "none" };
                 }
-                ((List<string[]>)rows).Add(row);
+                ((List<KeyValue[]>)rows).Add(values);
             }
             return rows;
         }
+
+        public IEnumerable<Dictionary<string, object>> GetData2(QueryGetData data)
+        {
+            Dbf dbf = new Dbf();
+
+            dbf.OpenFile(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload", data.FileName));
+
+            IEnumerable<Dictionary<string, object>> rows = new List<Dictionary<string, object>>();
+
+            for (int indexRow = 0; indexRow < data.PageSize; indexRow++)
+            {
+                Dictionary<string, object> values = new Dictionary<string, object>();
+                for (int i = 0; i < dbf.CountColumns; i++)
+                {
+                    values.Add(dbf.GetColumnName(i), dbf.GetValue(i, indexRow));
+                }
+                ((List<Dictionary<string, object>>)rows).Add(values);
+            }
+            return rows;
+        }
+
     }
 }

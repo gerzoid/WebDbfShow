@@ -13,6 +13,6 @@ namespace Entities.Dto
         public int CountRows { get; set; }
         public string? CodePage { get; set; }
         public string? Version { get; set; }
-        public ColumnHandsonTable[]? Columns { get; set; }
+        public Column[]? Columns { get; set; }
     }
 }
