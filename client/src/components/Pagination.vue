@@ -11,6 +11,7 @@
     console.log(fileStore.fileInfo.countRows);
     watch(pageSize, () => {
         fileStore.pageSize = pageSize.value;
+        fileStore.page = 1;
     });
 
     watch(current1, () => {

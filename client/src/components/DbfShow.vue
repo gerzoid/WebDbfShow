@@ -16,27 +16,26 @@ function onModifyRowData(row){
   console.log('dsdddd');
 };
 
-
 var settings = ref({
   licenseKey: "non-commercial-and-evaluation",
   columns: toRaw(fileStore.fileInfo.columns),
-  rowHeaders: true,
+  rowHeaders(index) {
+    return (fileStore.page-1)*fileStore.pageSize+index+1;
+  },
   colHeaders: true,
   width: "100%",
   height: "100%",
   manualColumnResize: true,
   stretchH: "all",
-  modifyRowData : "onModifyRowData"
+  modifyRowData : "onModifyRowData",
+
 });
 
-onMounted(() => {
-  //console.log(hot.value.hotInstance.loadData(['1','2','4']));
-});
+
 
 watch(()=>([fileStore.page, fileStore.pageSize]), () => {
-  getData();  
+  getData();
 })
-
 
 function getData() {
   const data = new FormData();
@@ -59,8 +58,6 @@ getData();
 <template>
   <hot-table
     ref="hot"
-    :rowHeaders="true"
-    :colHeaders="true"
     :settings="settings"
   ></hot-table>
 </template>
