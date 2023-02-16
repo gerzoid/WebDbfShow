@@ -16,6 +16,7 @@ var uploadFiles = ({ onSuccess, onError, file })=>
   var formData = new FormData();
     formData.append('formfile', file);
     formData.append('filename', file.name);
+    var hasError = false;
     fileStore.originalFileName = file.name;
     axios.post('http://localhost:5149/api/Files', formData, {
       headers: {
@@ -26,8 +27,10 @@ var uploadFiles = ({ onSuccess, onError, file })=>
       emit('upload-completed', data.data);
     }).catch(e=>{
       console.log('Ошибка: ' + e);
-  }).finally(
-    showNotification('error', 'Внимание', 'Файл не загружен. Произошла ошибка', 5));
+      hasError = true;
+  }).finally(()=>{
+    if (hasError)
+      showNotification('error', 'Внимание', 'Файл не загружен. Произошла ошибка', 5);});
 }
 </script>
 

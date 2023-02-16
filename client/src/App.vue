@@ -31,26 +31,30 @@ function onClick(e){
     <a-layout class="layout">
       <a-layout-header>
         <div class="logo" />
-        <a-menu
+        <a-menu class="main-menu"
           v-model:selectedKeys="selectedKeys"
           theme="dark"
           mode="horizontal"
-          :style="{ lineHeight: '64px' }"
           @click="onClick"
         >
-      <a-sub-menu key="1">
-          <template selected #title>Файл</template>
-          <a-menu-item key="close">Закрыть</a-menu-item>
-          <a-menu-item disabled key="struct">Структура файла</a-menu-item>
-          <a-menu-item disabled key="export">Экспорт</a-menu-item>
-          <!--<a-menu-item-group title="Item 2">
-            <a-menu-item key="setting:3">Option 3</a-menu-item>
-            <a-menu-item key="setting:4">Option 4</a-menu-item>
-          </a-menu-item-group> --->
-          </a-sub-menu>
+          <a-sub-menu key="1">
+            <template selected #title>Файл</template>
+              <a-menu-item disabled key="save">Скачать</a-menu-item>
+              <a-menu-item disabled key="struct">Структура файла</a-menu-item>
+              <a-menu-item disabled key="export">Экспорт</a-menu-item>
+              <a-menu-item key="close">Закрыть</a-menu-item>
+            <!--<a-menu-item-group title="Item 2">
+              <a-menu-item key="setting:3">Option 3</a-menu-item>
+              <a-menu-item key="setting:4">Option 4</a-menu-item>
+            </a-menu-item-group> --->
+            </a-sub-menu>
           <a-menu-item disabled key="2">Правка</a-menu-item>
           <a-menu-item disabled key="3">Статистика</a-menu-item>
+          <a-menu-item  class='right' key="help">Помощь</a-menu-item>
         </a-menu>
+        <div class='menu-right'>
+          <div>Вход</div>
+        </div>
       </a-layout-header>
       <a-layout-content id='content'>
         <div class="subcontent">
@@ -62,7 +66,6 @@ function onClick(e){
         </div>
       </a-layout-content>
       <a-layout-content v-if="fileStore.isLoading==true" id='dopinfo'>
-
       <div><b>Колонок:</b>  {{ fileStore.fileInfo.countColumns }} <b>Строк:</b> {{ fileStore.fileInfo.countRows }} <b>Кодировка:</b> {{ fileStore.fileInfo.codePage }} <b>Формат:</b> {{ fileStore.fileInfo.version }}</div>
     </a-layout-content>
       <a-layout-footer style="text-align: center">
@@ -97,4 +100,16 @@ function onClick(e){
   [data-theme='dark'] .site-layout-content {
     background: #141414;
   }
+.main-menu{
+    float: left;
+    width: 70%;
+    line-height: '64px';
+}
+.menu-right{
+    width: 20%;
+    float: right;
+    color: white;
+    text-align: right;
+}
+
   </style>
