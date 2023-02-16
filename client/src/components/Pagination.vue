@@ -10,7 +10,7 @@
 
     console.log(fileStore.fileInfo.countRows);
     watch(pageSize, () => {
-        fileStore.page = pageSize.value;
+        fileStore.pageSize = pageSize.value;
     });
 
     watch(current1, () => {
