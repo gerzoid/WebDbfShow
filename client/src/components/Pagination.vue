@@ -12,6 +12,7 @@
     watch(pageSize, () => {
         fileStore.pageSize = pageSize.value;
         fileStore.page = 1;
+        current1.value=1;
     });
 
     watch(current1, () => {

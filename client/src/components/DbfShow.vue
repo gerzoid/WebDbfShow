@@ -13,7 +13,7 @@ var hot = ref(null);
 registerAllModules();
 
 function onModifyRowData(row){
-  console.log('dsdddd');
+  console.log('edit row');
 };
 
 var settings = ref({
@@ -28,10 +28,7 @@ var settings = ref({
   manualColumnResize: true,
   stretchH: "all",
   modifyRowData : "onModifyRowData",
-
 });
-
-
 
 watch(()=>([fileStore.page, fileStore.pageSize]), () => {
   getData();

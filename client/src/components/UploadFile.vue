@@ -2,7 +2,7 @@
 
 import { InboxOutlined } from '@ant-design/icons-vue';
 import axios from 'axios'
-import { message } from 'ant-design-vue';
+import { showNotification } from '../plugins/notification'
 import { ref } from 'vue';
 import { useFileStore } from '../stores/filestore'
 
@@ -25,8 +25,9 @@ var uploadFiles = ({ onSuccess, onError, file })=>
       onSuccess(null, file);
       emit('upload-completed', data.data);
     }).catch(e=>{
-    message.error(e);
-  });
+      console.log('Ошибка: ' + e);
+  }).finally(
+    showNotification('error', 'Внимание', 'Файл не загружен. Произошла ошибка', 5));
 }
 </script>
 

@@ -52,13 +52,13 @@ namespace DbfFile
             }
         }
 
-        public IEnumerable<Dictionary<string, object>> GetData(QueryGetData data)
+        public List<Dictionary<string, object>> GetData(QueryGetData data)
         {
             Dbf dbf = new Dbf();
 
             dbf.OpenFile(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload", data.FileName));
 
-            IEnumerable<Dictionary<string, object>> rows = new List<Dictionary<string, object>>();
+            var rows = new List<Dictionary<string, object>>();
 
             int startRow = data.PageSize * (data.Page-1);
             startRow = startRow>= dbf.CountRows ? dbf.CountRows : startRow;
@@ -72,7 +72,7 @@ namespace DbfFile
                 {
                     values.Add(dbf.GetColumnName(i), dbf.GetValue(i, indexRow));
                 }
-                ((List<Dictionary<string, object>>)rows).Add(values);
+                rows.Add(values);
             }
             return rows;
         }

@@ -7,6 +7,6 @@ namespace Contracts.DBF
     {
         public DbfInfo OpenFile(string filename);
 
-        public IEnumerable<Dictionary<string, object>> GetData(QueryGetData data);
+        public List<Dictionary<string, object>> GetData(QueryGetData data);
     }
 }
