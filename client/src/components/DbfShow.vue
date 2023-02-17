@@ -4,7 +4,7 @@ import axios from "axios";
 import { useFileStore } from "../stores/filestore";
 import { storeToRefs } from "pinia";
 import "handsontable/dist/handsontable.full.min.css";
-import { registerAllModules } from 'handsontable/registry';
+import { registerAllModules } from "handsontable/registry";
 import { ref, watch, toRaw, onMounted } from "vue";
 
 const fileStore = useFileStore();
@@ -12,27 +12,32 @@ const fileStore = useFileStore();
 var hot = ref(null);
 registerAllModules();
 
-function onModifyRowData(row){
-  console.log('edit row');
-};
+function onModifyRowData(row) {
+  console.log("edit row");
+}
 
 var settings = ref({
   licenseKey: "non-commercial-and-evaluation",
   columns: toRaw(fileStore.fileInfo.columns),
   rowHeaders(index) {
-    return (fileStore.page-1)*fileStore.pageSize+index+1;
+    return (fileStore.page - 1) * fileStore.pageSize + index + 1;
   },
   colHeaders: true,
   width: "100%",
   height: "100%",
   manualColumnResize: true,
+  columnSorting: true,
   stretchH: "all",
-  modifyRowData : "onModifyRowData",
+  modifyRowData: "onModifyRowData",
+  hiddenColumns: { columns: [fileStore.fileInfo.countColumns] }, //последняя колонка всегда _IS_DELETED_, всегда скрыта
 });
 
-watch(()=>([fileStore.page, fileStore.pageSize]), () => {
-  getData();
-})
+watch(
+  () => [fileStore.page, fileStore.pageSize],
+  () => {
+    getData();
+  }
+);
 
 function getData() {
   const data = new FormData();
@@ -53,10 +58,7 @@ getData();
 </script>
 
 <template>
-  <hot-table
-    ref="hot"
-    :settings="settings"
-  ></hot-table>
+  <hot-table ref="hot" :settings="settings"></hot-table>
 </template>
 
 <style scoped>

@@ -16,8 +16,10 @@ export const useFileStore = defineStore('fileStore', {
       },
       getIsLoading(state){
         return state.isLoading;
+      },
+      getCountColumns(state){
+        return state.fileInfo.countColumns -1; //Вычитаем исусственную колонку _IS_DELETED_
       }
-
     },
     actions: {
       //Закрываем ооткрытый файл

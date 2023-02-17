@@ -20,7 +20,7 @@ namespace DbfFile
 
             info.CountColumns = dbf.CountColumns;
             info.CountRows = dbf.CountRows;
-            info.Columns = new Column[info.CountColumns];
+            info.Columns = new Column[info.CountColumns+1];
             info.CodePage = dbf.CodePage.codePage;
             info.Version = dbf.GetVersion();
             for (int i = 0; i < dbf.CountColumns; i++)
@@ -30,6 +30,9 @@ namespace DbfFile
                 //var col = new Column() { Name = dbf.GetColumnName(i), Type = dbf.GetColumnType(i), Size = dbf.GetColumnSize(i) };
                 info.Columns[i] = col;
             }
+            //Добавляем служебное поле, содержащее признак удаленной записи
+            info.Columns[info.CountColumns] = new Column() { Name = "_IS_DELETED_", Title = "_IS_DELETED_", Type = "text", Size = 1 };
+
             dbf.Close();
             //var tt = GetRow(1);
             return info;
@@ -68,10 +71,11 @@ namespace DbfFile
             for (int indexRow = startRow; indexRow < endRow; indexRow++)
             {
                 Dictionary<string, object> values = new Dictionary<string, object>();
-                for (int i = 0; i < dbf.CountColumns; i++)
+                for (int i = 0; i < dbf.CountColumns-1; i++)
                 {
                     values.Add(dbf.GetColumnName(i), dbf.GetValue(i, indexRow));
                 }
+                values.Add("_IS_DELETED_", dbf.IsDeleted(indexRow));
                 rows.Add(values);
             }
             return rows;

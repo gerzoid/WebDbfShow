@@ -1,115 +1,117 @@
 <script setup>
-import { defineComponent, ref, watch, onMounted } from 'vue';
-import Pagination from './components/Pagination.vue'
-import UploadFile from './components/UploadFile.vue'
-import Dbfshow from './components/DbfShow.vue'
-import { storeToRefs } from 'pinia'
-import { message} from 'ant-design-vue';
-import { showNotification } from './plugins/notification'
-import { useFileStore } from './stores/filestore'
+import { defineComponent, ref, watch, onMounted } from "vue";
+import Pagination from "./components/Pagination.vue";
+import UploadFile from "./components/UploadFile.vue";
+import Dbfshow from "./components/DbfShow.vue";
+import { storeToRefs } from "pinia";
+import { message } from "ant-design-vue";
+import { showNotification } from "./plugins/notification";
+import { useFileStore } from "./stores/filestore";
 
-var selectedKeys= ref([]);
+var selectedKeys = ref([]);
 const fileStore = useFileStore();
 
-var onUploadCompleted =(data)=>{
+var onUploadCompleted = (data) => {
   fileStore.fileInfo = data;
   fileStore.fileName = data.name;
   fileStore.isLoading = true;
-  showNotification('success', 'Загрузка файлов', 'Файл успешно загружен')
-}
+  showNotification("success", "Загрузка файлов", "Файл успешно загружен");
+};
 
-function onClick(e){
-  switch(e.key)
-  {
-    case 'close': fileStore.closeFile();
-        break;
+function onClick(e) {
+  switch (e.key) {
+    case "close":
+      fileStore.closeFile();
+      break;
   }
 }
 </script>
 
 <template>
-    <a-layout class="layout">
-      <a-layout-header>
-        <div class="logo" />
-        <a-menu class="main-menu"
-          v-model:selectedKeys="selectedKeys"
-          theme="dark"
-          mode="horizontal"
-          @click="onClick"
-        >
-          <a-sub-menu key="1">
-            <template selected #title>Файл</template>
-              <a-menu-item disabled key="save">Скачать</a-menu-item>
-              <a-menu-item disabled key="struct">Структура файла</a-menu-item>
-              <a-menu-item disabled key="export">Экспорт</a-menu-item>
-              <a-menu-item key="close">Закрыть</a-menu-item>
-            <!--<a-menu-item-group title="Item 2">
+  <a-layout class="layout">
+    <a-layout-header>
+      <div class="logo" />
+      <a-menu
+        class="main-menu"
+        v-model:selectedKeys="selectedKeys"
+        theme="dark"
+        mode="horizontal"
+        @click="onClick"
+      >
+        <a-sub-menu key="1">
+          <template selected #title>Файл</template>
+          <a-menu-item disabled key="save">Скачать</a-menu-item>
+          <a-menu-item disabled key="struct">Структура файла</a-menu-item>
+          <a-menu-item disabled key="export">Экспорт</a-menu-item>
+          <a-menu-item key="close">Закрыть</a-menu-item>
+          <!--<a-menu-item-group title="Item 2">
               <a-menu-item key="setting:3">Option 3</a-menu-item>
               <a-menu-item key="setting:4">Option 4</a-menu-item>
             </a-menu-item-group> --->
-            </a-sub-menu>
-          <a-menu-item disabled key="2">Правка</a-menu-item>
-          <a-menu-item disabled key="3">Статистика</a-menu-item>
-          <a-menu-item  class='right' key="help">Помощь</a-menu-item>
-        </a-menu>
-        <div class='menu-right'>
-          <div>Вход</div>
+        </a-sub-menu>
+        <a-menu-item disabled key="2">Правка</a-menu-item>
+        <a-menu-item disabled key="3">Статистика</a-menu-item>
+        <a-menu-item class="right" key="help">Помощь</a-menu-item>
+      </a-menu>
+      <div class="menu-right">
+        <div>Вход</div>
+      </div>
+    </a-layout-header>
+    <a-layout-content id="content">
+      <div class="subcontent">
+        <dbfshow v-if="fileStore.isLoading == true"></dbfshow>
+        <div v-else class="upload">
+          <upload-file @upload-completed="onUploadCompleted"></upload-file>
         </div>
-      </a-layout-header>
-      <a-layout-content id='content'>
-        <div class="subcontent">
-            <dbfshow v-if="fileStore.isLoading==true"></dbfshow>
-            <div v-else class="upload">
-                <upload-file @upload-completed="onUploadCompleted"></upload-file>
-            </div>
-            <pagination v-if="fileStore.isLoading==true"></pagination>
-        </div>
-      </a-layout-content>
-      <a-layout-content v-if="fileStore.isLoading==true" id='dopinfo'>
-      <div><b>Колонок:</b>  {{ fileStore.fileInfo.countColumns }} <b>Строк:</b> {{ fileStore.fileInfo.countRows }} <b>Кодировка:</b> {{ fileStore.fileInfo.codePage }} <b>Формат:</b> {{ fileStore.fileInfo.version }}</div>
+        <pagination v-if="fileStore.isLoading == true"></pagination>
+      </div>
     </a-layout-content>
-      <a-layout-footer style="text-align: center">
-        jobtools.ru ©2023
-      </a-layout-footer>
-    </a-layout>
-  </template>
+    <a-layout-content v-if="fileStore.isLoading == true" id="dopinfo">
+      <div>
+        <b>Колонок:</b> {{ fileStore.getCountColumns }} <b>Строк:</b>
+        {{ fileStore.fileInfo.countRows }} <b>Кодировка:</b>
+        {{ fileStore.fileInfo.codePage }} <b>Формат:</b> {{ fileStore.fileInfo.version }}
+      </div>
+    </a-layout-content>
+    <a-layout-footer style="text-align: center"> jobtools.ru ©2023 </a-layout-footer>
+  </a-layout>
+</template>
 
-  <style>
-  .site-layout-content {
-    min-height: 280px;
-    padding: 24px;
-    background: #fff;
-  }
-  #components-layout-demo-top .logo {
-    float: left;
-    width: 100%;
-    height: 32px;
-    margin: 16px 24px 16px 0;
-    background: rgba(255, 255, 255, 0.3);
-  }
-  .ant-row-rtl #components-layout-demo-top .logo {
-    float: right;
-    margin: 16px 0 16px 24px;
-  }
-
-  .upload{
-    max-width: 50%;
-    margin: 0 auto;
-  }
-
-  [data-theme='dark'] .site-layout-content {
-    background: #141414;
-  }
-.main-menu{
-    float: left;
-    width: 70%;
-    line-height: '64px';
+<style>
+.site-layout-content {
+  min-height: 280px;
+  padding: 24px;
+  background: #fff;
 }
-.menu-right{
-    width: 20%;
-    float: right;
-    color: white;
-    text-align: right;
+#components-layout-demo-top .logo {
+  float: left;
+  width: 100%;
+  height: 32px;
+  margin: 16px 24px 16px 0;
+  background: rgba(255, 255, 255, 0.3);
+}
+.ant-row-rtl #components-layout-demo-top .logo {
+  float: right;
+  margin: 16px 0 16px 24px;
 }
 
-  </style>
+.upload {
+  max-width: 50%;
+  margin: 0 auto;
+}
+
+[data-theme="dark"] .site-layout-content {
+  background: #141414;
+}
+.main-menu {
+  float: left;
+  width: 70%;
+  line-height: "64px";
+}
+.menu-right {
+  width: 20%;
+  float: right;
+  color: white;
+  text-align: right;
+}
+</style>
