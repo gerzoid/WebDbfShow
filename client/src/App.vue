@@ -12,9 +12,9 @@ var selectedKeys = ref([]);
 const fileStore = useFileStore();
 
 var onUploadCompleted = (data) => {
-  //data.columns[0] = data.columns.push({ renderer: "myrenderer" });
-  data.columns[0].renderer = "myrenderer";
-  console.log(data);
+  //Set custom renderer
+  //data.columns.map((d) => (d.renderer = "myrenderer"));
+
   fileStore.fileInfo = data;
   fileStore.fileName = data.name;
   fileStore.isLoading = true;

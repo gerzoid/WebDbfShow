@@ -16,14 +16,15 @@ registerAllModules();
 function onModifyRowData(row) {
   console.log("edit row");
 }
-
-Handsontable.renderers.registerRenderer("myrenderer", (hotInstance, TD, ...rest) => {
+//Custom renderer
+/*Handsontable.renderers.registerRenderer("myrenderer", (hotInstance, TD, ...rest) => {
   Handsontable.renderers.TextRenderer(hotInstance, TD, ...rest);
-  console.log(rest);
-  TD.style.fontWeight = "bold";
-  TD.style.color = "green";
-  TD.style.background = "#d7f1e1";
-});
+  if (
+    hot.value.hotInstance.getDataAtCell(rest[0], fileStore.fileInfo.countColumns) == true
+  ) {
+    TD.classList.add("deleted");
+  }
+});*/
 
 var settings = ref({
   licenseKey: "non-commercial-and-evaluation",
@@ -39,9 +40,13 @@ var settings = ref({
   stretchH: "all",
   modifyRowData: "onModifyRowData",
   hiddenColumns: { columns: [fileStore.fileInfo.countColumns] }, //последняя колонка всегда _IS_DELETED_, всегда скрыта
+  cells: function (row, col, prop) {
+    var cellProperties = {};
+    if (hot.value.hotInstance.getDataAtCell(row, fileStore.fileInfo.countColumns) == true)
+      cellProperties.className = "deleted";
+    return cellProperties;
+  },
 });
-
-//hot.columns
 
 watch(
   () => [fileStore.page, fileStore.pageSize],
