@@ -1,5 +1,6 @@
 <script setup>
 import { HotTable } from "@handsontable/vue3";
+import Handsontable from "handsontable";
 import axios from "axios";
 import { useFileStore } from "../stores/filestore";
 import { storeToRefs } from "pinia";
@@ -16,6 +17,14 @@ function onModifyRowData(row) {
   console.log("edit row");
 }
 
+Handsontable.renderers.registerRenderer("myrenderer", (hotInstance, TD, ...rest) => {
+  Handsontable.renderers.TextRenderer(hotInstance, TD, ...rest);
+  console.log(rest);
+  TD.style.fontWeight = "bold";
+  TD.style.color = "green";
+  TD.style.background = "#d7f1e1";
+});
+
 var settings = ref({
   licenseKey: "non-commercial-and-evaluation",
   columns: toRaw(fileStore.fileInfo.columns),
@@ -31,6 +40,8 @@ var settings = ref({
   modifyRowData: "onModifyRowData",
   hiddenColumns: { columns: [fileStore.fileInfo.countColumns] }, //последняя колонка всегда _IS_DELETED_, всегда скрыта
 });
+
+//hot.columns
 
 watch(
   () => [fileStore.page, fileStore.pageSize],
