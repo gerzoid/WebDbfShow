@@ -37,7 +37,7 @@ namespace WebDBFShow.Controllers
         {
                 //await _appService.UpdateReestrsAccount(result);
               
-            //var result = _reader.GetData(data);
+            var result = _reader.ModifyData(data);
             return Ok();
         }
     }

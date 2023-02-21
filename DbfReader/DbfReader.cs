@@ -79,9 +79,21 @@ namespace DbfFile
             return rows;
         }
 
-        public bool ModifyData(string columnName, string value)
+        public bool ModifyData(ListQueryModifyData data)
         {
-
+            Dbf dbf = new Dbf();
+            dbf.OpenFile(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload", data.FileName));
+            
+            bool result = false;
+            foreach(QueryModifyData one in data.Data)
+            {
+                int columnIndex = dbf.GetColumnIndex(one.Field);
+                result =  dbf.SetValue(columnIndex, one.Row, one.Value);
+                if (!result)
+                    return false;
+            }
+            
+            return true;
         }
 
     }

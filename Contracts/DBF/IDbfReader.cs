@@ -7,5 +7,7 @@ namespace Contracts.DBF
         public DbfInfo OpenFile(string filename);
 
         public List<Dictionary<string, object>> GetData(QueryGetData data);
+
+        public bool ModifyData(ListQueryModifyData modifyData);
     }
 }
