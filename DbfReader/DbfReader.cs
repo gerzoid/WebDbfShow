@@ -53,7 +53,6 @@ namespace DbfFile
                     return "text";
             }
         }
-
         public List<Dictionary<string, object>> GetData(QueryGetData data)
         {
             Dbf dbf = new Dbf();
@@ -78,6 +77,11 @@ namespace DbfFile
                 rows.Add(values);
             }
             return rows;
+        }
+
+        public bool ModifyData(string columnName, string value)
+        {
+
         }
 
     }

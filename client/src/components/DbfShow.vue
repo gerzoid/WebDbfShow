@@ -88,7 +88,6 @@ function afterChange(changes) {
     };
     cnt++;
   }
-  console.log(result);
   axios
     .post("http://localhost:5149/api/editor/modify", result)
     .then((result) => {
