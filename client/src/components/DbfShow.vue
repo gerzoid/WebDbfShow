@@ -38,7 +38,7 @@ var settings = ref({
   manualColumnResize: true,
   columnSorting: true,
   stretchH: "all",
-  modifyRowData: "onModifyRowData",
+  afterChange: afterChange,
   hiddenColumns: { columns: [fileStore.fileInfo.countColumns] }, //последняя колонка всегда _IS_DELETED_, всегда скрыта
   cells: function (row, col, prop) {
     var cellProperties = {};
@@ -55,15 +55,44 @@ watch(
   }
 );
 
+//Получение данных с сервера
 function getData() {
   const data = new FormData();
   data.append("FileName", fileStore.fileInfo.name);
   data.append("PageSize", fileStore.pageSize);
   data.append("Page", fileStore.page);
   axios
-    .post("http://localhost:5149/api/Files/getData", data)
+    .post("http://localhost:5149/api/editor/getData", data)
     .then((result) => {
       hot.value.hotInstance.updateData(result.data);
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+}
+
+//Изменение данных в таблице
+function afterChange(changes) {
+  if (changes == null) return;
+  //const data = new FormData();
+  let result = {};
+  result["data"] = [];
+  let cnt = 0;
+  result["FileName"] = fileStore.fileName;
+  for (var i = 0; i < changes.length; i++) {
+    result["data"][cnt] = {
+      field: changes[i][1],
+      row: changes[i][0],
+      old: changes[i][2],
+      value: changes[i][3],
+    };
+    cnt++;
+  }
+  console.log(result);
+  axios
+    .post("http://localhost:5149/api/editor/modify", result)
+    .then((result) => {
+      console.log("update data post result = ", result);
     })
     .catch((e) => {
       console.log(e);

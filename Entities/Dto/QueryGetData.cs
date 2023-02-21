@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities.Models
+namespace Entities.Dto
 {
     public class QueryGetData
     {
         public string FileName { get; set; }
-        public int PageSize {get ; set;}
-        public int Page { get; set;}
+        public int PageSize { get; set; }
+        public int Page { get; set; }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using Contracts.DBF;
+using Entities.Dto;
 using Entities.Models;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 //using Newtonsoft.Json;
 
 namespace WebDBFShow.Controllers
@@ -42,20 +44,5 @@ namespace WebDBFShow.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }        
-        [HttpPost]
-        [EnableCors("Policy1")]
-        [Route("getdata")]
-        public async Task<ActionResult> GetData([FromForm]QueryGetData data)
-        {
-            var result = _reader.GetData(data);
-            return Ok(result);
-        }
-        
-        [HttpGet]
-        public async Task<ActionResult> Index()
-        {
-            var t = _reader.OpenFile(@"c:\1\test.dbf");
-            return Ok(t);
-        }
     }
 }

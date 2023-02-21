@@ -1,5 +1,4 @@
 ﻿using Entities.Dto;
-using Entities.Models;
 
 namespace Contracts.DBF
 {
