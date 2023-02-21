@@ -8,6 +8,6 @@ namespace Contracts.DBF
 
         public List<Dictionary<string, object>> GetData(QueryGetData data);
 
-        public bool ModifyData(ListQueryModifyData modifyData);
+        public List<AnswerModify> ModifyData(ListQueryModifyData modifyData);
     }
 }

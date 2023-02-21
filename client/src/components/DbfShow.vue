@@ -7,8 +7,10 @@ import { storeToRefs } from "pinia";
 import "handsontable/dist/handsontable.full.min.css";
 import { registerAllModules } from "handsontable/registry";
 import { ref, watch, toRaw, onMounted } from "vue";
+import { showNotification } from "../plugins/notification";
 
 const fileStore = useFileStore();
+var revertChanges = false;
 
 var hot = ref(null);
 registerAllModules();
@@ -73,8 +75,8 @@ function getData() {
 
 //Изменение данных в таблице
 function afterChange(changes) {
+  if (revertChanges) return;
   if (changes == null) return;
-  //const data = new FormData();
   let result = {};
   result["data"] = [];
   let cnt = 0;
@@ -91,14 +93,26 @@ function afterChange(changes) {
   axios
     .post("http://localhost:5149/api/editor/modify", result)
     .then((result) => {
-      console.log("update data post result = ", result);
+      revertChanges = true;
+      for (var i = 0; i < changes.length; i++) {
+        if (result.data[i].result==false)
+          hot.value.hotInstance.setDataAtCell(changes[i][0], hot.value.hotInstance.propToCol(changes[i][1]),changes[i][2]);
+      };
+      revertChanges = false;
     })
     .catch((e) => {
-      console.log(e);
-    });
+      revertChanges = true;
+      for (var i = 0; i < changes.length; i++) {
+          hot.value.hotInstance.setDataAtCell(changes[i][0], hot.value.hotInstance.propToCol(changes[i][1]),changes[i][2]);
+      };
+      revertChanges = false;
+      showNotification('error', 'Обновление данных', 'Произошла непредвиденная ошибка а сервере, данные не были обновлены.',3)
+    })
+    .finally(()=> revertChanges = false );
 }
 
 getData();
+
 </script>
 
 <template>
