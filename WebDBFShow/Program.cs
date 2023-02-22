@@ -49,7 +49,8 @@ namespace WebDBFShow
 
             builder.Services.AddDbContext<DatabaseContext>(options =>
             {
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("WebDBFShow"));
+                options.UseSqlite(builder.Configuration.GetConnectionString("SqliteConnection"), b => b.MigrationsAssembly("WebDBFShow"));
+                //options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("WebDBFShow"));
             });
 
             builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();

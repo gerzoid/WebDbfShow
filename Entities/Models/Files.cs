@@ -12,6 +12,7 @@ namespace Entities.Models
         public Guid FilesId { get; set; }
         [Required]
         public string? Name { get; set; }
+        public string? OriginalName { get; set; }
         public string? Description { get; set; }        
         public string? Path { get; set; }
         public int? Size { get; set; }

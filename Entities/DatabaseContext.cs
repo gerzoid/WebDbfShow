@@ -12,6 +12,7 @@ namespace Entities
     {
         public DatabaseContext(DbContextOptions options) : base(options)
         {
+            Database.EnsureCreated();
         }
 
         public DbSet<Users> Users { get; set; }

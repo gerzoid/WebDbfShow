@@ -34,9 +34,7 @@ namespace WebDBFShow.Controllers
         [EnableCors("Policy1")]
         [Route("modify")]
         public async Task<ActionResult> Modify(ListQueryModifyData data)
-        {
-                //await _appService.UpdateReestrsAccount(result);
-              
+        {            
             var result = _reader.ModifyData(data);
             return Ok(result);
         }
