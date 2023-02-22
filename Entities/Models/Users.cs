@@ -8,8 +8,7 @@ using System.Threading.Tasks;
 namespace Entities.Models
 {
     public class Users
-    {
-        
+    {        
         public Guid UsersId { get; set; }
         
         [Required]

@@ -4,12 +4,31 @@ import Pagination from "./components/Pagination.vue";
 import UploadFile from "./components/UploadFile.vue";
 import Dbfshow from "./components/DbfShow.vue";
 import { storeToRefs } from "pinia";
-import { message } from "ant-design-vue";
+import { getCookie, setCookie } from "./plugins/cookies";
 import { showNotification } from "./plugins/notification";
 import { useFileStore } from "./stores/filestore";
+import axios from "axios";
 
 var selectedKeys = ref([]);
 const fileStore = useFileStore();
+
+onMounted(() => {
+  console.log("Mounted App.vue");
+  const data = new FormData();
+  console.log(getCookie("dbfshowuser"));
+  data.append("userId", getCookie("dbfshowuser"));
+  axios
+    .post("http://localhost:5149/api/users/check", data)
+    .then((result) => {
+      let date = new Date();
+      console.log(result);
+      date = new Date(date.setMonth(date.getMonth() + 8));
+      setCookie("dbfshowuser", result.data, { expiries: date.toUTCString() });
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+});
 
 var onUploadCompleted = (data) => {
   //Set custom renderer

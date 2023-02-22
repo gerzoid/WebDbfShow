@@ -1,10 +1,10 @@
 ﻿using Contracts;
-using Contracts.DBF;
-using DbfFile;
+using Entities.Dto;
 using Entities.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Repository;
+using Mapster;
+using Microsoft.AspNetCore.Cors;
 
 namespace WebDBFShow.Controllers
 {
@@ -13,14 +13,37 @@ namespace WebDBFShow.Controllers
     public class UsersController : ControllerBase
     {
         IRepositoryManager _manager;
-        public UsersController(IRepositoryManager manager)
+        ILogger<UsersController> _logger;
+
+        public UsersController(IRepositoryManager manager, ILogger<UsersController> logger)
         {
+            _logger = logger;
             _manager = manager;
         }
         
-        [HttpGet]
-        public ActionResult Get()
+        [HttpPost]
+        [EnableCors("Policy1")]
+        [Route("check")]
+        public ActionResult Check([FromForm] string? userId)
         {
+            _logger.LogInformation($"Received a new request to verify the user userId={userId}");
+            var user = _manager.UsersRepository.GetUsers().Where(d => d.UsersId.ToString() == userId).SingleOrDefault();
+
+            if (user == null)
+            {
+                var userGuid = Guid.NewGuid();
+                _manager.UsersRepository.Create(new Users() { UsersId = userGuid, Name = "" });
+                _manager.Save();
+                userId = userGuid.ToString();
+            }
+            else
+            {
+                //TypeAdapterConfig<Users, UserDto>.NewConfig().Include<Files, FileDto>();
+                var files = _manager.FilesRepository.GetFiles().Where(d => d.UserId.ToString() == userId).ToList();
+                var result = new UserDto();
+                //user.Adapt(result).
+
+            }
             //_manager.UsersRepository.Create(new Users
             //{
             //UsersId = new Guid(Guid.NewGuid().ToString()),
@@ -34,7 +57,7 @@ namespace WebDBFShow.Controllers
             });
             _manager.Save();*/
 
-            return Ok();
+            return Ok(userId);
             //return Ok(_manager.FilesRepository.GetFiles());
             //return Ok(_manager.UsersRepository.GetUsers());
         }
