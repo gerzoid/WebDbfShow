@@ -10,7 +10,8 @@ import { ref, watch, toRaw, onMounted } from "vue";
 import { showNotification } from "../plugins/notification";
 
 const fileStore = useFileStore();
-var revertChanges = false;
+//Изменения не требующие синхронизации с бэком
+var notSyncChanges = false;
 
 var hot = ref(null);
 registerAllModules();
@@ -75,7 +76,7 @@ function getData() {
 
 //Изменение данных в таблице
 function afterChange(changes) {
-  if (revertChanges) return;
+  if (notSyncChanges) return;
   if (changes == null) return;
   let result = {};
   result["data"] = [];
@@ -93,26 +94,44 @@ function afterChange(changes) {
   axios
     .post("http://localhost:5149/api/editor/modify", result)
     .then((result) => {
-      revertChanges = true;
+      notSyncChanges = true;
       for (var i = 0; i < changes.length; i++) {
-        if (result.data[i].result==false)
-          hot.value.hotInstance.setDataAtCell(changes[i][0], hot.value.hotInstance.propToCol(changes[i][1]),changes[i][2]);
-      };
-      revertChanges = false;
+        if (result.data[i].result == false)
+          hot.value.hotInstance.setDataAtCell(
+            changes[i][0],
+            hot.value.hotInstance.propToCol(changes[i][1]),
+            changes[i][2]
+          );
+        else
+          hot.value.hotInstance.setDataAtCell(
+            changes[i][0],
+            hot.value.hotInstance.propToCol(changes[i][1]),
+            result.data[i].value
+          );
+      }
+      notSyncChanges = false;
     })
     .catch((e) => {
-      revertChanges = true;
+      notSyncChanges = true;
       for (var i = 0; i < changes.length; i++) {
-          hot.value.hotInstance.setDataAtCell(changes[i][0], hot.value.hotInstance.propToCol(changes[i][1]),changes[i][2]);
-      };
-      revertChanges = false;
-      showNotification('error', 'Обновление данных', 'Произошла непредвиденная ошибка а сервере, данные не были обновлены.',3)
+        hot.value.hotInstance.setDataAtCell(
+          changes[i][0],
+          hot.value.hotInstance.propToCol(changes[i][1]),
+          changes[i][2]
+        );
+      }
+      notSyncChanges = false;
+      showNotification(
+        "error",
+        "Обновление данных",
+        "Произошла непредвиденная ошибка а сервере, данные не были обновлены.",
+        3
+      );
     })
-    .finally(()=> revertChanges = false );
+    .finally(() => (revertChanges = false));
 }
 
 getData();
-
 </script>
 
 <template>

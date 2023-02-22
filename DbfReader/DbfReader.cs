@@ -84,13 +84,13 @@ namespace DbfFile
             Dbf dbf = new Dbf();
             dbf.OpenFile(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload", data.FileName));
             var result = new List<AnswerModify>();
-            var res = false;
+            string? res = "";
 
             foreach(QueryModifyData one in data.Data)
             {
                 int columnIndex = dbf.GetColumnIndex(one.Field);
                 res = dbf.SetValue(columnIndex, one.Row, one.Value);
-                result.Add(new AnswerModify() { Result = res, Value =one.Value });
+                result.Add(new AnswerModify() { Result = res!=null, Value =res });
             }
             
             return result;
