@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace WebDBFShow.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20230222065730_First")]
-    partial class First
+    [Migration("20230222233502_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,17 +29,13 @@ namespace WebDBFShow.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("OriginalName")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Path")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("Size")
+                    b.Property<long?>("Size")
                         .HasColumnType("INTEGER");
 
                     b.Property<Guid>("UserId")

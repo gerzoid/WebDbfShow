@@ -9,13 +9,12 @@ namespace Entities.Models
 {
     public class Files
     {
-        public Guid FilesId { get; set; }
         [Required]
-        public string? Name { get; set; }
+        public Guid FilesId { get; set; }
         public string? OriginalName { get; set; }
         public string? Description { get; set; }        
         public string? Path { get; set; }
-        public int? Size { get; set; }
+        public long? Size { get; set; }
         public Guid UserId { get; set; }
         public Users? User { get; set; }
     }

@@ -26,17 +26,13 @@ namespace WebDBFShow.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("OriginalName")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Path")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("Size")
+                    b.Property<long?>("Size")
                         .HasColumnType("INTEGER");
 
                     b.Property<Guid>("UserId")

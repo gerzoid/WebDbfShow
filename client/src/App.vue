@@ -23,7 +23,8 @@ onMounted(() => {
       let date = new Date();
       console.log(result);
       date = new Date(date.setMonth(date.getMonth() + 8));
-      setCookie("dbfshowuser", result.data, { expiries: date.toUTCString() });
+      setCookie("dbfshowuser", result.data.usersId, { expiries: date.toUTCString() });
+      fileStore.userId = result.data.usersId;
     })
     .catch((e) => {
       console.log(e);

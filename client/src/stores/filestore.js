@@ -4,6 +4,7 @@ export const useFileStore = defineStore('fileStore', {
     state: () => ({
       fileInfo: [],
       fileName: 'test.dbf',
+      userId:'',
       pageSize: 50,
       page:1,
       originalFileName:'',

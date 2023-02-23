@@ -16,6 +16,7 @@ var uploadFiles = ({ onSuccess, onError, file })=>
   var formData = new FormData();
     formData.append('formfile', file);
     formData.append('filename', file.name);
+    formData.append('userId', fileStore.userId);
     var hasError = false;
     fileStore.originalFileName = file.name;
     axios.post('http://localhost:5149/api/Files', formData, {

@@ -8,6 +8,7 @@
     const current1 = ref(fileStore.page);
     const totalRecord = ref(fileStore.fileInfo.countRows);
 
+    console.log(fileStore.fileInfo.countRows);
     watch(pageSize, () => {
         fileStore.pageSize = pageSize.value;
         fileStore.page = 1;

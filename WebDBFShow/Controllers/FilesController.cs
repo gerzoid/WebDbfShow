@@ -1,4 +1,5 @@
-﻿using Contracts.DBF;
+﻿using Contracts;
+using Contracts.DBF;
 using Entities.Dto;
 using Entities.Models;
 using Microsoft.AspNetCore.Cors;
@@ -12,11 +13,13 @@ namespace WebDBFShow.Controllers
     [Route("api/[controller]")]
     public class FilesController : Controller
     {
+        IRepositoryManager _manager;
         private ILogger<FilesController> _logger;
         IFileDbReader _reader;
 
-        public FilesController(ILogger<FilesController> logger, IFileDbReader reader)
+        public FilesController(ILogger<FilesController> logger, IFileDbReader reader, IRepositoryManager manager)
         {
+            _manager = manager;
             _logger = logger;
             _reader = reader;
         }
@@ -29,12 +32,23 @@ namespace WebDBFShow.Controllers
         {
             try
             {
-                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload", Guid.NewGuid().ToString() +Path.GetExtension(file.FileName));
-                using (Stream stream = new FileStream(path, FileMode.Create))
+                var fileId = Guid.NewGuid();
+                
+                var newFile = new Entities.Models.Files() { 
+                    UserId= Guid.Parse(file.UserId),                     
+                    OriginalName = file.FileName, 
+                    FilesId = fileId,
+                    Size=file.FormFile.Length,
+                    Path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload", fileId.ToString() + Path.GetExtension(file.FileName)) 
+                };
+               
+                using (Stream stream = new FileStream(newFile.Path, FileMode.Create))
                 {
                     await file.FormFile.CopyToAsync(stream);
                 }
-                var info = _reader.OpenFile(path);
+                _manager.FilesRepository.CreateFile(newFile);
+                _manager.Save();
+                var info = _reader.OpenFile(newFile.Path);
 
                 return StatusCode(StatusCodes.Status201Created, info);
             }
