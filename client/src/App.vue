@@ -19,7 +19,7 @@ function CheckUploadedFiles() {
   const data = new FormData();
   data.append("userId", getCookie("dbfshowuser"));
   axios
-    .post("http://localhost:5149/api/users/check", data)
+    .post(fileStore.serverAddress + "/api/users/check", data)
     .then((result) => {
       let date = new Date();
       date = new Date(date.setMonth(date.getMonth() + 8));
@@ -41,7 +41,7 @@ var onSelectedFile = (id, originalName) => {
   var formData = new FormData();
   formData.append("fileId", id);
   axios
-    .post("http://localhost:5149/api/Files/open", formData)
+    .post(fileStore.serverAddress + "/api/Files/open", formData)
     .then((result) => {
       fileStore.fileInfo = result.data;
       fileStore.fileName = result.data.name;

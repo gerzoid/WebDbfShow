@@ -65,7 +65,7 @@ function getData() {
   data.append("PageSize", fileStore.pageSize);
   data.append("Page", fileStore.page);
   axios
-    .post("http://localhost:5149/api/editor/getData", data)
+    .post(fileStore.serverAddress + "/api/editor/getData", data)
     .then((result) => {
       hot.value.hotInstance.updateData(result.data);
     })
@@ -92,7 +92,7 @@ function afterChange(changes) {
     cnt++;
   }
   axios
-    .post("http://localhost:5149/api/editor/modify", result)
+    .post(fileStore.serverAddress + "/api/editor/modify", result)
     .then((result) => {
       notSyncChanges = true;
       for (var i = 0; i < changes.length; i++) {
