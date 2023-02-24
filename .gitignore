@@ -8,9 +8,14 @@
 **/node_modules/
 /public
 /vendor
+database.db*
+database.db
 composer.lock
 package-lock.json
 package-jquery.json.back
 npm-debug.log
 yarn-error.log
 /logs
+/WebDBFShow/database.db
+/WebDBFShow/database.db-shm
+/WebDBFShow/database.db-wal
