@@ -128,7 +128,7 @@ function afterChange(changes) {
         3
       );
     })
-    .finally(() => (revertChanges = false));
+    .finally(() => (notSyncChanges = false));
 }
 
 getData();
