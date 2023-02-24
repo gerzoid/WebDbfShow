@@ -14,7 +14,8 @@ var selectedKeys = ref([]);
 const fileStore = useFileStore();
 var listUploadedFiles = ref(null);
 
-onMounted(() => {
+//Проверитьь список загруженных файлов по юзеру
+function CheckUploadedFiles() {
   const data = new FormData();
   data.append("userId", getCookie("dbfshowuser"));
   axios
@@ -30,6 +31,10 @@ onMounted(() => {
     .catch((e) => {
       console.log(e);
     });
+}
+
+onMounted(() => {
+  CheckUploadedFiles();
 });
 
 var onSelectedFile = (id, originalName) => {
@@ -60,6 +65,7 @@ function onClick(e) {
   switch (e.key) {
     case "close":
       fileStore.closeFile();
+      CheckUploadedFiles();
       break;
   }
 }
