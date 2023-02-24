@@ -31,6 +31,7 @@ namespace WebDBFShow.Migrations
                     OriginalName = table.Column<string>(type: "TEXT", nullable: true),
                     Description = table.Column<string>(type: "TEXT", nullable: true),
                     Path = table.Column<string>(type: "TEXT", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: true),
                     Size = table.Column<long>(type: "INTEGER", nullable: true),
                     UserId = table.Column<Guid>(type: "TEXT", nullable: false)
                 },

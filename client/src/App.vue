@@ -2,6 +2,7 @@
 import { defineComponent, ref, watch, onMounted } from "vue";
 import Pagination from "./components/Pagination.vue";
 import UploadFile from "./components/UploadFile.vue";
+import ListUploadFiles from "./components/ListUploadFiles.vue";
 import Dbfshow from "./components/DbfShow.vue";
 import { storeToRefs } from "pinia";
 import { getCookie, setCookie } from "./plugins/cookies";
@@ -11,26 +12,40 @@ import axios from "axios";
 
 var selectedKeys = ref([]);
 const fileStore = useFileStore();
+var listUploadedFiles = ref(null);
 
 onMounted(() => {
-  console.log("Mounted App.vue");
   const data = new FormData();
-  console.log(getCookie("dbfshowuser"));
   data.append("userId", getCookie("dbfshowuser"));
   axios
     .post("http://localhost:5149/api/users/check", data)
     .then((result) => {
       let date = new Date();
-      console.log(result);
       date = new Date(date.setMonth(date.getMonth() + 8));
       setCookie("dbfshowuser", result.data.usersId, { expiries: date.toUTCString() });
       fileStore.userId = result.data.usersId;
+      console.log(result.data.files);
+      listUploadedFiles.value = result.data.files;
     })
     .catch((e) => {
       console.log(e);
     });
 });
 
+var onSelectedFile = (id, originalName) => {
+  var formData = new FormData();
+  formData.append("fileId", id);
+  axios
+    .post("http://localhost:5149/api/Files/open", formData)
+    .then((result) => {
+      fileStore.fileInfo = result.data;
+      fileStore.fileName = result.data.name;
+      fileStore.isLoading = true;
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+};
 var onUploadCompleted = (data) => {
   //Set custom renderer
   //data.columns.map((d) => (d.renderer = "myrenderer"));
@@ -85,6 +100,10 @@ function onClick(e) {
         <dbfshow v-if="fileStore.isLoading == true"></dbfshow>
         <div v-else class="upload">
           <upload-file @upload-completed="onUploadCompleted"></upload-file>
+          <list-upload-files
+            @selectedFile="onSelectedFile"
+            :files="listUploadedFiles"
+          ></list-upload-files>
         </div>
         <pagination v-if="fileStore.isLoading == true"></pagination>
       </div>

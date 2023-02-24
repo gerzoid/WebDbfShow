@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace WebDBFShow.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20230222233502_Init")]
+    [Migration("20230224074713_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -24,6 +24,9 @@ namespace WebDBFShow.Migrations
                 {
                     b.Property<Guid>("FilesId")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Description")

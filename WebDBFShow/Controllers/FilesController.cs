@@ -25,7 +25,7 @@ namespace WebDBFShow.Controllers
         }
 
         [HttpPost]
-        [EnableCors("Policy1")]        
+        [EnableCors("Policy1")]
         [RequestSizeLimit(10_000_000)]
         //[RequestFormLimits(ValueLengthLimit = int.MaxValue, MultipartBodyLengthLimit = int.MaxValue)]
         public async Task<ActionResult> Upload([FromForm] FileModel file)
@@ -33,15 +33,17 @@ namespace WebDBFShow.Controllers
             try
             {
                 var fileId = Guid.NewGuid();
-                
-                var newFile = new Entities.Models.Files() { 
-                    UserId= Guid.Parse(file.UserId),                     
-                    OriginalName = file.FileName, 
+
+                var newFile = new Entities.Models.Files()
+                {
+                    CreatedAt = DateTime.Now,
+                    UserId = Guid.Parse(file.UserId),
+                    OriginalName = file.FileName,
                     FilesId = fileId,
-                    Size=file.FormFile.Length,
-                    Path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload", fileId.ToString() + Path.GetExtension(file.FileName)) 
+                    Size = file.FormFile.Length,
+                    Path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload", fileId.ToString() + Path.GetExtension(file.FileName))
                 };
-               
+
                 using (Stream stream = new FileStream(newFile.Path, FileMode.Create))
                 {
                     await file.FormFile.CopyToAsync(stream);
@@ -52,11 +54,21 @@ namespace WebDBFShow.Controllers
 
                 return StatusCode(StatusCodes.Status201Created, info);
             }
-            catch(Exception E)
+            catch (Exception E)
             {
                 Console.WriteLine(E.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
-        }        
+        }
+
+        [HttpPost]
+        [EnableCors("Policy1")]
+        [Route("open")]
+        public async Task<ActionResult> Open([FromForm] string fileId)
+        {
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload", fileId + ".dbf");
+            var info = _reader.OpenFile(path);    //TODO переделать, что бы формат файла либо передавался, либо из базы брать, так как может быть другой формат
+            return StatusCode(StatusCodes.Status201Created, info);
+        }
     }
 }
