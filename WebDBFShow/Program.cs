@@ -58,6 +58,7 @@ namespace WebDBFShow
            
             var app = builder.Build();
 
+
             app.UseCors();
 
             //Глобальный Exception Handler
@@ -66,17 +67,13 @@ namespace WebDBFShow
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
-                //Глобальный Exception Handler
-                app.ConfigureExceptionHandler(app.Logger);
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
 
-            app.UseCookiePolicy();
-            
-            app.UseHttpsRedirection();
+            app.UseCookiePolicy();            
+            //app.UseHttpsRedirection();
             app.UseAuthorization();
-
             app.MapControllers();
 
             app.Run();

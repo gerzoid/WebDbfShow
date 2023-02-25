@@ -1,7 +1,7 @@
 <script setup>
 import { HotTable } from "@handsontable/vue3";
 import Handsontable from "handsontable";
-import axios from "axios";
+import { axio } from "../plugins/axios";
 import { useFileStore } from "../stores/filestore";
 import { storeToRefs } from "pinia";
 import "handsontable/dist/handsontable.full.min.css";
@@ -16,9 +16,6 @@ var notSyncChanges = false;
 var hot = ref(null);
 registerAllModules();
 
-function onModifyRowData(row) {
-  console.log("edit row");
-}
 //Custom renderer
 /*Handsontable.renderers.registerRenderer("myrenderer", (hotInstance, TD, ...rest) => {
   Handsontable.renderers.TextRenderer(hotInstance, TD, ...rest);
@@ -64,8 +61,8 @@ function getData() {
   data.append("FileName", fileStore.fileInfo.name);
   data.append("PageSize", fileStore.pageSize);
   data.append("Page", fileStore.page);
-  axios
-    .post(fileStore.serverAddress + "/api/editor/getData", data)
+  axio
+    .post("/api/editor/getData", data)
     .then((result) => {
       hot.value.hotInstance.updateData(result.data);
     })
@@ -91,8 +88,8 @@ function afterChange(changes) {
     };
     cnt++;
   }
-  axios
-    .post(fileStore.serverAddress + "/api/editor/modify", result)
+  axio
+    .post("/api/editor/modify", result)
     .then((result) => {
       notSyncChanges = true;
       for (var i = 0; i < changes.length; i++) {

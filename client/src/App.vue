@@ -8,7 +8,7 @@ import { storeToRefs } from "pinia";
 import { getCookie, setCookie } from "./plugins/cookies";
 import { showNotification } from "./plugins/notification";
 import { useFileStore } from "./stores/filestore";
-import axios from "axios";
+import { axio } from "./plugins/axios";
 
 var selectedKeys = ref([]);
 const fileStore = useFileStore();
@@ -18,14 +18,13 @@ var listUploadedFiles = ref(null);
 function CheckUploadedFiles() {
   const data = new FormData();
   data.append("userId", getCookie("dbfshowuser"));
-  axios
-    .post(fileStore.serverAddress + "/api/users/check", data)
+  axio
+    .post("/api/users/check", data, { proxy: false })
     .then((result) => {
       let date = new Date();
       date = new Date(date.setMonth(date.getMonth() + 8));
       setCookie("dbfshowuser", result.data.usersId, { expiries: date.toUTCString() });
       fileStore.userId = result.data.usersId;
-      console.log(result.data.files);
       listUploadedFiles.value = result.data.files;
     })
     .catch((e) => {
@@ -40,8 +39,8 @@ onMounted(() => {
 var onSelectedFile = (id, originalName) => {
   var formData = new FormData();
   formData.append("fileId", id);
-  axios
-    .post(fileStore.serverAddress + "/api/Files/open", formData)
+  axio
+    .post("/api/Files/open", formData)
     .then((result) => {
       fileStore.fileInfo = result.data;
       fileStore.fileName = result.data.name;

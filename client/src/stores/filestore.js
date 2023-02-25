@@ -10,7 +10,6 @@ export const useFileStore = defineStore('fileStore', {
       originalFileName:'',
       isLoading: false,
       nextId: 0,
-      serverAddress : 'http://localhost:5000',
     }),
     getters: {
       getFilename(state) {

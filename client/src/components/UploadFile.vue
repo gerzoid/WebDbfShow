@@ -1,6 +1,6 @@
 <script setup>
 import { InboxOutlined } from "@ant-design/icons-vue";
-import axios from "axios";
+import { axio } from "../plugins/axios";
 import { showNotification } from "../plugins/notification";
 import { ref } from "vue";
 import { useFileStore } from "../stores/filestore";
@@ -17,8 +17,8 @@ var uploadFiles = ({ onSuccess, onError, file }) => {
   formData.append("userId", fileStore.userId);
   var hasError = false;
   fileStore.originalFileName = file.name;
-  axios
-    .post(fileStore.serverAddress + "/api/Files", formData, {
+  axio
+    .post("/api/Files", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
