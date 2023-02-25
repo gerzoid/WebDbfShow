@@ -1,13 +1,13 @@
 <script setup>
 import { HotTable } from "@handsontable/vue3";
 import Handsontable from "handsontable";
-import { axio } from "../plugins/axios";
 import { useFileStore } from "../stores/filestore";
 import { storeToRefs } from "pinia";
 import "handsontable/dist/handsontable.full.min.css";
 import { registerAllModules } from "handsontable/registry";
 import { ref, watch, toRaw, onMounted } from "vue";
 import { showNotification } from "../plugins/notification";
+import Api from "../plugins/api";
 
 const fileStore = useFileStore();
 //Изменения не требующие синхронизации с бэком
@@ -57,12 +57,7 @@ watch(
 
 //Получение данных с сервера
 function getData() {
-  const data = new FormData();
-  data.append("FileName", fileStore.fileInfo.name);
-  data.append("PageSize", fileStore.pageSize);
-  data.append("Page", fileStore.page);
-  axio
-    .post("/api/editor/getData", data)
+  Api.getData()
     .then((result) => {
       hot.value.hotInstance.updateData(result.data);
     })
@@ -88,8 +83,7 @@ function afterChange(changes) {
     };
     cnt++;
   }
-  axio
-    .post("/api/editor/modify", result)
+  Api.Change(result)
     .then((result) => {
       notSyncChanges = true;
       for (var i = 0; i < changes.length; i++) {

@@ -8,7 +8,7 @@ import { storeToRefs } from "pinia";
 import { getCookie, setCookie } from "./plugins/cookies";
 import { showNotification } from "./plugins/notification";
 import { useFileStore } from "./stores/filestore";
-import { axio } from "./plugins/axios";
+import Api from "./plugins/api";
 
 var selectedKeys = ref([]);
 const fileStore = useFileStore();
@@ -16,10 +16,7 @@ var listUploadedFiles = ref(null);
 
 //Проверитьь список загруженных файлов по юзеру
 function CheckUploadedFiles() {
-  const data = new FormData();
-  data.append("userId", getCookie("dbfshowuser"));
-  axio
-    .post("/api/users/check", data, { proxy: false })
+  Api.CheckUploadedFiles()
     .then((result) => {
       let date = new Date();
       date = new Date(date.setMonth(date.getMonth() + 8));
@@ -37,10 +34,7 @@ onMounted(() => {
 });
 
 var onSelectedFile = (id, originalName) => {
-  var formData = new FormData();
-  formData.append("fileId", id);
-  axio
-    .post("/api/Files/open", formData)
+  Api.OpenFile(id)
     .then((result) => {
       fileStore.fileInfo = result.data;
       fileStore.fileName = result.data.name;
@@ -94,7 +88,10 @@ function onClick(e) {
         </a-sub-menu>
         <a-menu-item disabled key="2">Правка</a-menu-item>
         <a-menu-item disabled key="3">Статистика</a-menu-item>
-        <a-menu-item class="right" key="help">Помощь</a-menu-item>
+        <a-sub-menu key="4">
+          <template #title>Помощь</template>
+          <a-menu-item key="about">О сервисе</a-menu-item>
+        </a-sub-menu>
       </a-menu>
       <div class="menu-right">
         <div>Вход</div>

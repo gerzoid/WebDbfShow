@@ -10,6 +10,7 @@ export const useFileStore = defineStore('fileStore', {
       originalFileName:'',
       isLoading: false,
       nextId: 0,
+      listUploadedFiles: null,
     }),
     getters: {
       getFilename(state) {
@@ -20,6 +21,9 @@ export const useFileStore = defineStore('fileStore', {
       },
       getCountColumns(state){
         return state.fileInfo.countColumns -1; //Вычитаем исусственную колонку _IS_DELETED_
+      },
+      getListUploadedFiles(state){
+        return state.listUploadedFiles;
       }
     },
     actions: {

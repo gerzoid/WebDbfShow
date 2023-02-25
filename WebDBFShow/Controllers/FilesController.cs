@@ -26,7 +26,7 @@ namespace WebDBFShow.Controllers
 
         [HttpPost]
         [EnableCors("Policy1")]
-        [RequestSizeLimit(10_000_000)]
+        [RequestSizeLimit(50_000_000)]
         //[RequestFormLimits(ValueLengthLimit = int.MaxValue, MultipartBodyLengthLimit = int.MaxValue)]
         public async Task<ActionResult> Upload([FromForm] FileModel file)
         {

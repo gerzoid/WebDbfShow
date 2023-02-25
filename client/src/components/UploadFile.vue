@@ -1,9 +1,9 @@
 <script setup>
 import { InboxOutlined } from "@ant-design/icons-vue";
-import { axio } from "../plugins/axios";
 import { showNotification } from "../plugins/notification";
 import { ref } from "vue";
 import { useFileStore } from "../stores/filestore";
+import Api from "../plugins/api";
 
 const emit = defineEmits(["upload-completed"]);
 
@@ -11,18 +11,9 @@ var fileList = ref([]);
 const fileStore = useFileStore();
 
 var uploadFiles = ({ onSuccess, onError, file }) => {
-  var formData = new FormData();
-  formData.append("formfile", file);
-  formData.append("filename", file.name);
-  formData.append("userId", fileStore.userId);
   var hasError = false;
   fileStore.originalFileName = file.name;
-  axio
-    .post("/api/Files", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    })
+  Api.UploadFile(file)
     .then((data) => {
       onSuccess(null, file);
       emit("upload-completed", data.data);
