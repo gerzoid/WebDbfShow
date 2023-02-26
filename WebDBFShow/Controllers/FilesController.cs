@@ -48,9 +48,10 @@ namespace WebDBFShow.Controllers
                 {
                     await file.FormFile.CopyToAsync(stream);
                 }
+                var info = _reader.OpenFile(newFile.Path);
+
                 _manager.FilesRepository.CreateFile(newFile);
                 _manager.Save();
-                var info = _reader.OpenFile(newFile.Path);
 
                 return StatusCode(StatusCodes.Status201Created, info);
             }

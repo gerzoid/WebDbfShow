@@ -19,7 +19,8 @@ export default class Api {
         return axio.post("/api/Files/open", formData);
     }
 
-    static getData(){
+    //Получить данные
+    static GetData(){
         const fileStore = useFileStore();
         const data = new FormData();
         data.append("FileName", fileStore.fileInfo.name);
@@ -28,10 +29,12 @@ export default class Api {
         return axio.post("/api/editor/getData", data);
     }
 
+    //Изменение данных
     static Change(result){
         return axio.post("/api/editor/modify", result);
     }
 
+    //Загрузка файла
     static UploadFile(file){
         const fileStore = useFileStore();
         var formData = new FormData();

@@ -1,6 +1,5 @@
 <script setup>
-import { CodeSandboxCircleFilled } from "@ant-design/icons-vue";
-import { computed, ref, toRef, watch } from "vue";
+import { watch } from "vue";
 import { useFileStore } from "../stores/filestore";
 import moment from "moment";
 

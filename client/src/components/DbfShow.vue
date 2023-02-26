@@ -57,7 +57,7 @@ watch(
 
 //Получение данных с сервера
 function getData() {
-  Api.getData()
+  Api.GetData()
     .then((result) => {
       hot.value.hotInstance.updateData(result.data);
     })

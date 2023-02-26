@@ -1,5 +1,6 @@
 <script setup>
 import { defineComponent, ref, watch, onMounted } from "vue";
+import ModalComponent from "./components/ModalComponent.vue";
 import Pagination from "./components/Pagination.vue";
 import UploadFile from "./components/UploadFile.vue";
 import ListUploadFiles from "./components/ListUploadFiles.vue";
@@ -13,6 +14,8 @@ import Api from "./plugins/api";
 var selectedKeys = ref([]);
 const fileStore = useFileStore();
 var listUploadedFiles = ref(null);
+
+var activeModalComponent = ref(null);
 
 //Проверитьь список загруженных файлов по юзеру
 function CheckUploadedFiles() {
@@ -33,6 +36,9 @@ onMounted(() => {
   CheckUploadedFiles();
 });
 
+var onClosedModal = () => {
+  activeModalComponent.value = null;
+};
 var onSelectedFile = (id, originalName) => {
   Api.OpenFile(id)
     .then((result) => {
@@ -60,6 +66,8 @@ function onClick(e) {
       fileStore.closeFile();
       CheckUploadedFiles();
       break;
+    case "about":
+      activeModalComponent.value = "About";
   }
 }
 </script>
@@ -97,6 +105,11 @@ function onClick(e) {
         <div>Вход</div>
       </div>
     </a-layout-header>
+    <modal-component
+      ref="modal"
+      :activeComponentName="activeModalComponent"
+      @closed="onClosedModal"
+    ></modal-component>
     <a-layout-content id="content">
       <div class="subcontent">
         <dbfshow v-if="fileStore.isLoading == true"></dbfshow>
