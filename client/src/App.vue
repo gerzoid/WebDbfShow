@@ -68,8 +68,10 @@ function onClick(e) {
       break;
     case "about":
       activeModalComponent.value = "About";
+      break;
     case "codepage":
       activeModalComponent.value = "Codepage";
+      break;
   }
 }
 </script>
