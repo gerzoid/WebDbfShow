@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities.Dto
+namespace Entities.Todo
 {
-    public class AnswerModify
+    public class KeyValue
     {
-        public string Value{ get; set; }
-        public bool Result{ get; set; }
-
+        public string Key { get; set; }
+        public string Value { get; set; }
     }
 }

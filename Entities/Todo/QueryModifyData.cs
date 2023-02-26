@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities.Dto
+namespace Entities.Todo
 {
     public class QueryModifyData
     {

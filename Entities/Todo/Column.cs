@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace Entities.Dto
+namespace Entities.Todo
 {
     public class Column
     {
