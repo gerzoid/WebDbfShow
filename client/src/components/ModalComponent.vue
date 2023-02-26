@@ -1,0 +1,39 @@
+<script setup>
+import { ref, onMounted, watch } from "vue";
+import About from "./Modal/About.vue";
+
+const props = defineProps({ activeComponentName: null });
+const emit = defineEmits(["closed"]);
+
+var visible = ref(false);
+
+const componentList = { About: About };
+const componentTitle = { About: "О сервисе" };
+
+var selectedComponent = "About";
+
+var activeComponent = componentList[selectedComponent];
+var activeTittle = componentTitle[selectedComponent];
+
+onMounted(() => {});
+
+watch(
+  () => props.activeComponentName,
+  () => {
+    if (props.activeComponentName != null) {
+      activeComponent = componentList[props.activeComponentName];
+      activeTittle = componentTitle[props.activeComponentName];
+      visible.value = true;
+    } else visible.value = false;
+  }
+);
+
+function handleOk() {
+  emit("closed");
+}
+</script>
+<template></template>
+  <a-modal v-model:visible="visible" :title="activeTittle" @ok="handleOk">
+    <component :is="activeComponent"></component>
+  </a-modal>
+</template>
