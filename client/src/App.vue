@@ -5,7 +5,7 @@ import Pagination from "./components/Pagination.vue";
 import UploadFile from "./components/UploadFile.vue";
 import ListUploadFiles from "./components/ListUploadFiles.vue";
 import Dbfshow from "./components/DbfShow.vue";
-import { storeToRefs } from "pinia";
+//import { storeToRefs } from "pinia";
 import { getCookie, setCookie } from "./plugins/cookies";
 import { showNotification } from "./plugins/notification";
 import { useFileStore } from "./stores/filestore";
@@ -68,6 +68,8 @@ function onClick(e) {
       break;
     case "about":
       activeModalComponent.value = "About";
+    case "codepage":
+      activeModalComponent.value = "Codepage";
   }
 }
 </script>
@@ -95,8 +97,12 @@ function onClick(e) {
             </a-menu-item-group> --->
         </a-sub-menu>
         <a-menu-item disabled key="2">Правка</a-menu-item>
-        <a-menu-item disabled key="3">Статистика</a-menu-item>
-        <a-sub-menu key="4">
+        <a-sub-menu key="3">
+          <template #title>Разное</template>
+          <a-menu-item key="codepage">Кодировка</a-menu-item>
+        </a-sub-menu>
+        <a-menu-item disabled key="4">Статистика</a-menu-item>
+        <a-sub-menu key="5">
           <template #title>Помощь</template>
           <a-menu-item key="about">О сервисе</a-menu-item>
         </a-sub-menu>
@@ -126,8 +132,9 @@ function onClick(e) {
     <a-layout-content v-if="fileStore.isLoading == true" id="dopinfo">
       <div>
         <b>Колонок:</b> {{ fileStore.getCountColumns }} <b>Строк:</b>
-        {{ fileStore.fileInfo.countRows }} <b>Кодировка:</b>
-        {{ fileStore.fileInfo.codePage }} <b>Формат:</b> {{ fileStore.fileInfo.version }}
+        {{ fileStore.fileInfo.countRows }} <b> Кодировка:</b>
+        <a @click="onClick({ key: 'codepage' })">{{ fileStore.fileInfo.codePage }}</a>
+        <b> Формат:</b> {{ fileStore.fileInfo.version }}
       </div>
     </a-layout-content>
     <a-layout-footer style="text-align: center"> jobtools.ru ©2023 </a-layout-footer>

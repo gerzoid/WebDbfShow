@@ -21,6 +21,7 @@ namespace DbfFile
             info.CountRows = dbf.CountRows;
             info.Columns = new Column[info.CountColumns+1];
             info.CodePage = dbf.CodePage.codePage;
+            info.CodePageId = dbf.CodePage.code;
             info.Version = dbf.GetVersion();
             for (int i = 0; i < dbf.CountColumns; i++)
             {

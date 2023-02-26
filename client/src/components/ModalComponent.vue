@@ -1,14 +1,15 @@
 <script setup>
 import { ref, onMounted, watch } from "vue";
 import About from "./Modal/About.vue";
+import Codepage from "./Modal/Codepage.vue";
 
 const props = defineProps({ activeComponentName: null });
 const emit = defineEmits(["closed"]);
 
 var visible = ref(false);
 
-const componentList = { About: About };
-const componentTitle = { About: "О сервисе" };
+const componentList = { About: About, Codepage: Codepage };
+const componentTitle = { About: "О сервисе", Codepage: "Изменить кодировку" };
 
 var selectedComponent = "About";
 
@@ -32,7 +33,7 @@ function handleOk() {
   emit("closed");
 }
 </script>
-<template></template>
+<template>
   <a-modal v-model:visible="visible" :title="activeTittle" @ok="handleOk">
     <component :is="activeComponent"></component>
   </a-modal>
