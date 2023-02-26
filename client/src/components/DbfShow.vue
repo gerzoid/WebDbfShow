@@ -49,9 +49,10 @@ var settings = ref({
 });
 
 watch(
-  () => [fileStore.page, fileStore.pageSize],
+  () => [fileStore.page, fileStore.pageSize, fileStore.needReload],
   () => {
     getData();
+    fileStore.needReload = false;
   }
 );
 

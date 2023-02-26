@@ -34,7 +34,10 @@ function handleOk() {
 }
 </script>
 <template>
-  <a-modal v-model:visible="visible" :title="activeTittle" @ok="handleOk">
+  <a-modal v-model:visible="visible" :title="activeTittle">
     <component :is="activeComponent"></component>
+    <template #footer>
+      <a-button key="submit" type="primary" @click="handleOk">Закрыть</a-button>
+    </template>
   </a-modal>
 </template>

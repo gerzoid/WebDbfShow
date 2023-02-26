@@ -14,7 +14,7 @@ import Api from "./plugins/api";
 var selectedKeys = ref([]);
 const fileStore = useFileStore();
 var listUploadedFiles = ref(null);
-
+//var codePage = ref(fileStore.fileInfo.codePageId);
 var activeModalComponent = ref(null);
 
 //Проверитьь список загруженных файлов по юзеру
@@ -133,7 +133,7 @@ function onClick(e) {
       <div>
         <b>Колонок:</b> {{ fileStore.getCountColumns }} <b>Строк:</b>
         {{ fileStore.fileInfo.countRows }} <b> Кодировка:</b>
-        <a @click="onClick({ key: 'codepage' })">{{ fileStore.fileInfo.codePage }}</a>
+        <a @click="onClick({ key: 'codepage' })">{{ fileStore.getCodePage }}</a>
         <b> Формат:</b> {{ fileStore.fileInfo.version }}
       </div>
     </a-layout-content>

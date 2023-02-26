@@ -2,11 +2,21 @@
 import { codepages } from "../../plugins/codepages";
 import { useFileStore } from "../../stores/filestore";
 import { ref } from "vue";
+import Api from "../../plugins/api";
 
 const fileStore = useFileStore();
 var codepage = ref(fileStore.fileInfo.codePageId);
 
-const handleChange = (value) => {};
+const handleChange = (value) => {
+  Api.SetEncoding(value)
+    .then((result) => {
+      fileStore.fileInfo.codePageId = value;
+      fileStore.needReload = true;
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+};
 </script>
 <template>
   <div class="card">

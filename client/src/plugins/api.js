@@ -29,6 +29,15 @@ export default class Api {
         return axio.post("/api/editor/getData", data);
     }
 
+    //Получить данные
+    static SetEncoding(codePageId){
+        const fileStore = useFileStore();
+        const data = new FormData();
+        data.append("FileName", fileStore.fileInfo.name);
+        data.append("CodePageId", codePageId);
+        return axio.post("/api/editor/encoding", data);
+    }
+
     //Изменение данных
     static Change(result){
         return axio.post("/api/editor/modify", result);

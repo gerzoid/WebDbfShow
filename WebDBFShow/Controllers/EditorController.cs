@@ -38,5 +38,16 @@ namespace WebDBFShow.Controllers
             var result = _reader.ModifyData(data);
             return Ok(result);
         }
+
+        [HttpPost]
+        [EnableCors("Policy1")]
+        [Route("encoding")]
+        public async Task<ActionResult> SetEncoding([FromForm]QueryEncodingData data)
+        {
+            var result = _reader.SetEncoding(data);
+            if (result)
+                return Ok(result);
+            return BadRequest();
+        }
     }
 }

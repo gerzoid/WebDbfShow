@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { codepages } from "../plugins/codepages";
 
 export const useFileStore = defineStore('fileStore', {
     state: () => ({
@@ -11,6 +12,7 @@ export const useFileStore = defineStore('fileStore', {
       isLoading: false,
       nextId: 0,
       listUploadedFiles: null,
+      needReload: false,
     }),
     getters: {
       getFilename(state) {
@@ -24,6 +26,12 @@ export const useFileStore = defineStore('fileStore', {
       },
       getListUploadedFiles(state){
         return state.listUploadedFiles;
+      },
+      getCodePage(state){
+        return  codepages[state.fileInfo.codePageId];
+      },
+      getNeedReliad(state){
+        return state.needReload;
       }
     },
     actions: {

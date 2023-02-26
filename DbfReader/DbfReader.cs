@@ -20,7 +20,6 @@ namespace DbfFile
             info.CountColumns = dbf.CountColumns;
             info.CountRows = dbf.CountRows;
             info.Columns = new Column[info.CountColumns+1];
-            info.CodePage = dbf.CodePage.codePage;
             info.CodePageId = dbf.CodePage.code;
             info.Version = dbf.GetVersion();
             for (int i = 0; i < dbf.CountColumns; i++)
@@ -79,7 +78,6 @@ namespace DbfFile
             }
             return rows;
         }
-
         public List<AnswerModify> ModifyData(ListQueryModifyData data)
         {
             Dbf dbf = new Dbf();
@@ -97,5 +95,11 @@ namespace DbfFile
             return result;
         }
 
+        public bool SetEncoding(QueryEncodingData data)
+        {
+            Dbf dbf = new Dbf();
+            dbf.OpenFile(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload", data.FileName));
+            return dbf.SetCodePage(data.CodePageId);
+        }
     }
 }
