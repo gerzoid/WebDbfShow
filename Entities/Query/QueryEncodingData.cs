@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities.Todo
+namespace Entities.Query
 {
-    public class QueryGetData
+    public class QueryEncodingData
     {
         public string FileName { get; set; }
-        public int PageSize { get; set; }
-        public int Page { get; set; }
+        public byte CodePageId { get; set; }
     }
 }

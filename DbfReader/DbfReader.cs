@@ -1,5 +1,7 @@
 ﻿using Contracts.DBF;
 using DbfShowLib.DBF;
+using Entities.Answer;
+using Entities.Query;
 using Entities.Todo;
 using System.Collections.Generic;
 using System.Security.Cryptography;

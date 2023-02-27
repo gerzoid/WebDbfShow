@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities.Todo
+namespace Entities.Answer
 {
     public class Answer
     {

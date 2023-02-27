@@ -1,6 +1,6 @@
 ﻿using Contracts.DBF;
 using Entities.Models;
-using Entities.Todo;
+using Entities.Query;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;

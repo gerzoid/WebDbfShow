@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities.Todo
+namespace Entities.Query
 {
-    public class QueryEncodingData
+    public class ListQueryModifyData
     {
+        public List<QueryModifyData> Data { get; set; }
         public string FileName { get; set; }
-        public byte CodePageId {  get; set; }
+        //public string UserId { get; set; }
     }
 }

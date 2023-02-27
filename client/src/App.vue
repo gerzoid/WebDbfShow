@@ -1,12 +1,11 @@
 <script setup>
-import { defineComponent, ref, watch, onMounted } from "vue";
+import { ref,onMounted } from "vue";
 import ModalComponent from "./components/ModalComponent.vue";
 import Pagination from "./components/Pagination.vue";
 import UploadFile from "./components/UploadFile.vue";
 import ListUploadFiles from "./components/ListUploadFiles.vue";
 import Dbfshow from "./components/DbfShow.vue";
-//import { storeToRefs } from "pinia";
-import { getCookie, setCookie } from "./plugins/cookies";
+import { setCookie } from "./plugins/cookies";
 import { showNotification } from "./plugins/notification";
 import { useFileStore } from "./stores/filestore";
 import Api from "./plugins/api";
@@ -14,7 +13,6 @@ import Api from "./plugins/api";
 var selectedKeys = ref([]);
 const fileStore = useFileStore();
 var listUploadedFiles = ref(null);
-//var codePage = ref(fileStore.fileInfo.codePageId);
 var activeModalComponent = ref(null);
 
 //Проверитьь список загруженных файлов по юзеру

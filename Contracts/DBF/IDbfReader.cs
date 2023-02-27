@@ -1,4 +1,6 @@
-﻿using Entities.Todo;
+﻿using Entities.Answer;
+using Entities.Query;
+using Entities.Todo;
 
 namespace Contracts.DBF
 {
