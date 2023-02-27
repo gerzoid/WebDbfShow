@@ -10,5 +10,7 @@ namespace Contracts.DBF
         public List<Dictionary<string, object>> GetData(QueryGetData data);
         public List<AnswerModify> ModifyData(ListQueryModifyData modifyData);
         public bool SetEncoding(QueryEncodingData data);
+
+        public List<RecordStat> CalcStatistics(string fileName);
     }
 }
