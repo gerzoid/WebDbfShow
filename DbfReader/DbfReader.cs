@@ -6,6 +6,7 @@ using Entities.Todo;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace DbfFile
 {
@@ -90,7 +91,7 @@ namespace DbfFile
             foreach (QueryModifyData one in data.Data)
             {
                 int columnIndex = dbf.GetColumnIndex(one.Field);
-                res = dbf.SetValue(columnIndex, one.Row, one.Value);
+                res = dbf.SetValue(columnIndex, one.Row, one.Value).Result;
                 result.Add(new AnswerModify() { Result = res != null, Value = res });
             }
             dbf.Close();
@@ -108,7 +109,7 @@ namespace DbfFile
         public List<RecordStat> CalculateStatistics(string fileName)
         {
             Dbf dbf = new Dbf();
-            dbf.OpenFile(fileName);
+            dbf.OpenFile(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload", fileName));
 
             var countColumns = dbf.CountColumns;
             var countRows = dbf.CountRows;

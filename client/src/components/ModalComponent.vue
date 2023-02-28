@@ -2,14 +2,20 @@
 import { ref, onMounted, watch } from "vue";
 import About from "./Modal/About.vue";
 import Codepage from "./Modal/Codepage.vue";
+import Statistics from "./Modal/Report/Statistics.vue";
 
 const props = defineProps({ activeComponentName: null });
 const emit = defineEmits(["closed"]);
 
 var visible = ref(false);
 
-const componentList = { About: About, Codepage: Codepage };
-const componentTitle = { About: "О сервисе", Codepage: "Изменить кодировку" };
+const componentList = { About: About, Codepage: Codepage, Statistics: Statistics };
+
+const componentTitle = {
+  About: "О сервисе",
+  Codepage: "Изменить кодировку",
+  Statistics: "Статистика",
+};
 
 var selectedComponent = "About";
 

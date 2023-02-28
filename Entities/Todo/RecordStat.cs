@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace Entities.Todo
 {
-    public struct RecordStat
+    public class RecordStat
     {
-        public string name;
-        public string type;
-        public double max;
-        public double min;
-        public string maxDate;
-        public string minDate;
-        public double avg;
-        public double sum;
+        public string name { get; set; }
+        public string type { get; set; }
+        public double max { get; set; }
+        public double min { get; set; }
+        public string maxDate { get; set; }
+        public string minDate { get; set; }
+        public double avg { get; set; }
+        public double sum { get; set; }
     }
 
 }

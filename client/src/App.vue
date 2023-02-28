@@ -1,5 +1,5 @@
 <script setup>
-import { ref,onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import ModalComponent from "./components/ModalComponent.vue";
 import Pagination from "./components/Pagination.vue";
 import UploadFile from "./components/UploadFile.vue";
@@ -70,6 +70,9 @@ function onClick(e) {
     case "codepage":
       activeModalComponent.value = "Codepage";
       break;
+    case "statistics":
+      activeModalComponent.value = "Statistics";
+      break;
   }
 }
 </script>
@@ -101,7 +104,12 @@ function onClick(e) {
           <template #title>Разное</template>
           <a-menu-item key="codepage">Кодировка</a-menu-item>
         </a-sub-menu>
-        <a-menu-item disabled key="4">Статистика</a-menu-item>
+        <a-sub-menu key="4">
+          <template #title>Статистика</template>
+          <a-menu-item :disabled="!fileStore.isLoading" key="statistics"
+            >Статистика...</a-menu-item
+          >
+        </a-sub-menu>
         <a-sub-menu key="5">
           <template #title>Помощь</template>
           <a-menu-item key="about">О сервисе</a-menu-item>
