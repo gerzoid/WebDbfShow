@@ -69,7 +69,7 @@ namespace WebDBFShow.Controllers
         {
             var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload", fileId + ".dbf");
             var info = _reader.OpenFile(path);    //TODO переделать, что бы формат файла либо передавался, либо из базы брать, так как может быть другой формат
-            var t = _reader.CalcStatistics(path);
+            var t = _reader.CalculateStatistics(path);
             return StatusCode(StatusCodes.Status201Created, info);
         }
     }
