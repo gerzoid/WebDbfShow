@@ -43,7 +43,6 @@ namespace WebDBFShow.Controllers
             try
             {
                 var fileId = Guid.NewGuid();
-
                 var newFile = new Entities.Models.Files()
                 {
                     CreatedAt = DateTime.Now,
@@ -54,6 +53,8 @@ namespace WebDBFShow.Controllers
                     Path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload", fileId.ToString() + Path.GetExtension(file.FileName))
                 };
 
+                //TODO создать новый сервисный класс для всей логики
+
                 using (Stream stream = new FileStream(newFile.Path, FileMode.Create))
                 {
                     await file.FormFile.CopyToAsync(stream);
@@ -62,15 +63,13 @@ namespace WebDBFShow.Controllers
 
                 _manager.FilesRepository.CreateFile(newFile);
                 _manager.Save();
-                if (_manager.FilesRepository.GetFiles().Count() > 5)
-                {
-                    var files = _manager.FilesRepository.GetFiles().OrderByDescending(d => d.CreatedAt).Skip(5).ToList();
-                    foreach (var item in files)
-                    {
-                        _manager.FilesRepository.RemoveFile(item);
-                    }
+                var files = _manager.FilesRepository.GetFiles().Where(d => d.UserId == Guid.Parse(file.UserId)).OrderByDescending(d => d.CreatedAt).Skip(5).ToList();
+                foreach (var item in files)
+                {                   
+                    System.IO.File.Delete(item.Path);
+                    _manager.FilesRepository.RemoveFile(item);
                     _manager.Save();
-                }
+                }          
 
                 return StatusCode(StatusCodes.Status201Created, info);
             }
