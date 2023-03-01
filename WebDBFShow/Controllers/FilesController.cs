@@ -26,6 +26,16 @@ namespace WebDBFShow.Controllers
 
         [HttpPost]
         [EnableCors("Policy1")]
+        [Route("download")]
+        public IActionResult DownloadFile([FromForm] string fileName)
+        {
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload", fileName.ToString());
+            var fs = new FileStream(path, FileMode.Open);
+            return File(fs, "application/octet-stream", fileName);
+        }
+
+        [HttpPost]
+        [EnableCors("Policy1")]
         [RequestSizeLimit(50_000_000)]
         //[RequestFormLimits(ValueLengthLimit = int.MaxValue, MultipartBodyLengthLimit = int.MaxValue)]
         public async Task<ActionResult> Upload([FromForm] FileModel file)

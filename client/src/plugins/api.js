@@ -54,12 +54,31 @@ export default class Api {
     }
 
     //Загрузка файла
+    static DownloadFile(){
+        const fileStore = useFileStore();
+        const data = new FormData();
+        data.append("fileName", fileStore.fileInfo.name);
+        return axio
+        .post("/api/Files/download", data, {responseType: 'blob'})
+        .then((response)=>{
+            const href = URL.createObjectURL(response.data);
+            const link = document.createElement('a');
+            link.href = href;
+            link.setAttribute('download', fileStore.fileInfo.name); //or any other extension
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(href);
+        });
+    }
+
+    //Загрузка файла
     static UploadFile(file){
         const fileStore = useFileStore();
         var formData = new FormData();
         formData.append("formfile", file);
         formData.append("filename", file.name);
-        formData.append("userId", fileStore.userId);              
+        formData.append("userId", fileStore.userId);
         return axio
         .post("/api/Files", formData, {
           headers: {
