@@ -10,8 +10,8 @@ namespace Entities.Todo
     {
         public string name { get; set; }
         public string type { get; set; }
-        public double max { get; set; }
-        public double min { get; set; }
+        public object max { get; set; }
+        public object min { get; set; }
         public string maxDate { get; set; }
         public string minDate { get; set; }
         public double avg { get; set; }

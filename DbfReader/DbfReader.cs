@@ -121,12 +121,11 @@ namespace DbfFile
                 recordsStats.Add(new RecordStat()
                 {
                     name = dbf.GetColumnName(x),
-                    min = -1,
                     avg = 0,
                     type = dbf.GetColumnType(x),
-                    sum =0,
-                });
-             }
+                    sum = 0,
+                }); ;
+            }
             string value = "";
 
             for (int x = 0; x <= countColumns - 1; x++)
@@ -137,15 +136,16 @@ namespace DbfFile
                     if ((tmpRecordStat.type == "NUMERIC") || (tmpRecordStat.type == "FLOAT") || (tmpRecordStat.type == "INTEGER") || (tmpRecordStat.type == "CURRENCY") || (tmpRecordStat.type == "DOUBLE"))
                     {
                         value = dbf.GetValue(x, y).Trim();
+                        tmpRecordStat.min = tmpRecordStat.min ?? (float)0;
+                        tmpRecordStat.max = tmpRecordStat.max ?? (float)0;
                         if (value != "")
                         {
-
                             tmpRecordStat.sum += Convert.ToSingle(value);
-                            if (tmpRecordStat.min == -1)
+                            if ((float)tmpRecordStat.min == 0)
                                 tmpRecordStat.min = Convert.ToSingle(value);
-                            if (Convert.ToSingle(value) > tmpRecordStat.max)
+                            if (Convert.ToSingle(value) > (float)tmpRecordStat.max)
                                 tmpRecordStat.max = Convert.ToSingle(value);
-                            if (Convert.ToSingle(value) < tmpRecordStat.min)
+                            if (Convert.ToSingle(value) < (float)tmpRecordStat.min)
                                 tmpRecordStat.min = Convert.ToSingle(value);
                         }
                     }
@@ -153,31 +153,41 @@ namespace DbfFile
                         if ((tmpRecordStat.type == "DATE") || (tmpRecordStat.type == "DATETIME"))
                     {
                         value = dbf.GetValue(x, y).Trim();
+                        tmpRecordStat.min = tmpRecordStat.min ?? "";
+                        tmpRecordStat.max = tmpRecordStat.max ?? "";
                         if (value != "")
                         {
-                            if ((tmpRecordStat.minDate == "") || (tmpRecordStat.minDate == null))
-                                tmpRecordStat.minDate = value;
-                            if (Utils.CompareDate(value, tmpRecordStat.maxDate) == -1)
-                                tmpRecordStat.maxDate = value;
+                            if (((string)tmpRecordStat.min == "") || (tmpRecordStat.min == null))
+                                tmpRecordStat.min = value;
+                            if (Utils.CompareDate(value, (string)tmpRecordStat.max) == -1)
+                                tmpRecordStat.max = value;
                             else
-                                if (Utils.CompareDate(value, tmpRecordStat.minDate) == 1)
-                                tmpRecordStat.minDate = value;
+                                if (Utils.CompareDate(value, (string)tmpRecordStat.min) == 1)
+                                tmpRecordStat.min = value;
                         }
                     }
                     else
                             if ((tmpRecordStat.type == "CHAR") /*|| (recordsStat[x].type == "MEMO")*/)
                     {
                         value = dbf.GetValue(x, y).Trim();
-                        if (tmpRecordStat.min == -1)
-                            tmpRecordStat.min = Convert.ToSingle(value.Length);
-                        if (Convert.ToSingle(value.Length) > tmpRecordStat.max)
-                            tmpRecordStat.max = Convert.ToSingle(value.Length);
-                        if (Convert.ToSingle(value.Length) < tmpRecordStat.min)
-                            tmpRecordStat.min = Convert.ToSingle(value.Length);
+                        tmpRecordStat.min = tmpRecordStat.min ?? 0;
+                        tmpRecordStat.max = tmpRecordStat.max ?? 0;
+                        if ((int)tmpRecordStat.min == 0)
+                            tmpRecordStat.min = Convert.ToInt32(value.Length);
+                        if (Convert.ToInt32(value.Length) > (int)tmpRecordStat.max)
+                            tmpRecordStat.max = Convert.ToInt32(value.Length);
+                        if (Convert.ToInt32(value.Length) < (int)tmpRecordStat.min)
+                            tmpRecordStat.min = Convert.ToInt32(value.Length);
                     }
                 }
-                if (tmpRecordStat.min == -1)
-                    tmpRecordStat.min = 0;
+                //if (Convert.ToInt32(tmpRecordStat.min) == -1)
+                //  tmpRecordStat.min = 0;
+                if ((tmpRecordStat.type == "NUMERIC") || (tmpRecordStat.type == "FLOAT") || (tmpRecordStat.type == "INTEGER") || (tmpRecordStat.type == "CURRENCY") || (tmpRecordStat.type == "DOUBLE"))
+                {
+                    tmpRecordStat.max = Math.Round((float)(tmpRecordStat.max ?? 0), 2);
+                    tmpRecordStat.min = Math.Round((float)(tmpRecordStat.min ?? 0), 2);
+                    tmpRecordStat.sum = Math.Round((float)tmpRecordStat.sum, 2);
+                }
                 recordsStats[x] = tmpRecordStat;
             }
             dbf.Close();

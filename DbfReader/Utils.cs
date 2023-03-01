@@ -12,6 +12,10 @@ namespace DbfFile
         {
             if ((y == null) && (x == null)) return 0;
             if ((y == null) && (x != null)) return -1;
+
+            if ((y == "") && (x == "")) return 0;
+            if ((y == "") && (x != "")) return -1;
+
             if ((y.Length < 8) && (x.Length < 8)) return 0;
 
             DateTime d1 = DateTime.Parse(x);
