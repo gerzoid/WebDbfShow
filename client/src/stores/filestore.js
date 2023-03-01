@@ -4,10 +4,15 @@ import { codepages } from "../plugins/codepages";
 export const useFileStore = defineStore('fileStore', {
     state: () => ({
       fileInfo: [],
+      options: {
+        page:1,
+        pageSize:50,
+        hiddenDeletedRecords:false,
+      },
       fileName: 'test.dbf',
       userId:'',
-      pageSize: 50,
-      page:1,
+      // pageSize: 50,
+      // page:1,
       originalFileName:'',
       isLoading: false,
       nextId: 0,

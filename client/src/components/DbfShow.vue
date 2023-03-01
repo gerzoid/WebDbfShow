@@ -30,7 +30,7 @@ var settings = ref({
   licenseKey: "non-commercial-and-evaluation",
   columns: toRaw(fileStore.fileInfo.columns),
   rowHeaders(index) {
-    return (fileStore.page - 1) * fileStore.pageSize + index + 1;
+    return (fileStore.options.page - 1) * fileStore.options.pageSize + index + 1;
   },
   colHeaders: true,
   width: "100%",
@@ -49,7 +49,7 @@ var settings = ref({
 });
 
 watch(
-  () => [fileStore.page, fileStore.pageSize, fileStore.needReload],
+  () => [fileStore.options.page, fileStore.options.pageSize, fileStore.needReload],
   () => {
     getData();
     fileStore.needReload = false;

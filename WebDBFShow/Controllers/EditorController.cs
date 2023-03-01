@@ -24,7 +24,8 @@ namespace WebDBFShow.Controllers
         [HttpPost]
         [EnableCors("Policy1")]
         [Route("getdata")]
-        public async Task<ActionResult> GetData([FromForm]QueryGetData data)
+        //public async Task<ActionResult> GetData([FromForm] QueryGetData data)
+        public async Task<ActionResult> GetData(QueryGetData data)
         {
             var result = _reader.GetData(data);
             return Ok(result);

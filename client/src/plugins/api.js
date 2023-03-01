@@ -30,10 +30,12 @@ export default class Api {
     //Получить данные
     static GetData(){
         const fileStore = useFileStore();
-        const data = new FormData();
-        data.append("FileName", fileStore.fileInfo.name);
-        data.append("PageSize", fileStore.pageSize);
-        data.append("Page", fileStore.page);
+        var data={
+            "FileName" :fileStore.fileInfo.name,
+            "PageSize" : fileStore.options.pageSize,
+            "Page": fileStore.options.page,
+            "Options":fileStore.options
+        }
         return axio.post("/api/editor/getData", data);
     }
 
