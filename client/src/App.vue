@@ -93,7 +93,7 @@ function onClick(e) {
           <a-menu-item disabled key="save">Скачать</a-menu-item>
           <a-menu-item disabled key="struct">Структура файла</a-menu-item>
           <a-menu-item disabled key="export">Экспорт</a-menu-item>
-          <a-menu-item key="close">Закрыть</a-menu-item>
+          <a-menu-item :disabled="!fileStore.isLoading" key="close">Закрыть</a-menu-item>
           <!--<a-menu-item-group title="Item 2">
               <a-menu-item key="setting:3">Option 3</a-menu-item>
               <a-menu-item key="setting:4">Option 4</a-menu-item>
@@ -102,7 +102,7 @@ function onClick(e) {
         <a-menu-item disabled key="2">Правка</a-menu-item>
         <a-sub-menu key="3">
           <template #title>Разное</template>
-          <a-menu-item key="codepage">Кодировка</a-menu-item>
+          <a-menu-item :disabled="!fileStore.isLoading" key="codepage">Кодировка</a-menu-item>
         </a-sub-menu>
         <a-sub-menu key="4">
           <template #title>Статистика</template>

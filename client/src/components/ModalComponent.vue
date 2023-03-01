@@ -24,12 +24,15 @@ var activeTittle = componentTitle[selectedComponent];
 
 onMounted(() => {});
 
+var componentKey=0;
+
 watch(
   () => props.activeComponentName,
   () => {
     if (props.activeComponentName != null) {
       activeComponent = componentList[props.activeComponentName];
       activeTittle = componentTitle[props.activeComponentName];
+      componentKey+=1;
       visible.value = true;
     } else visible.value = false;
   }
@@ -46,7 +49,7 @@ function handleOk() {
     @ok="handleOk"
     @cancel="handleOk"
   >
-    <component :is="activeComponent"></component>
+    <component :is="activeComponent" :key="componentKey"></component>
     <template #footer>
       <a-button key="submit" type="primary" @click="handleOk">Закрыть</a-button>
     </template>
