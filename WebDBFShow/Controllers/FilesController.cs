@@ -62,6 +62,15 @@ namespace WebDBFShow.Controllers
 
                 _manager.FilesRepository.CreateFile(newFile);
                 _manager.Save();
+                if (_manager.FilesRepository.GetFiles().Count() > 5)
+                {
+                    var files = _manager.FilesRepository.GetFiles().OrderByDescending(d => d.CreatedAt).Skip(5).ToList();
+                    foreach (var item in files)
+                    {
+                        _manager.FilesRepository.RemoveFile(item);
+                    }
+                    _manager.Save();
+                }
 
                 return StatusCode(StatusCodes.Status201Created, info);
             }

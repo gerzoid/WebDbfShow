@@ -26,6 +26,11 @@ namespace Repository
             return Get();
         }
 
+        public void RemoveFile(Files item)
+        {
+            Remove(item);
+        }
+
 
     }
 }

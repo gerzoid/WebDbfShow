@@ -11,6 +11,8 @@ namespace Contracts
     {
         public IEnumerable<Files> GetFiles();
         public void CreateFile(Files file);
+        
+        public void RemoveFile(Files item);
 
     }
 }
