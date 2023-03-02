@@ -105,7 +105,6 @@ namespace DbfFile
             dbf.Close();
             return result;
         }
-
         public List<RecordStat> CalculateStatistics(string fileName)
         {
             Dbf dbf = new Dbf();

@@ -15,12 +15,12 @@ namespace WebDBFShow.Controllers
     public class ReportController : ControllerBase
     {
         ILogger<ReportController> _logger;
-        IFileDbReader _reader;
+        IShowService _service;
 
-        public ReportController(IFileDbReader reader, ILogger<ReportController> logger)
+        public ReportController(ILogger<ReportController> logger, IShowService service)
         {
-            _logger = logger;
-            _reader = reader;
+            _logger = logger;            
+            _service = service;
         }
 
         [HttpPost]
@@ -28,7 +28,7 @@ namespace WebDBFShow.Controllers
         [Route("statistics")]
         public ActionResult Statistics([FromForm] string? fileName)
         {
-            var stat = _reader.CalculateStatistics(fileName);
+            var stat = _service.CalculateStatistics(fileName);
             return Ok(stat);
         }
     }

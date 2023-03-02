@@ -1,10 +1,11 @@
-﻿using Contracts;
-using Entities.Dto;
+﻿using Entities.Dto;
 using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
 using Repository;
 using Mapster;
 using Microsoft.AspNetCore.Cors;
+using Contracts.Repository;
+using Contracts;
 
 namespace WebDBFShow.Controllers
 {
@@ -12,13 +13,13 @@ namespace WebDBFShow.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        IRepositoryManager _manager;
+        IShowService _service;
         ILogger<UsersController> _logger;
 
-        public UsersController(IRepositoryManager manager, ILogger<UsersController> logger)
+        public UsersController(IShowService service, ILogger<UsersController> logger)
         {
             _logger = logger;
-            _manager = manager;
+            _service= service;
         }
         
         [HttpPost]
@@ -27,20 +28,7 @@ namespace WebDBFShow.Controllers
         public ActionResult Check([FromForm] string? userId)
         {
             _logger.LogInformation($"Received a new request to verify the user userId={userId}");
-            var user = _manager.UsersRepository.Get().Where(d => d.UsersId.ToString() == userId).SingleOrDefault();
-
-            if (user == null)
-            {
-                user = new Users() { UsersId = Guid.NewGuid(), Name = "" };
-                _manager.UsersRepository.Create(user);
-                _manager.Save();
-            }
-            else
-            {
-                //TypeAdapterConfig<Users, UserDto>.NewConfig().Include<Files, FileDto>();
-                var files = _manager.FilesRepository.Get().Where(d => d.UserId.ToString() == userId).OrderByDescending(d=>d.CreatedAt).ToList();
-                user.Files = files;
-            }
+            var user = _service.GetOrCreateUser(userId);
             return Ok(user);
         }
     }

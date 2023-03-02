@@ -1,4 +1,5 @@
-﻿using Contracts.DBF;
+﻿using Contracts;
+using Contracts.DBF;
 using Entities.Models;
 using Entities.Query;
 using Microsoft.AspNetCore.Cors;
@@ -13,11 +14,13 @@ namespace WebDBFShow.Controllers
     public class EditorController : Controller
     {
         private ILogger<FilesController> _logger;
+        IShowService _service;
         IFileDbReader _reader;
 
-        public EditorController(ILogger<FilesController> logger, IFileDbReader reader)
+        public EditorController(ILogger<FilesController> logger, IFileDbReader reader, IShowService service)
         {
             _logger = logger;
+            _service = service;
             _reader = reader;
         }
 
@@ -26,7 +29,7 @@ namespace WebDBFShow.Controllers
         [Route("getdata")]
         public async Task<ActionResult> GetData(QueryGetData data)
         {
-            var result = _reader.GetData(data);
+            var result = _service.GetData(data);
             return Ok(result);
         }
 
@@ -35,7 +38,7 @@ namespace WebDBFShow.Controllers
         [Route("modify")]
         public async Task<ActionResult> Modify(ListQueryModifyData data)
         {            
-            var result = _reader.ModifyData(data);
+            var result = _service.ModifyData(data);
             return Ok(result);
         }
 
@@ -44,7 +47,7 @@ namespace WebDBFShow.Controllers
         [Route("encoding")]
         public async Task<ActionResult> SetEncoding([FromForm]QueryEncodingData data)
         {
-            var result = _reader.SetEncoding(data);
+            var result = _service.SetEncoding(data);
             if (result)
                 return Ok(result);
             return BadRequest();
