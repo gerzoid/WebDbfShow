@@ -43,8 +43,10 @@ var uploadFiles = ({ onSuccess, onError, file }) => {
     <p class="ant-upload-text">
       Щелкните мышкой или перетащите файл в эту область для его загрузки
     </p>
+    <p class="ant-upload-hint">Максимальный размер файла <b>50Мб</b></p>
     <p class="ant-upload-hint">
-      Поддерживаются dbf, csv файлы и txt с разделителями (аналог csv)
+      Поддерживаются только dbf файлы (в скором времени csv и txt с разделителями (аналог
+      csv))
     </p>
   </a-upload-dragger>
 </template>
