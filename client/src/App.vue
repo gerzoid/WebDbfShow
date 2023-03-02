@@ -90,7 +90,7 @@ function onClick(e) {
       >
         <a-sub-menu key="1">
           <template selected #title>Файл</template>
-          <a-menu-item @click="Api.DownloadFile()" key="save">Скачать</a-menu-item>
+          <a-menu-item :disabled="!fileStore.isLoading" @click="Api.DownloadFile()" key="save">Скачать</a-menu-item>
           <a-menu-item disabled key="struct">Структура файла</a-menu-item>
           <a-menu-item disabled key="export">Экспорт</a-menu-item>
           <a-menu-item :disabled="!fileStore.isLoading" key="close">Закрыть</a-menu-item>

@@ -1,10 +1,12 @@
 <script setup>
 import { useFileStore } from "../../../stores/filestore";
 import { ref, onMounted, onRenderTriggered } from "vue";
+import { showNotification } from "../../../plugins/notification";
 import Api from "../../../plugins/api";
 
 const fileStore = useFileStore();
 var spisok = ref([]);
+var spinning = ref(true);
 
 const columns = [
   {
@@ -36,22 +38,28 @@ onMounted(() => {
   Api.GetStatistics()
     .then((result) => {
       spisok.value = result.data;
+      spinning.value= false;
     })
-    .catch((e) => console.log(e));
+    .catch((e) =>{
+      console.log(e.response.data);
+      showNotification("error", "Внимание", "Ошибка при формировании данных на севрере. Подробнее в консоли", 5);
+    });
 });
 </script>
 <template>
   <div class="card">
     <div class="content" style="padding: 10px">
       <h4>Статистическая информация по полям файла</h4>
-      <a-table
-        class="stat-table"
-        :columns="columns"
-        :data-source="spisok"
-        :bordered="true"
-        :pagination="{ pageSize: 15 }"
-        size="small"
-      />
+      <a-spin :spinning="spinning" size="large">
+        <a-table
+          class="stat-table"
+          :columns="columns"
+          :data-source="spisok"
+          :bordered="true"
+          :pagination="{ pageSize: 15 }"
+          size="small"
+        />
+      </a-spin>
     </div>
   </div>
 </template>

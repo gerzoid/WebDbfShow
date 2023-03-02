@@ -38,7 +38,7 @@ namespace WebDBFShow.Controllers
             else
             {
                 //TypeAdapterConfig<Users, UserDto>.NewConfig().Include<Files, FileDto>();
-                var files = _manager.FilesRepository.GetFiles().Where(d => d.UserId.ToString() == userId).ToList();
+                var files = _manager.FilesRepository.GetFiles().Where(d => d.UserId.ToString() == userId).OrderByDescending(d=>d.CreatedAt).ToList();
                 user.Files = files;
             }
             return Ok(user);
