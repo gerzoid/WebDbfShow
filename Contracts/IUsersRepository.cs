@@ -7,9 +7,7 @@ using System.Threading.Tasks;
 
 namespace Contracts
 {
-    public interface IUsersRepository
+    public interface IUsersRepository: IGenericRepository<Users>
     {
-        public void Create(Users user);
-        public IEnumerable<Users> GetUsers();
     }
 }

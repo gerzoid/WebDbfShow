@@ -10,19 +10,10 @@ using System.Threading.Tasks;
 
 namespace Repository
 {
-    public class UsersRepository : Repository<Users>, IUsersRepository
+    public class UsersRepository : GenericRepository<Users>, IUsersRepository
     {
         public UsersRepository(DatabaseContext context) : base(context)
         {
-        }
-        public void Create(Users user)
-        {
-            base.Create(user);
-        }
-
-        public IEnumerable<Users> GetUsers()
-        {
-            return Get();
         }
     }
 }

@@ -7,12 +7,8 @@ using System.Threading.Tasks;
 
 namespace Contracts
 {
-    public interface IFilesRepository
+    public interface IFilesRepository: IGenericRepository<Files>
     {
-        public IEnumerable<Files> GetFiles();
-        public void CreateFile(Files file);
-        
-        public void RemoveFile(Files item);
 
     }
 }

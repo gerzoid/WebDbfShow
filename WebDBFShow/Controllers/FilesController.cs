@@ -61,13 +61,13 @@ namespace WebDBFShow.Controllers
                 }
                 var info = _reader.OpenFile(newFile.Path);
 
-                _manager.FilesRepository.CreateFile(newFile);
+                _manager.FilesRepository.Create(newFile);
                 _manager.Save();
-                var files = _manager.FilesRepository.GetFiles().Where(d => d.UserId == Guid.Parse(file.UserId)).OrderByDescending(d => d.CreatedAt).Skip(5).ToList();
+                var files = _manager.FilesRepository.Get().Where(d => d.UserId == Guid.Parse(file.UserId)).OrderByDescending(d => d.CreatedAt).Skip(5).ToList();
                 foreach (var item in files)
                 {                   
                     System.IO.File.Delete(item.Path);
-                    _manager.FilesRepository.RemoveFile(item);
+                    _manager.FilesRepository.Remove(item);
                     _manager.Save();
                 }          
 

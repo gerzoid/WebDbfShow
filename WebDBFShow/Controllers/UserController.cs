@@ -27,7 +27,7 @@ namespace WebDBFShow.Controllers
         public ActionResult Check([FromForm] string? userId)
         {
             _logger.LogInformation($"Received a new request to verify the user userId={userId}");
-            var user = _manager.UsersRepository.GetUsers().Where(d => d.UsersId.ToString() == userId).SingleOrDefault();
+            var user = _manager.UsersRepository.Get().Where(d => d.UsersId.ToString() == userId).SingleOrDefault();
 
             if (user == null)
             {
@@ -38,7 +38,7 @@ namespace WebDBFShow.Controllers
             else
             {
                 //TypeAdapterConfig<Users, UserDto>.NewConfig().Include<Files, FileDto>();
-                var files = _manager.FilesRepository.GetFiles().Where(d => d.UserId.ToString() == userId).OrderByDescending(d=>d.CreatedAt).ToList();
+                var files = _manager.FilesRepository.Get().Where(d => d.UserId.ToString() == userId).OrderByDescending(d=>d.CreatedAt).ToList();
                 user.Files = files;
             }
             return Ok(user);

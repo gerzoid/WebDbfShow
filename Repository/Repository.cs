@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace Repository
 {
-    public abstract class Repository<T> : IRepository<T> where T : class
+    public abstract class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         DbContext _context;
         DbSet<T> _dbSet;
 
-        public Repository(DbContext context)
+        public GenericRepository(DbContext context)
         {
             _context = context;
             _dbSet = _context.Set<T>();
@@ -32,7 +32,7 @@ namespace Repository
         {
             return _dbSet.AsNoTracking().Where(predicate).ToList();
         }
-        public T FindById(int id)
+        public T? FindById(int id)
         {
             return _dbSet.Find(id);
         }

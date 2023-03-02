@@ -10,27 +10,10 @@ using System.Threading.Tasks;
 
 namespace Repository
 {
-    public class FilesRepository : Repository<Files>, IFilesRepository
+    public class FilesRepository : GenericRepository<Files>, IFilesRepository
     {
         public FilesRepository(DbContext context) : base(context)
         {
         }
-
-        public void CreateFile(Files file)
-        {
-            Create(file);
-        }
-
-        public IEnumerable<Files> GetFiles()
-        {
-            return Get();
-        }
-
-        public void RemoveFile(Files item)
-        {
-            Remove(item);
-        }
-
-
     }
 }
