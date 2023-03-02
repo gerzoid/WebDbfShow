@@ -63,7 +63,7 @@ namespace WebDBFShow.Controllers
 
                 _manager.FilesRepository.Create(newFile);
                 _manager.Save();
-                var files = _manager.FilesRepository.Get().Where(d => d.UserId == Guid.Parse(file.UserId)).OrderByDescending(d => d.CreatedAt).Skip(5).ToList();
+                var files = _manager.FilesRepository.Find(d=>d.UserId == Guid.Parse(file.UserId)).OrderByDescending(d => d.CreatedAt).Skip(5).ToList();
                 foreach (var item in files)
                 {                   
                     System.IO.File.Delete(item.Path);

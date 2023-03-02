@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -32,26 +33,47 @@ namespace Repository
         {
             return _dbSet.AsNoTracking().Where(predicate).ToList();
         }
-        public T? FindById(int id)
+
+        public async Task<T>? FindById(int id)
         {
-            return _dbSet.Find(id);
+            return await _dbSet.FindAsync(id);
+        }
+
+        public IEnumerable<T> Find(Expression<Func<T, bool>> expression)
+        {
+            return _dbSet.Where(expression);
         }
 
         public void Create(T item)
         {
             _dbSet.Add(item);
-            //_context.SaveChanges();
         }
         public void Update(T item)
         {
             _context.Entry(item).State = EntityState.Modified;
-            //_context.SaveChanges();
         }
         public void Remove(T item)
         {
             _dbSet.Remove(item);
-            //_context.SaveChanges();
         }
+
+        public async Task<IEnumerable<T>> GetByConditions(Dictionary<string, string> conditions)
+        {
+            BinaryExpression? filter = null;
+            var userData = Expression.Parameter(typeof(T));
+            foreach (var toProcess in conditions)
+            {
+                var memberExpression = Expression.PropertyOrField(userData, toProcess.Key);
+                var constantExpression = Expression.Constant(toProcess.Value);
+                var binaryExpression = Expression.Equal(memberExpression, constantExpression);
+                filter = (filter != null) ? Expression.And(filter, binaryExpression) : binaryExpression;
+            }
+            Expression<Func<T, bool>> lambda = Expression.Lambda<Func<T, bool>>(filter, userData);
+            return await _context.Set<T>()
+                .Where(lambda)
+                .ToListAsync();
+        }
+
 
     }
 }
