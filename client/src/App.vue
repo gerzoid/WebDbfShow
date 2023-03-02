@@ -14,9 +14,11 @@ var selectedKeys = ref([]);
 const fileStore = useFileStore();
 var listUploadedFiles = ref(null);
 var activeModalComponent = ref(null);
+var spinnerCheckFiles = ref(false);
 
 //Проверитьь список загруженных файлов по юзеру
 function CheckUploadedFiles() {
+  spinnerCheckFiles.value = true;
   Api.CheckUploadedFiles()
     .then((result) => {
       let date = new Date();
@@ -27,7 +29,8 @@ function CheckUploadedFiles() {
     })
     .catch((e) => {
       console.log(e);
-    });
+    })
+    .finally(() => (spinnerCheckFiles.value = false));
 }
 
 onMounted(() => {
@@ -140,10 +143,12 @@ function onClick(e) {
         <dbfshow v-if="fileStore.isLoading == true"></dbfshow>
         <div v-else class="upload">
           <upload-file @upload-completed="onUploadCompleted"></upload-file>
-          <list-upload-files
-            @selectedFile="onSelectedFile"
-            :files="listUploadedFiles"
-          ></list-upload-files>
+          <a-spin :spinning="spinnerCheckFiles" size="large">
+            <list-upload-files
+              @selectedFile="onSelectedFile"
+              :files="listUploadedFiles"
+            ></list-upload-files>
+          </a-spin>
         </div>
         <pagination v-if="fileStore.isLoading == true"></pagination>
       </div>
