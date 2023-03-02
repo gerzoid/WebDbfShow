@@ -45,6 +45,7 @@ var onSelectedFile = (id, originalName) => {
     .then((result) => {
       fileStore.fileInfo = result.data;
       fileStore.fileName = result.data.name;
+      fileStore.originalFileName = result.data.originalFileName;
       fileStore.isLoading = true;
     })
     .catch((e) => {
