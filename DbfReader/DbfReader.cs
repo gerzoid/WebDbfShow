@@ -28,6 +28,11 @@ namespace DbfFile
             for (int i = 0; i < dbf.CountColumns; i++)
             {
                 var col = new Column() { Name = dbf.GetColumnName(i), Title = dbf.GetColumnName(i), Type = TypeMapping(dbf.GetColumnType(i)), Size = dbf.GetColumnSize(i) * 10 };
+                if (col.Size < 12)
+                    col.Size = 22;
+                if (col.Size > 1000)
+                    col.Size = 1000;
+
                 //var col = new Column() { Name = dbf.GetColumnName(i), Type = dbf.GetColumnType(i), Size = dbf.GetColumnSize(i) };
                 info.Columns[i] = col;
             }

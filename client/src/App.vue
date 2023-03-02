@@ -73,6 +73,9 @@ function onClick(e) {
     case "statistics":
       activeModalComponent.value = "Statistics";
       break;
+    case "message":
+      activeModalComponent.value = "MessageAuthor";
+      break;
   }
 }
 </script>
@@ -90,10 +93,15 @@ function onClick(e) {
       >
         <a-sub-menu key="1">
           <template selected #title>Файл</template>
-          <a-menu-item :disabled="!fileStore.isLoading" @click="Api.DownloadFile()" key="save">Скачать</a-menu-item>
+          <a-menu-item :disabled="!fileStore.isLoading" key="close">Закрыть</a-menu-item>
           <a-menu-item disabled key="struct">Структура файла</a-menu-item>
           <a-menu-item disabled key="export">Экспорт</a-menu-item>
-          <a-menu-item :disabled="!fileStore.isLoading" key="close">Закрыть</a-menu-item>
+          <a-menu-item
+            :disabled="!fileStore.isLoading"
+            @click="Api.DownloadFile()"
+            key="save"
+            >Скачать</a-menu-item
+          >
           <!--<a-menu-item-group title="Item 2">
               <a-menu-item key="setting:3">Option 3</a-menu-item>
               <a-menu-item key="setting:4">Option 4</a-menu-item>
@@ -115,11 +123,12 @@ function onClick(e) {
         <a-sub-menu key="5">
           <template #title>Помощь</template>
           <a-menu-item key="about">О сервисе</a-menu-item>
+          <a-menu-item key="message">Сообщение автору</a-menu-item>
         </a-sub-menu>
       </a-menu>
-      <div class="menu-right">
+      <!-- <div class="menu-right">
         <div>Вход</div>
-      </div>
+      </div> -->
     </a-layout-header>
     <modal-component
       ref="modal"

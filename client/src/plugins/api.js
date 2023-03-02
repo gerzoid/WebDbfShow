@@ -53,6 +53,13 @@ export default class Api {
         return axio.post("/api/editor/modify", result);
     }
 
+    //Изменение данных
+    static SendMessage(text){
+        const data = new FormData();
+        data.append("text", text.value);
+        return axio.post("/api/message/send", data);
+    }
+
     //Загрузка файла
     static DownloadFile(){
         const fileStore = useFileStore();

@@ -2,6 +2,7 @@
 import { ref, onMounted, watch } from "vue";
 import About from "./Modal/About.vue";
 import Codepage from "./Modal/Codepage.vue";
+import MessageAuthor from "./Modal/MessageAuthor.vue";
 import Statistics from "./Modal/Report/Statistics.vue";
 
 const props = defineProps({ activeComponentName: null });
@@ -24,6 +25,11 @@ const componentList = {
     name: Statistics,
     title: "Статистика",
     width: "600px",
+  },
+  MessageAuthor: {
+    name: MessageAuthor,
+    title: "Сообщение",
+    width: "500px",
   },
 };
 
