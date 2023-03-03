@@ -11,11 +11,12 @@ namespace Entities.Todo
     {
         [JsonPropertyName("data")]
         public string? Name { get; set; }
-        public string? Type { get; set; }
-
+        public string? Type { get; set; }   //Тип для Handsontable
+        public string? DbType { get; set; }   //Тип поля
         public string? Title { get; set; }
         [JsonPropertyName("width")]
-        public int Size { get; set; }
+        public int Size { get; set; }   //Размер для Handsontable, становится width
+        public int DbSize { get; set; }
         public int Prec { get; set; }
     }
 }
