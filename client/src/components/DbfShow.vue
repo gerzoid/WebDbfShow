@@ -39,6 +39,7 @@ var settings = ref({
   columnSorting: true,
   stretchH: "all",
   afterChange: afterChange,
+  beforeOnCellMouseDown: beforeOnCellMouseDown,
   hiddenColumns: { columns: [fileStore.fileInfo.countColumns] }, //последняя колонка всегда _IS_DELETED_, всегда скрыта
   cells: function (row, col, prop) {
     var cellProperties = {};
@@ -62,6 +63,10 @@ var settings = ref({
     },
   },
 });
+
+function beforeOnCellMouseDown(event, coords, TD, controller){
+  fileStore.selectedColumnType = fileStore.fileInfo.columns[coords.col].dbType+'('+fileStore.fileInfo.columns[coords.col].dbSize+')';
+}
 
 function ShowModal(key) {
   switch (key) {

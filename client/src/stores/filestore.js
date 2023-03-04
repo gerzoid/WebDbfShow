@@ -4,6 +4,7 @@ import { codepages } from "../plugins/codepages";
 export const useFileStore = defineStore('fileStore', {
     state: () => ({
       fileInfo: [],
+      selectedColumnType:'',
       options: {
         page:1,
         pageSize:50,

@@ -159,7 +159,7 @@ function onClick(e) {
         <b>Колонок:</b> {{ fileStore.getCountColumns }} <b>Строк:</b>
         {{ fileStore.fileInfo.countRows }} <b> Кодировка:</b>
         <a @click="onClick({ key: 'codepage' })">{{ fileStore.getCodePage }}</a>
-        <b> Формат:</b> {{ fileStore.fileInfo.version }}
+        <b> Формат:</b> {{ fileStore.fileInfo.version }} | {{ fileStore.selectedColumnType }}
       </div>
     </a-layout-content>
     <a-layout-footer style="text-align: center"> jobtools.ru ©2023 </a-layout-footer>

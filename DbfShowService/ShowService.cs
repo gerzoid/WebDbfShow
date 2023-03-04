@@ -34,7 +34,7 @@ namespace DbfShowService
                 OriginalName = file.FileName,
                 FilesId = fileId,
                 Size = file.FormFile.Length,
-                Path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload", fileId.ToString() + Path.GetExtension(file.FileName))
+                Path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload", fileId.ToString() + Path.GetExtension(file.FileName.ToLower()))
             };
 
             //TODO создать новый сервисный класс для всей логики

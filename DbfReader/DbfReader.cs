@@ -27,20 +27,26 @@ namespace DbfFile
             info.Version = dbf.GetVersion();
             for (int i = 0; i < dbf.CountColumns; i++)
             {
-                var col = new Column() { Name = dbf.GetColumnName(i), Title = dbf.GetColumnName(i), Type = TypeMapping(dbf.GetColumnType(i)), Size = dbf.GetColumnSize(i) * 10 };
+                var col = new Column()
+                {
+                    Name = dbf.GetColumnName(i),
+                    Title = dbf.GetColumnName(i),
+                    Type = TypeMapping(dbf.GetColumnType(i)),
+                    DbType = dbf.GetColumnType(i),
+                    DbSize = dbf.GetColumnSize(i),
+                    Size = dbf.GetColumnSize(i) * 10 
+                };
                 if (col.Size < 12)
                     col.Size = 22;
                 if (col.Size > 1000)
                     col.Size = 1000;
-
-                //var col = new Column() { Name = dbf.GetColumnName(i), Type = dbf.GetColumnType(i), Size = dbf.GetColumnSize(i) };
+                
                 info.Columns[i] = col;
             }
             //Добавляем служебное поле, содержащее признак удаленной записи
-            info.Columns[info.CountColumns] = new Column() { Name = "_IS_DELETED_", Title = "_IS_DELETED_", Type = "text", Size = 1 };
+            info.Columns[info.CountColumns] = new Column() { Name = "_IS_DELETED_", Title = "_IS_DELETED_", Type = "text", Size = 1 , DbType=""};
 
             dbf.Close();
-            //var tt = GetRow(1);
             return info;
         }
         public string TypeMapping(string type)
