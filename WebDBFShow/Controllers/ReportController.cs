@@ -31,5 +31,15 @@ namespace WebDBFShow.Controllers
             var stat = _service.CalculateStatistics(fileName);
             return Ok(stat);
         }
+        [HttpPost]
+        [EnableCors("Policy1")]
+        [Route("group")]
+        public ActionResult Group([FromForm] string? field, string? fileName)
+        {
+            
+            var stat = _service.CalculateGroup(Request.Form["fileName"].ToString(), Request.Form["field"].ToString());
+            return Ok(stat);
+        }
+
     }
 }

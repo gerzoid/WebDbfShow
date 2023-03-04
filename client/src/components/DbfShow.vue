@@ -46,7 +46,29 @@ var settings = ref({
       cellProperties.className = "deleted";
     return cellProperties;
   },
+  contextMenu: {
+    items: {
+      cm_group: {
+        name() {
+          return "Группировать";
+        },
+        callback(key, selection, clickEvent) {
+          fileStore.modal.dopInfo = {
+            column: fileStore.fileInfo.columns[selection[0].start.col].data,
+          };
+          ShowModal(key);
+        },
+      },
+    },
+  },
 });
+
+function ShowModal(key) {
+  switch (key) {
+    case "cm_group":
+      fileStore.activeModalComponent = "Group";
+  }
+}
 
 watch(
   () => [fileStore.options.page, fileStore.options.pageSize, fileStore.needReload],

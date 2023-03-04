@@ -19,5 +19,6 @@ namespace Contracts
         public List<Dictionary<string, object>> GetData(QueryGetData data);
         public List<AnswerModify> ModifyData(ListQueryModifyData data);
         public bool SetEncoding(QueryEncodingData data);
+        public GroupRecord[] CalculateGroup(string fileName, string field);
     }
 }

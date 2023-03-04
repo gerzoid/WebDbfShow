@@ -92,6 +92,12 @@ namespace DbfShowService
             return _reader.CalculateStatistics(fileName);
         }
 
+        public GroupRecord[] CalculateGroup(string fileName, string field)
+        {
+            //TODO переделать, что бы формат файла либо передавался, либо из базы брать, так как может быть другой формат
+            return _reader.CalculateGroup(fileName, field);
+        }
+
         public List<Dictionary<string, object>> GetData(QueryGetData data)
         {
             //TODO Здесь нужна выборка из базы или кеша для фильтров и т.п.

@@ -9,15 +9,18 @@ export const useFileStore = defineStore('fileStore', {
         pageSize:50,
         hiddenDeletedRecords:false,
       },
+      modal:{
+        activeModalComponent_: null,
+        dopInfo:null
+      },
       fileName: 'test.dbf',
       userId:'',
-      // pageSize: 50,
-      // page:1,
       originalFileName:'',
       isLoading: false,
       nextId: 0,
       listUploadedFiles: null,
       needReload: false,
+      activeModalComponent: null,
     }),
     getters: {
       getFilename(state) {

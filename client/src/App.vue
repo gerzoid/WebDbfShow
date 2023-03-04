@@ -13,7 +13,7 @@ import Api from "./plugins/api";
 var selectedKeys = ref([]);
 const fileStore = useFileStore();
 var listUploadedFiles = ref(null);
-var activeModalComponent = ref(null);
+//var activeModalComponent = ref(null);
 var spinnerCheckFiles = ref(false);
 
 //Проверитьь список загруженных файлов по юзеру
@@ -38,7 +38,7 @@ onMounted(() => {
 });
 
 var onClosedModal = () => {
-  activeModalComponent.value = null;
+  fileStore.activeModalComponent = null;
 };
 var onSelectedFile = (id, originalName) => {
   Api.OpenFile(id)
@@ -69,16 +69,16 @@ function onClick(e) {
       CheckUploadedFiles();
       break;
     case "about":
-      activeModalComponent.value = "About";
+      fileStore.activeModalComponent = "About";
       break;
     case "codepage":
-      activeModalComponent.value = "Codepage";
+      fileStore.activeModalComponent = "Codepage";
       break;
     case "statistics":
-      activeModalComponent.value = "Statistics";
+      fileStore.activeModalComponent = "Statistics";
       break;
     case "message":
-      activeModalComponent.value = "MessageAuthor";
+      fileStore.activeModalComponent = "MessageAuthor";
       break;
   }
 }
@@ -136,7 +136,7 @@ function onClick(e) {
     </a-layout-header>
     <modal-component
       ref="modal"
-      :activeComponentName="activeModalComponent"
+      :activeComponentName="fileStore.activeModalComponent"
       @closed="onClosedModal"
     ></modal-component>
     <a-layout-content id="content">

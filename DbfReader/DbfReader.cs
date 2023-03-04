@@ -14,10 +14,10 @@ namespace DbfFile
     {
         public DbfInfo OpenFile(string fileName)
         {
-            DbfInfo info = new DbfInfo();
+            DbfInfo info = new();
             info.Name = Path.GetFileName(fileName);
 
-            Dbf dbf = new Dbf();
+            Dbf dbf = new();
             dbf.OpenFile(fileName);
 
             info.CountColumns = dbf.CountColumns;
@@ -90,9 +90,8 @@ namespace DbfFile
         {
             Dbf dbf = new Dbf();
             dbf.OpenFile(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload", data.FileName));
+            var res = "";
             var result = new List<AnswerModify>();
-            string? res = "";
-
             foreach (QueryModifyData one in data.Data)
             {
                 int columnIndex = dbf.GetColumnIndex(one.Field);
@@ -112,7 +111,7 @@ namespace DbfFile
         }
         public List<RecordStat> CalculateStatistics(string fileName)
         {
-            Dbf dbf = new Dbf();
+            Dbf dbf = new();
             dbf.OpenFile(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload", fileName));
 
             var countColumns = dbf.CountColumns;
@@ -140,8 +139,8 @@ namespace DbfFile
                     if ((tmpRecordStat.type == "NUMERIC") || (tmpRecordStat.type == "FLOAT") || (tmpRecordStat.type == "INTEGER") || (tmpRecordStat.type == "CURRENCY") || (tmpRecordStat.type == "DOUBLE"))
                     {
                         value = dbf.GetValue(x, y).Trim();
-                        tmpRecordStat.min = tmpRecordStat.min ?? (float)0;
-                        tmpRecordStat.max = tmpRecordStat.max ?? (float)0;
+                        tmpRecordStat.min ??= (float)0;
+                        tmpRecordStat.max ??= (float)0;
                         if (value != "")
                         {
                             tmpRecordStat.sum += Convert.ToSingle(value);
@@ -157,7 +156,7 @@ namespace DbfFile
                         if ((tmpRecordStat.type == "DATE") || (tmpRecordStat.type == "DATETIME"))
                     {
                         value = dbf.GetValue(x, y).Trim();
-                        tmpRecordStat.min = tmpRecordStat.min ?? "";
+                        tmpRecordStat.min ??= "";
                         tmpRecordStat.max = tmpRecordStat.max ?? "";
                         if (value != "")
                         {
@@ -196,6 +195,98 @@ namespace DbfFile
             }
             dbf.Close();
             return recordsStats;
+        }
+
+        public GroupRecord[] CalculateGroup(string fileName, string field)
+        {
+            Dbf dbf = new Dbf();
+            dbf.OpenFile(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload", fileName));
+
+            int[] stat = null;
+            GroupRecord[] records;
+            int[] digitColumns;
+            string[] digitColumnsName;
+
+            int columnPosition = dbf.GetColumnIndex(field);
+            if (columnPosition < 0)
+                return null;
+
+            //SortValue(columnName);
+
+
+            records = new GroupRecord[dbf.CountRows];
+            digitColumns = new int[dbf.CountColumns];
+            digitColumnsName = new string[dbf.CountColumns];
+            int countNumericColumns = 0;
+            for (int y = 0; y <= dbf.CountColumns - 1; y++)
+            {
+                string columnType = dbf.GetColumnType(y);
+                if (( columnType== "NUMERIC") || (columnType == "FLOAT") || (columnType == "INTEGER") || (columnType == "DOUBLE") || (columnType == "CURRENCY"))
+                {
+                    digitColumns[countNumericColumns] = y;
+                    digitColumnsName[countNumericColumns] = dbf.GetColumnName(y);
+                    countNumericColumns++;
+                }
+            }
+            Array.Resize(ref digitColumns, countNumericColumns);
+            Array.Resize(ref digitColumnsName, countNumericColumns);
+
+            string temp = dbf.GetValue(columnPosition, 0);
+            string tempOld = temp;
+            int count = 0, count2 = 0; ;
+
+            records[0].summ = new double[countNumericColumns];
+
+            for (int x = 0; x < dbf.CountRows; x++)
+            {
+                temp = dbf.GetValue(columnPosition, x);
+                if (tempOld != temp)
+                {
+                    records[count].value = tempOld;
+                    count2 = 0;
+                    count++;
+                    tempOld = temp;
+                    records[count].summ = new double[countNumericColumns];
+                }
+                count2++;
+                records[count].count++;
+                for (int t = 0; t <= countNumericColumns - 1; t++)
+                {
+                    string TMP = dbf.GetValue(digitColumns[t],x);
+                    //if (separator == '.')
+                      //  TMP = TMP.Replace(',', Convert.ToChar(separator));
+
+                    if (TMP == "") TMP = "0";
+                    records[count].summ[t] += Convert.ToDouble(TMP);
+                }
+            }
+            records[count].value = temp;
+            count++;
+            Array.Resize(ref records, count);
+
+            /*FormStatGroup formGroup = new FormStatGroup();
+            formGroup.grid.Columns.Add(columnName, columnName);
+            formGroup.grid.Columns.Add("Count", "Count");
+            formGroup.grid.Columns[formGroup.grid.Columns.Count - 1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            for (int t = 0; t <= countNumericColumns - 1; t++)
+            {
+                formGroup.grid.Columns.Add("сумма(" + digitColumnsName[t] + ")", "сумма(" + digitColumnsName[t] + ")");
+                formGroup.grid.Columns[formGroup.grid.Columns.Count - 1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            }
+            for (int x = 0; x <= count - 1; x++)
+            {
+                formGroup.grid.Rows.Add();
+                formGroup.grid.Rows[x].Cells[columnName].Value = records[x].value;
+                formGroup.grid.Rows[x].Cells["Count"].Value = records[x].count;
+                for (int t = 0; t <= countNumericColumns - 1; t++)
+                    formGroup.grid.Rows[x].Cells[2 + t].Value = records[x].summ[t];
+            }
+            formGroup.dir = GetDBFileName();
+            formGroup.ShowDialog();*/
+
+
+            dbf.Close();
+            return records;
         }
     }
 }

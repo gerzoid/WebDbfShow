@@ -4,6 +4,7 @@ import About from "./Modal/About.vue";
 import Codepage from "./Modal/Codepage.vue";
 import MessageAuthor from "./Modal/MessageAuthor.vue";
 import Statistics from "./Modal/Report/Statistics.vue";
+import Group from "./Modal/Report/Group.vue";
 
 const props = defineProps({ activeComponentName: null });
 const emit = defineEmits(["closed"]);
@@ -14,6 +15,11 @@ const componentList = {
   About: {
     name: About,
     title: "О сервисе",
+    width: "500px",
+  },
+  Group: {
+    name: Group,
+    title: "Группировка",
     width: "500px",
   },
   Codepage: {

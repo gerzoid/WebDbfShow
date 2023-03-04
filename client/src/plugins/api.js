@@ -19,6 +19,15 @@ export default class Api {
         return axio.post("/api/Files/open", formData);
     }
 
+    //Открыть файл
+    static GetGroups(){
+        const fileStore = useFileStore();
+        var formData = new FormData();
+        formData.append("field", fileStore.modal.dopInfo.column);
+        formData.append("fileName", fileStore.fileInfo.name);
+        return axio.post("/api/report/group", formData);
+    }
+
     //Статистика
     static GetStatistics(){
         const fileStore = useFileStore();
