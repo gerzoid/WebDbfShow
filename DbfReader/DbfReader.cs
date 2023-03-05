@@ -217,7 +217,7 @@ namespace DbfFile
             if (columnPosition < 0)
                 return null;
 
-            //SortValue(columnName);
+            dbf.SortValue(field, DbfShowLib.Sorting.SortingType.ASC);
 
 
             records = new GroupRecord[dbf.CountRows];
@@ -236,8 +236,8 @@ namespace DbfFile
             }
             Array.Resize(ref digitColumns, countNumericColumns);
             Array.Resize(ref digitColumnsName, countNumericColumns);
-
-            string temp = dbf.GetValue(columnPosition, 0);
+            
+            string temp = dbf.GetValueWithFilter(columnPosition, 0);
             string tempOld = temp;
             int count = 0, count2 = 0; ;
 
@@ -245,7 +245,7 @@ namespace DbfFile
 
             for (int x = 0; x < dbf.CountRows; x++)
             {
-                temp = dbf.GetValue(columnPosition, x);
+                temp = dbf.GetValueWithFilter(columnPosition, x);
                 if (tempOld != temp)
                 {
                     records[count].value = tempOld;
@@ -258,7 +258,7 @@ namespace DbfFile
                 records[count].count++;
                 for (int t = 0; t <= countNumericColumns - 1; t++)
                 {
-                    string TMP = dbf.GetValue(digitColumns[t],x);
+                    string TMP = dbf.GetValueWithFilter(digitColumns[t],x);
                     //if (separator == '.')
                       //  TMP = TMP.Replace(',', Convert.ToChar(separator));
 
