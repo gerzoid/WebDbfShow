@@ -203,13 +203,13 @@ namespace DbfFile
             return recordsStats;
         }
 
-        public GroupRecord[] CalculateGroup(string fileName, string field)
+        public List<GroupRecord> CalculateGroup(string fileName, string field)
         {
             Dbf dbf = new Dbf();
             dbf.OpenFile(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload", fileName));
 
             int[] stat = null;
-            GroupRecord[] records;
+            List<GroupRecord> records;
             int[] digitColumns;
             string[] digitColumnsName;
 
@@ -220,7 +220,11 @@ namespace DbfFile
             dbf.SortValue(field, DbfShowLib.Sorting.SortingType.ASC);
 
 
-            records = new GroupRecord[dbf.CountRows];
+            records = new List<GroupRecord>();//dbf.CountRows
+            for (int i = 0; i< dbf.CountRows; i++)
+            {
+                records.Add(new GroupRecord() { count= 0});
+            }
             digitColumns = new int[dbf.CountColumns];
             digitColumnsName = new string[dbf.CountColumns];
             int countNumericColumns = 0;
@@ -268,7 +272,8 @@ namespace DbfFile
             }
             records[count].value = temp;
             count++;
-            Array.Resize(ref records, count);
+            records.RemoveRange(count, records.Count - count);
+            //Array.Resize(ref records, count);
 
             /*FormStatGroup formGroup = new FormStatGroup();
             formGroup.grid.Columns.Add(columnName, columnName);

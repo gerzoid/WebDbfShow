@@ -11,6 +11,6 @@ namespace Contracts.DBF
         public List<AnswerModify> ModifyData(ListQueryModifyData modifyData);
         public bool SetEncoding(QueryEncodingData data);
         public List<RecordStat> CalculateStatistics(string fileName);
-        public GroupRecord[] CalculateGroup(string fileName, string field);
+        public List<GroupRecord> CalculateGroup(string fileName, string field);
     }
 }

@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Entities.Todo
 {
-    public struct GroupRecord
+    public class GroupRecord
     {
-        public string name;
-        public string value;
-        public int count;
-        public double[] summ;
-        public bool isDigit;
+        public string name { get; set; }
+        public string value { get; set; }
+        public int count { get; set; }
+        public double[] summ { get; set; }
+        public bool isDigit { get; set; }
     }
 }

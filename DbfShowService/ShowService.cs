@@ -92,7 +92,7 @@ namespace DbfShowService
             return _reader.CalculateStatistics(fileName);
         }
 
-        public GroupRecord[] CalculateGroup(string fileName, string field)
+        public List<GroupRecord> CalculateGroup(string fileName, string field)
         {
             //TODO переделать, что бы формат файла либо передавался, либо из базы брать, так как может быть другой формат
             return _reader.CalculateGroup(fileName, field);
