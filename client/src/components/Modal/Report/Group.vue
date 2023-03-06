@@ -12,10 +12,12 @@ const columns = [
   {
     title: "Значение",
     dataIndex: "value",
+    sorter: (a,b)=> {return a.value.toUpperCase() < b.value.toUpperCase() ? 0 : -1 },
   },
   {
     title: "Количество",
     dataIndex: "count",
+    sorter: (a,b)=> {return a.count-b.count},
   },
 ];
 
@@ -45,7 +47,7 @@ onMounted(() => {
           :columns="columns"
           :data-source="spisok"
           :bordered="true"
-          :pagination="{ pageSize: 15 }"
+          :pagination="{ pageSize: 15, simple:true }"
           size="small"
         />
       </a-spin>
