@@ -4,8 +4,8 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 -->
 <Project>
   <PropertyGroup>
-    <_PublishTargetUrl>C:\Users\Supervisor\source\repos\WebDBFShow\WebDBFShow\bin\Release\net7.0\publish\</_PublishTargetUrl>
-    <History>True|2023-03-03T04:53:45.4234623Z;True|2023-03-03T12:05:24.2883781+08:00;True|2023-03-03T09:38:17.5438086+08:00;True|2023-02-25T09:57:14.3210499+08:00;True|2023-02-25T09:54:51.0756762+08:00;True|2023-02-25T09:43:44.4486574+08:00;True|2023-02-25T09:31:42.9085548+08:00;True|2023-02-24T22:26:48.5693924+08:00;True|2023-02-24T19:41:52.3318614+08:00;</History>
+    <_PublishTargetUrl>D:\WEB\WebDbfShow\WebDBFShow\bin\Release\net7.0\publish\</_PublishTargetUrl>
+    <History>True|2023-03-06T13:07:47.9546333Z;True|2023-03-03T12:53:45.4234623+08:00;True|2023-03-03T12:05:24.2883781+08:00;True|2023-03-03T09:38:17.5438086+08:00;True|2023-02-25T09:57:14.3210499+08:00;True|2023-02-25T09:54:51.0756762+08:00;True|2023-02-25T09:43:44.4486574+08:00;True|2023-02-25T09:31:42.9085548+08:00;True|2023-02-24T22:26:48.5693924+08:00;True|2023-02-24T19:41:52.3318614+08:00;</History>
     <LastFailureDetails />
   </PropertyGroup>
 </Project>

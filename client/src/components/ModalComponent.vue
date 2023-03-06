@@ -20,7 +20,7 @@ const componentList = {
   Group: {
     name: Group,
     title: "Группировка",
-    width: "500px",
+    width: "600px",
   },
   Codepage: {
     name: Codepage,

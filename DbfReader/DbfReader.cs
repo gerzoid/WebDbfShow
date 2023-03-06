@@ -257,12 +257,14 @@ namespace DbfFile
                 }
                 count2++;
                 records[count].count++;
-                
+                double doub = 0;
                 for (int t = 0; t < digitColumnNames.Count(); t++)
                 {
                     string TMP = dbf.GetValueWithFilter(digitColumnIndex[t], x);
                     if (TMP == "") TMP = "0";
-                    records[count].summ[digitColumnNames[t]] += Convert.ToDouble(TMP);
+                    //records[count].summ[digitColumnNames[t]] += Convert.ToDouble(TMP);
+
+                    records[count].summ[digitColumnNames[t]] += double.TryParse(TMP, out doub) ? doub : 0;
                 }     
             }
             records[count].value = temp;

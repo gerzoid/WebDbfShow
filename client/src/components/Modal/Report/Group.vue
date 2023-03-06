@@ -8,23 +8,48 @@ const fileStore = useFileStore();
 var spisok = ref([]);
 var spinning = ref(true);
 
-const columns = [
+var columns = ref([
   {
     title: "Значение",
     dataIndex: "value",
-    sorter: (a,b)=> {return a.value.toUpperCase() < b.value.toUpperCase() ? 0 : -1 },
+    sorter: (a, b) => {
+      return a.value.toUpperCase() < b.value.toUpperCase() ? 0 : -1;
+    },
   },
   {
     title: "Количество",
     dataIndex: "count",
-    sorter: (a,b)=> {return a.count-b.count},
+    sorter: (a, b) => {
+      return a.count - b.count;
+    },
   },
-];
+]);
 
 onMounted(() => {
   Api.GetGroups()
     .then((result) => {
-      spisok.value = result.data;
+      if (result.data.length > 0) {
+        Object.keys(result.data[0].summ).forEach((item) =>
+          columns.value.push({
+            title: item,
+            dataIndex: item,
+            sorter: (a, b) => {
+              return a.count - b.count;
+            },
+          })
+        );
+      }
+      var res = [];
+      result.data.forEach(function (value) {
+        var arr_elem = {};
+        for (var prop in value.summ)
+          arr_elem[prop] = parseFloat(value.summ[prop].toFixed(2));
+        arr_elem["count"] = value["count"];
+        arr_elem["value"] = value["value"];
+        res.push(arr_elem);
+      });
+      //spisok.value = result.data;
+      spisok.value = res;
       spinning.value = false;
     })
     .catch((e) => {
@@ -47,7 +72,7 @@ onMounted(() => {
           :columns="columns"
           :data-source="spisok"
           :bordered="true"
-          :pagination="{ pageSize: 15, simple:true }"
+          :pagination="{ pageSize: 15, simple: true }"
           size="small"
         />
       </a-spin>

@@ -19,6 +19,9 @@
   text-align: center;
   padding-top: 4px;
 }
+.ant-modal-body{
+  overflow: overlay;
+}
 
 .deleted{
   color:red;
