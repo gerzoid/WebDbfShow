@@ -6,6 +6,7 @@ using Entities.Models;
 using Entities.Query;
 using Entities.Todo;
 using Microsoft.Extensions.Logging;
+using SerilogTimings;
 
 namespace DbfShowService
 {
@@ -95,7 +96,10 @@ namespace DbfShowService
         public List<GroupRecord> CalculateGroup(string fileName, string field)
         {
             //TODO переделать, что бы формат файла либо передавался, либо из базы брать, так как может быть другой формат
-            return _reader.CalculateGroup(fileName, field);
+            using (Operation.Time("Calculate groups by {fileName}"))
+            {
+                return _reader.CalculateGroup(fileName, field);
+            }
         }
 
         public List<Dictionary<string, object>> GetData(QueryGetData data)
