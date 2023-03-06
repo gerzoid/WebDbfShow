@@ -203,12 +203,11 @@ namespace DbfFile
             return recordsStats;
         }
 
-        public List<GroupRecord> CalculateGroup(string fileName, string field)
+        public List<GroupRecord>? CalculateGroup(string fileName, string field)
         {
             Dbf dbf = new Dbf();
             dbf.OpenFile(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload", fileName));
 
-            int[] stat = null;
             List<GroupRecord> records;
             int[] digitColumns;
             string[] digitColumnsName;
@@ -217,35 +216,33 @@ namespace DbfFile
             if (columnPosition < 0)
                 return null;
 
-            dbf.SortValue(field, DbfShowLib.Sorting.SortingType.ASC);
-
-
-            records = new List<GroupRecord>();//dbf.CountRows
-            for (int i = 0; i< dbf.CountRows; i++)
-            {
-                records.Add(new GroupRecord() { count= 0});
-            }
-            digitColumns = new int[dbf.CountColumns];
-            digitColumnsName = new string[dbf.CountColumns];
-            int countNumericColumns = 0;
-            for (int y = 0; y <= dbf.CountColumns - 1; y++)
-            {
-                string columnType = dbf.GetColumnType(y);
-                if (( columnType== "NUMERIC") || (columnType == "FLOAT") || (columnType == "INTEGER") || (columnType == "DOUBLE") || (columnType == "CURRENCY"))
-                {
-                    digitColumns[countNumericColumns] = y;
-                    digitColumnsName[countNumericColumns] = dbf.GetColumnName(y);
-                    countNumericColumns++;
-                }
-            }
-            Array.Resize(ref digitColumns, countNumericColumns);
-            Array.Resize(ref digitColumnsName, countNumericColumns);
+            //Сортируем dbf, для дальнейшей группировки
+            dbf.SortValue(field, DbfShowLib.Sorting.SortingType.ASC);            
             
+            records = new List<GroupRecord>();//dbf.CountRows
+            for (int i = 0; i< dbf.CountRows; i++)            
+                records.Add(new GroupRecord() { name = field, count= 0});
+            
+
+            Dictionary<string, double> digitColumns_ = new System.Collections.Generic.Dictionary<string, double>();
+
+            for (int y = 0; y <= dbf.CountColumns - 1; y++)
+            { 
+                string columnType = dbf.GetColumnType(y);
+                if ((columnType == "NUMERIC") || (columnType == "FLOAT") || (columnType == "INTEGER") || (columnType == "DOUBLE") || (columnType == "CURRENCY"))
+
+                    digitColumns_[dbf.GetColumnName(y)] = 0;                
+            }
+
             string temp = dbf.GetValueWithFilter(columnPosition, 0);
             string tempOld = temp;
             int count = 0, count2 = 0; ;
 
-            records[0].summ = new double[countNumericColumns];
+            //records[0].summ = new double[countNumericColumns];
+            records[0].summ = digitColumns_.ToDictionary(entry => entry.Key, entry => entry.Value);
+
+            var digitColumnNames = digitColumns_.Keys.ToArray();
+            var digitColumnIndex = digitColumns_.Keys.Select(x => dbf.GetColumnIndex(x)).ToArray();
 
             for (int x = 0; x < dbf.CountRows; x++)
             {
@@ -256,46 +253,21 @@ namespace DbfFile
                     count2 = 0;
                     count++;
                     tempOld = temp;
-                    records[count].summ = new double[countNumericColumns];
+                    records[count].summ = digitColumns_.ToDictionary(entry => entry.Key, entry => entry.Value);
                 }
                 count2++;
                 records[count].count++;
-                for (int t = 0; t <= countNumericColumns - 1; t++)
+                
+                for (int t = 0; t < digitColumnNames.Count(); t++)
                 {
-                    string TMP = dbf.GetValueWithFilter(digitColumns[t],x);
-                    //if (separator == '.')
-                      //  TMP = TMP.Replace(',', Convert.ToChar(separator));
-
+                    string TMP = dbf.GetValueWithFilter(digitColumnIndex[t], x);
                     if (TMP == "") TMP = "0";
-                    records[count].summ[t] += Convert.ToDouble(TMP);
-                }
+                    records[count].summ[digitColumnNames[t]] += Convert.ToDouble(TMP);
+                }     
             }
             records[count].value = temp;
             count++;
             records.RemoveRange(count, records.Count - count);
-            //Array.Resize(ref records, count);
-
-            /*FormStatGroup formGroup = new FormStatGroup();
-            formGroup.grid.Columns.Add(columnName, columnName);
-            formGroup.grid.Columns.Add("Count", "Count");
-            formGroup.grid.Columns[formGroup.grid.Columns.Count - 1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            for (int t = 0; t <= countNumericColumns - 1; t++)
-            {
-                formGroup.grid.Columns.Add("сумма(" + digitColumnsName[t] + ")", "сумма(" + digitColumnsName[t] + ")");
-                formGroup.grid.Columns[formGroup.grid.Columns.Count - 1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            }
-            for (int x = 0; x <= count - 1; x++)
-            {
-                formGroup.grid.Rows.Add();
-                formGroup.grid.Rows[x].Cells[columnName].Value = records[x].value;
-                formGroup.grid.Rows[x].Cells["Count"].Value = records[x].count;
-                for (int t = 0; t <= countNumericColumns - 1; t++)
-                    formGroup.grid.Rows[x].Cells[2 + t].Value = records[x].summ[t];
-            }
-            formGroup.dir = GetDBFileName();
-            formGroup.ShowDialog();*/
-
-
             dbf.Close();
             return records;
         }

@@ -11,7 +11,8 @@ namespace Entities.Todo
         public string name { get; set; }
         public string value { get; set; }
         public int count { get; set; }
-        public double[] summ { get; set; }
+        //public double[] summ { get; set; }
+        public Dictionary<string, double> summ { get; set; }
         public bool isDigit { get; set; }
     }
 }
