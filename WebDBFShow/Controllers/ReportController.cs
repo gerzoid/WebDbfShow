@@ -16,11 +16,12 @@ namespace WebDBFShow.Controllers
     {
         ILogger<ReportController> _logger;
         IShowService _service;
-
-        public ReportController(ILogger<ReportController> logger, IShowService service)
+        IFileDbReader _reader;
+        public ReportController(ILogger<ReportController> logger, IShowService service, IFileDbReader reader)
         {
             _logger = logger;            
             _service = service;
+            _reader = reader;
         }
 
         [HttpPost]
@@ -28,7 +29,7 @@ namespace WebDBFShow.Controllers
         [Route("statistics")]
         public ActionResult Statistics([FromForm] string? fileName)
         {
-            var stat = _service.CalculateStatistics(fileName);
+            var stat = _reader.CalculateStatistics(fileName);
             return Ok(stat);
         }
         [HttpPost]
@@ -37,7 +38,7 @@ namespace WebDBFShow.Controllers
         public ActionResult Group([FromForm] string? field, string? fileName)
         {
             
-            var stat = _service.CalculateGroup(Request.Form["fileName"].ToString(), Request.Form["field"].ToString());
+            var stat = _reader.CalculateGroup(Request.Form["fileName"].ToString(), Request.Form["field"].ToString());
             return Ok(stat);
         }
 

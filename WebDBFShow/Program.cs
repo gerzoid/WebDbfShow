@@ -44,7 +44,7 @@ namespace WebDBFShow
             //////////////////////////////////////////////////////////////////////////////////
             #region Логи
             var logger = new LoggerConfiguration()
-                .ReadFrom.Configuration(builder.Configuration)
+                .ReadFrom.Configuration(builder.Configuration)                
                 .WriteTo.Console()
                 .Enrich.FromLogContext()
                 .CreateLogger();

@@ -7,6 +7,8 @@ using Entities.Query;
 using Entities.Todo;
 using Microsoft.Extensions.Logging;
 using SerilogTimings;
+using System.Collections.Generic;
+using System.Net.Http.Headers;
 
 namespace DbfShowService
 {
@@ -15,6 +17,7 @@ namespace DbfShowService
         IRepositoryManager _manager;
         ILogger<ShowService> _logger;
         IFileDbReader _reader;
+
         const int COUNT_MAX_UPLOAD_FILES= 5;
         
         public ShowService(ILogger<ShowService> logger, IRepositoryManager manager, IFileDbReader reader)
@@ -86,35 +89,6 @@ namespace DbfShowService
             var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload", fileId + ".dbf");
             return _reader.OpenFile(path);
         }
-
-        public List<RecordStat> CalculateStatistics(string fileName)
-        {
-            //TODO переделать, что бы формат файла либо передавался, либо из базы брать, так как может быть другой формат
-            return _reader.CalculateStatistics(fileName);
-        }
-
-        public List<GroupRecord> CalculateGroup(string fileName, string field)
-        {
-            //TODO переделать, что бы формат файла либо передавался, либо из базы брать, так как может быть другой формат
-            using (Operation.Time("Calculate groups by {fileName}"))
-            {
-                return _reader.CalculateGroup(fileName, field);
-            }
-        }
-
-        public List<Dictionary<string, object>> GetData(QueryGetData data)
-        {
-            //TODO Здесь нужна выборка из базы или кеша для фильтров и т.п.
-            return _reader.GetData(data);
-        }
-        public List<AnswerModify> ModifyData(ListQueryModifyData data)
-        {
-            return _reader.ModifyData(data);
-        }
-
-        public bool SetEncoding(QueryEncodingData data)
-        {
-            return _reader.SetEncoding(data);
-        }
+   
     }
 }

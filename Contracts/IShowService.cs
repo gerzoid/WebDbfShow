@@ -15,10 +15,5 @@ namespace Contracts
         public Users GetOrCreateUser(string userId);
         public Task<DbfInfo> UploadFile(FileModel file);
         public DbfInfo OpenFile(string fileId);
-        public List<RecordStat> CalculateStatistics(string fileName);
-        public List<Dictionary<string, object>> GetData(QueryGetData data);
-        public List<AnswerModify> ModifyData(ListQueryModifyData data);
-        public bool SetEncoding(QueryEncodingData data);
-        public List<GroupRecord> CalculateGroup(string fileName, string field);
     }
 }
