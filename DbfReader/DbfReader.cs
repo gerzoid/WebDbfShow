@@ -209,8 +209,6 @@ namespace DbfFile
             dbf.OpenFile(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload", fileName));
 
             List<GroupRecord> records;
-            int[] digitColumns;
-            string[] digitColumnsName;
 
             int columnPosition = dbf.GetColumnIndex(field);
             if (columnPosition < 0)
@@ -219,7 +217,7 @@ namespace DbfFile
             //Сортируем dbf, для дальнейшей группировки
             dbf.SortValue(field, DbfShowLib.Sorting.SortingType.ASC);            
             
-            records = new List<GroupRecord>();//dbf.CountRows
+            records = new List<GroupRecord>();
             for (int i = 0; i< dbf.CountRows; i++)            
                 records.Add(new GroupRecord() { name = field, count= 0});
             

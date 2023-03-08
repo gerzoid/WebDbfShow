@@ -24,7 +24,7 @@ function onClick(file) {
 </script>
 
 <template>
-  <div v-if="hasLoadedFiles == true">
+  <div class="uploadedfiles" v-if="hasLoadedFiles == true">
     <div class="zagolovok">
       Ранее загруженные файлы, доступные для дальнейшего редактирования
     </div>
@@ -40,6 +40,9 @@ function onClick(file) {
 </template>
 
 <style>
+.uploadedfiles{
+  min-height: 130px;
+}
 .row {
   padding: 0px 0px;
   width: 100%;
