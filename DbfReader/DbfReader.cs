@@ -272,7 +272,7 @@ namespace DbfFile
             return records;
         }
 
-        public int CountUniqueRecordsInColumn(string fileName, string fieldName) 
+        public int? CountUniqueRecordsInColumn(string fileName, string fieldName) 
         {
             Dbf dbf = new Dbf();
             dbf.OpenFile(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload", fileName));
@@ -286,12 +286,13 @@ namespace DbfFile
                 stat = null;*/
 
             int columnPosition = dbf.GetColumnIndex(fieldName);
+            if (columnPosition < 0) return null;
             dbf.SortValue(fieldName, DbfShowLib.Sorting.SortingType.ASC);
             string temp = "";
             string tempOld = "";
             int count = 0;
             for (int x = 0; x < dbf.CountRows; x++) {
-                temp = dbf.GetValue(x, columnPosition);
+                temp = dbf.GetValueWithFilter(columnPosition, x);
                 if (tempOld != temp) {
                     count++;
                     tempOld = temp;
@@ -302,5 +303,32 @@ namespace DbfFile
             dbf.Close();
             return count;
         }
+
+        public int? CountValueRecordsInColumn(string fileName, string fieldName, string value)
+        {
+            Dbf dbf = new Dbf();
+            dbf.OpenFile(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload", fileName));
+
+            /*int[] stat;
+            if (dbf.filteredRecords != null) {
+                stat = new int[filteredRecords.Length];
+                Array.Copy(filteredRecords, stat, filteredRecords.Length);
+            }
+            else
+                stat = null;*/
+
+            int columnPosition = dbf.GetColumnIndex(fieldName);
+            if (columnPosition < 0) return null;
+
+            int count = 0;
+            for (int x = 0; x < dbf.CountRows; x++)
+            {
+                if (dbf.GetValueWithFilter(columnPosition, x) == value)
+                    count++;
+            }
+            dbf.Close();
+            return count;
+        }
+
     }
 }

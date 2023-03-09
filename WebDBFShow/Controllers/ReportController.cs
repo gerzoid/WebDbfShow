@@ -45,9 +45,12 @@ namespace WebDBFShow.Controllers
         [HttpPost]
         [EnableCors("Policy1")]
         [Route("ministat")]
-        public ActionResult MiniStatFunction([FromForm] string? field, string? fileName, string funcName) {
-            var count = _reader.CountUniqueRecordsInColumn(fileName, field);
-            return Ok(count);
+        public ActionResult MiniStatFunction([FromForm] string? field, string? fileName, string funcName, string? value = null) {
+            switch (funcName) { 
+                case "countunique":return Ok(_reader.CountUniqueRecordsInColumn(fileName, field));
+                case "countvalue": return Ok(_reader.CountValueRecordsInColumn(fileName, field, value));
+                default: return NotFound();
+            }
         }
 
     }
