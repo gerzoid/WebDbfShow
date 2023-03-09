@@ -271,5 +271,36 @@ namespace DbfFile
             dbf.Close();
             return records;
         }
+
+        public int CountUniqueRecordsInColumn(string fileName, string fieldName) 
+        {
+            Dbf dbf = new Dbf();
+            dbf.OpenFile(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/upload", fileName));
+
+            /*int[] stat;
+            if (dbf.filteredRecords != null) {
+                stat = new int[filteredRecords.Length];
+                Array.Copy(filteredRecords, stat, filteredRecords.Length);
+            }
+            else
+                stat = null;*/
+
+            int columnPosition = dbf.GetColumnIndex(fieldName);
+            dbf.SortValue(fieldName, DbfShowLib.Sorting.SortingType.ASC);
+            string temp = "";
+            string tempOld = "";
+            int count = 0;
+            for (int x = 0; x < dbf.CountRows; x++) {
+                temp = dbf.GetValue(x, columnPosition);
+                if (tempOld != temp) {
+                    count++;
+                    tempOld = temp;
+                }
+            }
+            if (tempOld != temp)
+                count++;
+            dbf.Close();
+            return count;
+        }
     }
 }

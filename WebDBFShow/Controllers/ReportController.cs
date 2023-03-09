@@ -32,14 +32,22 @@ namespace WebDBFShow.Controllers
             var stat = _reader.CalculateStatistics(fileName);
             return Ok(stat);
         }
+
         [HttpPost]
         [EnableCors("Policy1")]
         [Route("group")]
         public ActionResult Group([FromForm] string? field, string? fileName)
-        {
-            
+        {            
             var stat = _reader.CalculateGroup(Request.Form["fileName"].ToString(), Request.Form["field"].ToString());
             return Ok(stat);
+        }
+
+        [HttpPost]
+        [EnableCors("Policy1")]
+        [Route("ministat")]
+        public ActionResult MiniStatFunction([FromForm] string? field, string? fileName, string funcName) {
+            var count = _reader.CountUniqueRecordsInColumn(fileName, field);
+            return Ok(count);
         }
 
     }

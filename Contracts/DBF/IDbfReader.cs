@@ -12,5 +12,6 @@ namespace Contracts.DBF
         public bool SetEncoding(QueryEncodingData data);
         public List<RecordStat> CalculateStatistics(string fileName);
         public List<GroupRecord> CalculateGroup(string fileName, string field);
+        public int CountUniqueRecordsInColumn(string fileName, string fieldName);
     }
 }
