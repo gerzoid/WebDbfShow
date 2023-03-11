@@ -49,30 +49,59 @@ var settings = ref({
   },
   contextMenu: {
     items: {
-      cm_group: {
+      stat: {
         name() {
-          return "Группировать";
+          return "Статистика";
         },
-        callback(key, selection, clickEvent) {
-          fileStore.modal.dopInfo = {
-            column: fileStore.fileInfo.columns[selection[0].start.col].data,
-          };
-          ShowModal(key);
+        submenu: {
+          items: [
+            {
+              key: "stat:cm_group",
+              name: "Группировать",
+              callback(key, selection, clickEvent) {
+                fileStore.modal.dopInfo = {
+                  column: fileStore.fileInfo.columns[selection[0].start.col].data,
+                };
+                fileStore.activeModalComponent = "Group";
+              },
+            },
+            {
+              key: "stat:cm_countunique",
+              name: "Количество уникальных записей по столбцу",
+              callback(key, selection, clickEvent) {
+                fileStore.modal.dopInfo = {
+                  column: fileStore.fileInfo.columns[selection[0].start.col].data,
+                };
+                fileStore.activeModalComponent = "CountUnique";
+              },
+            },
+            {
+              key: "stat:cm_countvalue",
+              name: "Количество записей со значением в выделеннной ячейке",
+              callback(key, selection, clickEvent) {
+                fileStore.modal.dopInfo = {
+                  value: hot.value.hotInstance.getDataAtCell(
+                    selection[0].start.row,
+                    selection[0].start.col
+                  ),
+                  column: fileStore.fileInfo.columns[selection[0].start.col].data,
+                };
+                fileStore.activeModalComponent = "CountValue";
+              },
+            },
+          ],
         },
       },
     },
   },
 });
 
-function beforeOnCellMouseDown(event, coords, TD, controller){
-  fileStore.selectedColumnType = fileStore.fileInfo.columns[coords.col].dbType+'('+fileStore.fileInfo.columns[coords.col].dbSize+')';
-}
-
-function ShowModal(key) {
-  switch (key) {
-    case "cm_group":
-      fileStore.activeModalComponent = "Group";
-  }
+function beforeOnCellMouseDown(event, coords, TD, controller) {
+  fileStore.selectedColumnType =
+    fileStore.fileInfo.columns[coords.col].dbType +
+    "(" +
+    fileStore.fileInfo.columns[coords.col].dbSize +
+    ")";
 }
 
 watch(

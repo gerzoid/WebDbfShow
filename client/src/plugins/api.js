@@ -19,7 +19,6 @@ export default class Api {
         return axio.post("/api/Files/open", formData);
     }
 
-    //Открыть файл
     static GetGroups(){
         const fileStore = useFileStore();
         var formData = new FormData();
@@ -34,6 +33,17 @@ export default class Api {
         const data = new FormData();
         data.append("fileName", fileStore.fileInfo.name);
         return axio.post("/api/report/statistics", data);
+    }
+
+    //Статистика
+    static GetMiniStatCount(funcName, value=''){
+        const fileStore = useFileStore();
+        var data={
+            "FuncName": funcName,
+            "FileName": fileStore.fileInfo.name,
+            "Field": fileStore.modal.dopInfo.column,
+            "Value": value}
+        return axio.post("/api/report/ministat", data);
     }
 
     //Получить данные

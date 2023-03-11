@@ -1,6 +1,8 @@
 <script setup>
 import { ref, onMounted, watch } from "vue";
 import About from "./Modal/About.vue";
+import CountUnique from "./Modal/Report/Countunique.vue";
+import CountValue from "./Modal/Report/CountValue.vue";
 import Codepage from "./Modal/Codepage.vue";
 import MessageAuthor from "./Modal/MessageAuthor.vue";
 import Statistics from "./Modal/Report/Statistics.vue";
@@ -31,6 +33,16 @@ const componentList = {
     name: Statistics,
     title: "Статистика",
     width: "600px",
+  },
+  CountUnique: {
+    name: CountUnique,
+    title: "Количество уникальных записей",
+    width: "500px",
+  },
+  CountValue: {
+    name: CountValue,
+    title: "Количество уникальных записей со значением",
+    width: "500px",
   },
   MessageAuthor: {
     name: MessageAuthor,

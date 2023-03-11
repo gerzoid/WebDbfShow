@@ -48,7 +48,6 @@ onMounted(() => {
         arr_elem["value"] = value["value"];
         res.push(arr_elem);
       });
-      //spisok.value = result.data;
       spisok.value = res;
       spinning.value = false;
     })
