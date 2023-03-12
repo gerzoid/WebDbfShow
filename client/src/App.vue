@@ -5,7 +5,6 @@ import Pagination from "./components/Pagination.vue";
 import UploadFile from "./components/UploadFile.vue";
 import ListUploadFiles from "./components/ListUploadFiles.vue";
 import Dbfshow from "./components/DbfShow.vue";
-import { setCookie } from "./plugins/cookies";
 import { showNotification } from "./plugins/notification";
 import { useFileStore } from "./stores/filestore";
 import Api from "./plugins/api";
@@ -18,29 +17,6 @@ import Api from "./plugins/api";
 var selectedKeys = ref([]);
 const fileStore = useFileStore();
 var listUploadedFiles = ref(null);
-//var activeModalComponent = ref(null);
-var spinnerCheckFiles = ref(false);
-
-//Проверитьь список загруженных файлов по юзеру
-function CheckUploadedFiles() {
-  spinnerCheckFiles.value = true;
-  Api.CheckUploadedFiles()
-    .then((result) => {
-      let date = new Date();
-      date = new Date(date.setMonth(date.getMonth() + 8));
-      setCookie("dbfshowuser", result.data.usersId, { expiries: date.toUTCString() });
-      fileStore.userId = result.data.usersId;
-      listUploadedFiles.value = result.data.files;
-    })
-    .catch((e) => {
-      console.log(e);
-    })
-    .finally(() => (spinnerCheckFiles.value = false));
-}
-
-onMounted(() => {
-  CheckUploadedFiles();
-});
 
 var onClosedModal = () => {
   fileStore.activeModalComponent = null;
@@ -58,9 +34,6 @@ var onSelectedFile = (id, originalName) => {
     });
 };
 var onUploadCompleted = (data) => {
-  //Set custom renderer
-  //data.columns.map((d) => (d.renderer = "myrenderer"));
-
   fileStore.fileInfo = data;
   fileStore.fileName = data.name;
   fileStore.isLoading = true;
@@ -71,7 +44,6 @@ function onClick(e) {
   switch (e.key) {
     case "close":
       fileStore.closeFile();
-      CheckUploadedFiles();
       break;
     case "about":
       fileStore.activeModalComponent = "About";
@@ -149,12 +121,7 @@ function onClick(e) {
         <dbfshow v-if="fileStore.isLoading == true"></dbfshow>
         <div v-else class="upload">
           <upload-file @upload-completed="onUploadCompleted"></upload-file>
-          <a-spin :spinning="spinnerCheckFiles" size="large">
-            <list-upload-files
-              @selectedFile="onSelectedFile"
-              :files="listUploadedFiles"
-            ></list-upload-files>
-          </a-spin>
+          <list-upload-files @selectedFile="onSelectedFile"></list-upload-files>
         </div>
         <pagination v-if="fileStore.isLoading == true"></pagination>
       </div>
