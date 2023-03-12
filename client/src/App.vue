@@ -43,13 +43,7 @@ var onUploadCompleted = (data) => {
 
 <template>
   <a-layout class="layout">
-    <a-layout-header>
-      <div class="logo" />
-      <file-menu></file-menu>
-      <!-- <div class="menu-right">
-        <div>Вход</div>
-      </div> -->
-    </a-layout-header>
+    <file-menu></file-menu>
     <modal-component
       ref="modal"
       :activeComponentName="fileStore.activeModalComponent"
