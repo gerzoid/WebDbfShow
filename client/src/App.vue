@@ -10,6 +10,11 @@ import { showNotification } from "./plugins/notification";
 import { useFileStore } from "./stores/filestore";
 import Api from "./plugins/api";
 
+//const els = document.querySelectorAll(".intro");
+//els.forEach((el) => {
+//  el.style.display = "none";
+//});
+
 var selectedKeys = ref([]);
 const fileStore = useFileStore();
 var listUploadedFiles = ref(null);
@@ -150,13 +155,6 @@ function onClick(e) {
               :files="listUploadedFiles"
             ></list-upload-files>
           </a-spin>
-          Этот онлайн редактор DBF поможет вам просмотреть и отредактировать содержимое файлов баз данных Dbase без установки какого-либо дополнительного программного обеспечения. Кроме того сервис постоянно расширяется дополнительным функционалом.<br>
-          В настоящий момент из дополнительных возможностей доступно:
-          <ul>
-          <li>Статистика файла</li>
-          <li>Группировка по полю (в контекстном меню) - группирует по значению выбранной колонки, и дополнительно суммирует все числовые колонки</li>
-          </ul>
-          После внесения изменений в файл вы можете его скачать обратно к себе на компьютер через меню <b>Файл\Скачать</b>        
         </div>
         <pagination v-if="fileStore.isLoading == true"></pagination>
       </div>
@@ -166,7 +164,8 @@ function onClick(e) {
         <b>Колонок:</b> {{ fileStore.getCountColumns }} <b>Строк:</b>
         {{ fileStore.fileInfo.countRows }} <b> Кодировка:</b>
         <a @click="onClick({ key: 'codepage' })">{{ fileStore.getCodePage }}</a>
-        <b> Формат:</b> {{ fileStore.fileInfo.version }} | {{ fileStore.selectedColumnType }}
+        <b> Формат:</b> {{ fileStore.fileInfo.version }} |
+        {{ fileStore.selectedColumnType }}
       </div>
     </a-layout-content>
     <a-layout-footer style="text-align: center"> jobtools.ru ©2023 </a-layout-footer>
