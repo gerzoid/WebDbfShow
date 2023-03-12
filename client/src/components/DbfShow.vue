@@ -127,19 +127,16 @@ function getData() {
 function afterChange(changes) {
   if (notSyncChanges) return;
   if (changes == null) return;
-  let result = {};
-  result["data"] = [];
-  let cnt = 0;
-  result["FileName"] = fileStore.fileName;
-  for (var i = 0; i < changes.length; i++) {
-    result["data"][cnt] = {
-      field: changes[i][1],
-      row: changes[i][0],
-      old: changes[i][2],
-      value: changes[i][3],
-    };
-    cnt++;
-  }
+
+  let result = {
+    FileName: fileStore.fileName,
+    data: changes.map((c) => ({
+      field: c[1],
+      row: c[0],
+      old: c[2],
+      value: c[3],
+    })),
+  };
   Api.Change(result)
     .then((result) => {
       notSyncChanges = true;
