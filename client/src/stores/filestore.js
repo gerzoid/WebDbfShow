@@ -22,8 +22,12 @@ export const useFileStore = defineStore('fileStore', {
       listUploadedFiles: null,
       needReload: false,
       activeModalComponent: null,
+      firstLoad: true,
     }),
     getters: {
+      getIsFirstLoad(state){
+        return state.firstLoad;
+      },
       getFilename(state) {
         return state.fileName;
       },

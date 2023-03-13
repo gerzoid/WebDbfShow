@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import ModalComponent from "./components/ModalComponent.vue";
 import Pagination from "./components/Pagination.vue";
 import UploadFile from "./components/UploadFile.vue";
@@ -10,13 +10,17 @@ import { showNotification } from "./plugins/notification";
 import { useFileStore } from "./stores/filestore";
 import Api from "./plugins/api";
 
-//const els = document.querySelectorAll(".intro");
-//els.forEach((el) => {
-//  el.style.display = "none";
-//});
-
 const fileStore = useFileStore();
 var listUploadedFiles = ref(null);
+
+watch(
+  () => fileStore.firstLoad,
+  () => {
+    console.log('123123213');
+    fileStore.needReload = false;
+  }
+);
+
 
 var onClosedModal = () => {
   fileStore.activeModalComponent = null;
@@ -36,8 +40,8 @@ var onSelectedFile = (id, originalName) => {
 var onUploadCompleted = (data) => {
   fileStore.fileInfo = data;
   fileStore.fileName = data.name;
-  fileStore.isLoading = true;
   showNotification("success", "Загрузка файлов", "Файл успешно загружен");
+  fileStore.isLoading = true;
 };
 </script>
 

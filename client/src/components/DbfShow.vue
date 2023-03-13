@@ -16,16 +16,6 @@ var notSyncChanges = false;
 var hot = ref(null);
 registerAllModules();
 
-//Custom renderer
-/*Handsontable.renderers.registerRenderer("myrenderer", (hotInstance, TD, ...rest) => {
-  Handsontable.renderers.TextRenderer(hotInstance, TD, ...rest);
-  if (
-    hot.value.hotInstance.getDataAtCell(rest[0], fileStore.fileInfo.countColumns) == true
-  ) {
-    TD.classList.add("deleted");
-  }
-});*/
-
 var settings = ref({
   licenseKey: "non-commercial-and-evaluation",
   columns: toRaw(fileStore.fileInfo.columns),
