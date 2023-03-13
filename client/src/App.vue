@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted } from "vue";
 import ModalComponent from "./components/ModalComponent.vue";
 import Pagination from "./components/Pagination.vue";
 import UploadFile from "./components/UploadFile.vue";
@@ -12,14 +12,6 @@ import Api from "./plugins/api";
 
 const fileStore = useFileStore();
 var listUploadedFiles = ref(null);
-
-watch(
-  () => fileStore.firstLoad,
-  () => {
-    console.log("123123213");
-    fileStore.needReload = false;
-  }
-);
 
 var onClosedModal = () => {
   fileStore.activeModalComponent = null;
@@ -66,7 +58,9 @@ var onUploadCompleted = (data) => {
       <div>
         <b>Колонок:</b> {{ fileStore.getCountColumns }} <b>Строк:</b>
         {{ fileStore.fileInfo.countRows }} <b> Кодировка:</b>
-        <a @click="onClick({ key: 'codepage' })">{{ fileStore.getCodePage }}</a>
+        <a @click="() => (fileStore.activeModalComponent = 'Codepage')">{{
+          fileStore.getCodePage
+        }}</a>
         <b> Формат:</b> {{ fileStore.fileInfo.version }} |
         {{ fileStore.selectedColumnType }}
       </div>

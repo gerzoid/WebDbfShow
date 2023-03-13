@@ -4,6 +4,6 @@
     preloader.style.display = 'none';
 
     // Показываем основное содержимое
-    const content = document.querySelector('.content');
-    content.style.display = 'block';
+    //const content = document.querySelector('.content');
+    //content.style.display = 'block';
   });

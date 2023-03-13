@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, watch } from "vue";
 import About from "./Modal/About.vue";
-import CountUnique from "./Modal/Report/Countunique.vue";
+import CountUnique from "./Modal/Report/CountUnique.vue";
 import CountValue from "./Modal/Report/CountValue.vue";
 import Codepage from "./Modal/Codepage.vue";
 import MessageAuthor from "./Modal/MessageAuthor.vue";

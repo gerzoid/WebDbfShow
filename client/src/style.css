@@ -44,12 +44,6 @@
   background: #141414;
 }
 
-/* Скрываем основное содержимое до загрузки страницы */
-.content {
-  display: none;
-}
-
-
 .upload {
   max-width: 100%;
   margin: 0 auto;
