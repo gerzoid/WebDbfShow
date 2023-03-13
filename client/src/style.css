@@ -26,3 +26,53 @@
 .deleted{
   color:red;
 }
+
+.site-layout-content {
+  min-height: 280px;
+  padding: 24px;
+  background: #fff;
+}
+#components-layout-demo-top .logo {
+  float: left;
+  width: 100%;
+  height: 32px;
+  margin: 16px 24px 16px 0;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+[data-theme="dark"] .site-layout-content {
+  background: #141414;
+}
+
+/* Скрываем основное содержимое до загрузки страницы */
+.content {
+  display: none;
+}
+
+
+.upload {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+@media screen and (min-width: 768px) {
+  .upload {
+    width: 80%; /* установите ширину контейнера на 50% от максимальной ширины при разрешении экрана меньше 768 пикселей */
+  }
+
+  @media screen and (min-width: 1000px) {
+    .upload {
+      width: 70%; /* установите ширину контейнера на 50% от максимальной ширины при разрешении экрана меньше 768 пикселей */
+    }
+  }
+  @media screen and (min-width: 1300px) {
+    .upload {
+      width: 60%; /* установите ширину контейнера на 50% от максимальной ширины при разрешении экрана меньше 768 пикселей */
+    }
+  }
+  @media screen and (min-width: 1500px) {
+    .upload {
+      width: 50%; /* установите ширину контейнера на 50% от максимальной ширины при разрешении экрана меньше 768 пикселей */
+    }
+  }
+}

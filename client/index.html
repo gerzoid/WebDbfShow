@@ -8,7 +8,9 @@
     <meta name="keywords" content="dbf, просмотр dbf online, редактирование dbf online,foxpro,dbase,структура dbf online,кодировка dbf online, онлайн" />
     <title>DBF online просмотр и редактирование</title>
   </head>
-<!-- Yandex.Metrika counter -->
+  <link rel="stylesheet" href="src/plugins/preloader/preloader.css">  
+  <script type="module" src="src/plugins/preloader/preloader.js"></script>
+  <!-- Yandex.Metrika counter -->
 <script type="text/javascript" >
   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
   m[i].l=1*new Date();
@@ -27,12 +29,19 @@
 </noscript>
 <!-- /Yandex.Metrika counter -->
   <body>
+    <div class="preloader">
+      <div class="preloader__inner"></div>
+    </div>
     <div class="intro">
-      <div id="app2"></div>
-    <div class="intro"> !Этот онлайн редактор DBF поможет вам просмотреть и отредактировать содержимое
-      файлов баз данных Dbase без установки какого-либо дополнительного программного
-      обеспечения. Кроме того сервис постоянно расширяется дополнительным
-      функционалом.<br />
+      <main class="ant-layout-content" id="content">
+        <div class="subcontent">
+          <div class="upload">
+        <div id="app2"></div>
+      <p>Открыть dbf файлы онлайн теперь проще простого с помощью нашего сервиса. Больше не нужно скачивать специальное программное обеспечение для просмотра этого формата данных. Наш онлайн инструмент позволяет открывать и просматривать dbf файлы в любом браузере без каких-либо дополнительных установок.</p>
+
+    <p>С помощью нашего сервиса вы можете легко просматривать и редактировать dbf файлы, а также экспортировать их в другие форматы, такие как Excel или CSV. Наш инструмент поддерживает все версии dbf файлов и гарантирует быстрый и надежный доступ к вашим данным.</p>
+
+  <p>Кроме того, наш сервис полностью бесплатный и не требует регистрации. Вы можете начать использовать его прямо сейчас и получить доступ к своим dbf файлам в любое время и из любого места. Не откладывайте на потом, откройте dbf файлы онлайн уже сегодня с помощью нашего удобного инструмента!</p>
       В настоящий момент из дополнительных возможностей доступно:
       <ul>
         <li>Статистика файла</li>
@@ -45,7 +54,9 @@
       компьютер через меню <b>Файл\Скачать</b>
     </div>
   </div>
+  </div>
+  </div>
   <div id="app" class="shows" style="display: none;"></div>
-    <script type="module" src="/src/main.js"></script>
+  <script type="module" src="/src/main.js"></script>
   </body>
 </html>

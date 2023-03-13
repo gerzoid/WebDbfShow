@@ -38,8 +38,8 @@ namespace DbfFile
                 };
                 if (col.Size < 12)
                     col.Size = 22;
-                if (col.Size > 1000)
-                    col.Size = 1000;
+                if (col.Size > 300)
+                    col.Size = 300;
                 
                 info.Columns[i] = col;
             }

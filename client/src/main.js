@@ -11,3 +11,4 @@ let Pinia = createPinia();
 createApp(App).use(Pinia).use(Antd).mount('#app');
 
 createApp(FirstPage).use(Pinia).use(Antd).mount('#app2');
+

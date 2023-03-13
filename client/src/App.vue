@@ -16,11 +16,10 @@ var listUploadedFiles = ref(null);
 watch(
   () => fileStore.firstLoad,
   () => {
-    console.log('123123213');
+    console.log("123123213");
     fileStore.needReload = false;
   }
 );
-
 
 var onClosedModal = () => {
   fileStore.activeModalComponent = null;
@@ -77,31 +76,11 @@ var onUploadCompleted = (data) => {
 </template>
 
 <style>
-.site-layout-content {
-  min-height: 280px;
-  padding: 24px;
-  background: #fff;
-}
-#components-layout-demo-top .logo {
-  float: left;
-  width: 100%;
-  height: 32px;
-  margin: 16px 24px 16px 0;
-  background: rgba(255, 255, 255, 0.3);
-}
 .ant-row-rtl #components-layout-demo-top .logo {
   float: right;
   margin: 16px 0 16px 24px;
 }
 
-.upload {
-  max-width: 50%;
-  margin: 0 auto;
-}
-
-[data-theme="dark"] .site-layout-content {
-  background: #141414;
-}
 .main-menu {
   float: left;
   width: 70%;
