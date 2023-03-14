@@ -1,6 +1,8 @@
 # WebDbfShow
 Просмотр и редактирование DBF в браузере, так сказать online
 
+Адрес рабочего сайта http://dbf-online.ru
+
 Бэкенд: ASP Net core 7.0:
 <ul>
 <li>Entity Framework</li>
