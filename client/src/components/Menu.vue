@@ -1,6 +1,7 @@
 <script setup>
 import { ref, watch } from "vue";
 import { useFileStore } from "../stores/filestore";
+import Api from "../plugins/api";
 
 const fileStore = useFileStore();
 var selectedKeys = ref([]);
