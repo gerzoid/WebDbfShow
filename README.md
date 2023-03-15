@@ -5,6 +5,7 @@
 
 Бэкенд: ASP Net core 7.0:
 <ul>
+<li>Web API</li>
 <li>Entity Framework</li>
 <li>Serilog</li>
 </ul>
