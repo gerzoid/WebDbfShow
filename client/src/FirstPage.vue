@@ -17,6 +17,13 @@ var onSelectedFile = (id, originalName) => {
       fileStore.fileName = result.data.name;
       fileStore.originalFileName = result.data.originalFileName;
       fileStore.isLoading = true;
+      if (fileStore.fileInfo.codePageId == 0)
+        showNotification(
+          "warning",
+          "Кодировка файла",
+          "У файла не указана кодировка, данные могут отображаться не корректно. Кодировку можно поментья в меню Разное\\Кодировка",
+          5
+        );
       HideFirstPage();
     })
     .catch((e) => {

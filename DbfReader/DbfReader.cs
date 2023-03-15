@@ -34,12 +34,12 @@ namespace DbfFile
                     Type = TypeMapping(dbf.GetColumnType(i)),
                     DbType = dbf.GetColumnType(i),
                     DbSize = dbf.GetColumnSize(i),
-                    Size = dbf.GetColumnSize(i) * 10 
+                    Size = dbf.GetColumnSize(i) + 150 
                 };
-                if (col.Size < 12)
+                /*if (col.Size < 12)
                     col.Size = 22;
                 if (col.Size > 300)
-                    col.Size = 300;
+                    col.Size = 300;*/
                 
                 info.Columns[i] = col;
             }

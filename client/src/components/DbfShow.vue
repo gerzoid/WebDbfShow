@@ -27,7 +27,8 @@ var settings = ref({
   height: "100%",
   manualColumnResize: true,
   columnSorting: true,
-  stretchH: "all",
+  wordWrap: false,
+  autoColumnSize: true,
   afterChange: afterChange,
   beforeOnCellMouseDown: beforeOnCellMouseDown,
   hiddenColumns: { columns: [fileStore.fileInfo.countColumns] }, //последняя колонка всегда _IS_DELETED_, всегда скрыта
