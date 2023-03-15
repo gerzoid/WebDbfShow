@@ -41,7 +41,7 @@ export const useFileStore = defineStore('fileStore', {
         return state.listUploadedFiles;
       },
       getCodePage(state){
-        return  codepages[state.fileInfo.codePageId];
+        return codepages.find(key=> key.code == state.fileInfo.codePageId).description;
       },
       getNeedReliad(state){
         return state.needReload;
