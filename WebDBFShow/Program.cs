@@ -76,6 +76,8 @@ namespace WebDBFShow
             //Глобальный Exception Handler
             app.ConfigureExceptionHandler(app.Logger);
 
+            //app.UseMiddleware<BlockSubdomainsMiddleware>();
+
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
