@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CSVReader</title>
+    <link rel="stylesheet" href="~/dist/editor.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/dist/js/preloader/preloader.css">
+    <script type="module" src="~/dist/js/preloader/preloader.js"></script>
+    <link rel="stylesheet" href="~/CSVReader.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="preloader">
+        <div class="preloader__inner"></div>
+    </div>
+    <div id="app"></div>
+    </div>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

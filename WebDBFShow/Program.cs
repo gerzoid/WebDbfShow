@@ -23,6 +23,7 @@ namespace WebDBFShow
 
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
+            builder.Services.AddControllersWithViews();
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -71,8 +72,6 @@ namespace WebDBFShow
             var app = builder.Build();
 
 
-            app.UseCors();
-
             //Глобальный Exception Handler
             app.ConfigureExceptionHandler(app.Logger);
 
@@ -83,10 +82,22 @@ namespace WebDBFShow
                 app.UseSwaggerUI();
             }
 
+            app.UseStaticFiles();
+
+            app.UseRouting();
+
+            app.UseCors();
             app.UseCookiePolicy();            
             //app.UseHttpsRedirection();
+            
             app.UseAuthorization();
             app.MapControllers();
+
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
+
+
 
             app.Run();
         }
