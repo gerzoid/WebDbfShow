@@ -82,7 +82,7 @@ namespace DbfFile
             for (int indexRow = startRow; indexRow < endRow; indexRow++)
             {
                 Dictionary<string, object> values = new Dictionary<string, object>();
-                for (int i = 0; i < dbf.CountColumns - 1; i++)
+                for (int i = 0; i < dbf.CountColumns; i++)
                 {
                     values.Add(dbf.GetColumnName(i), dbf.GetValue(i, indexRow));
                 }
