@@ -54,7 +54,7 @@ var onUploadCompleted = (data) => {
     <a-layout-content id="content">
       <div class="subcontent">
         <dbfshow v-if="fileStore.isLoading == true"></dbfshow>
-        <div v-else class="upload">
+        <div v-else class="page">
           <upload-file @upload-completed="onUploadCompleted"></upload-file>
           <list-upload-files @selectedFile="onSelectedFile"></list-upload-files>
         </div>
@@ -72,7 +72,7 @@ var onUploadCompleted = (data) => {
         {{ fileStore.selectedColumnType }}
       </div>
     </a-layout-content>
-    <a-layout-footer style="text-align: center"> jobtools.ru ©2023 </a-layout-footer>
+    <div style="text-align: center">jobtools.ru ©2023</div>
   </a-layout>
 </template>
 

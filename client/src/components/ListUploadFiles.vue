@@ -61,6 +61,7 @@ function onClick(file) {
 <style>
 .uploadedfiles {
   min-height: 130px;
+  font-size: 14px;
 }
 .row {
   padding: 0px 0px;

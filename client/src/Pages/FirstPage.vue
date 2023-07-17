@@ -47,7 +47,7 @@ var onUploadCompleted = (data) => {
 <template>
   <main class="ant-layout-content" id="content">
     <div class="subcontent">
-      <div class="upload">
+      <div class="page">
         <upload-file @upload-completed="onUploadCompleted"></upload-file>
         <list-upload-files @selectedFile="onSelectedFile"></list-upload-files>
       </div>

@@ -1,11 +1,10 @@
 <script setup>
-import { ref } from "vue";
+import TopMenu from "../components/TopMenu.vue";
 </script>
 
 <template>
-  <main class="ant-layout-content" id="content">
-    <div class="subcontent">
-      <h1>About page</h1>
-    </div>
-  </main>
+  <TopMenu></TopMenu>
+  <div class="page">
+    <h1>About page</h1>
+  </div>
 </template>
