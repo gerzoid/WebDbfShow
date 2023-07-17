@@ -9,6 +9,23 @@ import Dbfshow from "../components/DbfShow.vue";
 import { showNotification } from "../plugins/notification";
 import { useFileStore } from "../stores/filestore";
 import Api from "../plugins/api";
+import { useHead } from "@unhead/vue";
+
+useHead({
+  title: "DBF редактор онлайн: Легкий доступ и редактирование DBF файлов",
+  meta: [
+    {
+      name: "description",
+      content:
+        "Изучите возможности DBF редактора онлайн, позволяющего легко и удобно редактировать DBF файлы прямо в браузере. Раскройте потенциал онлайн редактора для изменения данных, добавления новых записей, фильтрации и сортировки информации в DBF файлах.",
+    },
+    {
+      name: "keywords",
+      content:
+        "DBF редактор онлайн, онлайн редактор DBF, редактирование DBF файлов, изменение DBF данных, добавление записей в DBF, фильтрация DBF, сортировка DBF, онлайн инструмент для DBF",
+    },
+  ],
+});
 
 const fileStore = useFileStore();
 var listUploadedFiles = ref(null);
