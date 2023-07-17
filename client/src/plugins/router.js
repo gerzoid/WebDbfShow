@@ -7,6 +7,7 @@ import ProgrammsPage from '../Pages/ProgrammsPage.vue'
 import HistoryPage from '../Pages/HistoryPage.vue'
 import FirstPage from '../Pages/FirstPage.vue'
 
+
 const routes = [
     { path: '/', component: FirstPage },
     { path: '/about', component: AboutPage },
