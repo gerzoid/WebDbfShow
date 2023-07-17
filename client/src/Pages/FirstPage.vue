@@ -24,6 +24,7 @@ useHead({
     },
   ],
 });
+const server_url = import.meta.env.VITE_URL// "/assets/dbfshow_online.png"
 
 const fileStore = useFileStore();
 const router = useRouter();
@@ -98,7 +99,22 @@ var onUploadCompleted = (data) => {
         </ul>
         После внесения изменений в файл вы можете его скачать обратно к себе на компьютер
         через меню <b>Файл\Скачать</b>
+        <div class="center">
+        <a-image-preview-group>
+          <a-image :width="200" src="/assets/dbfshow_online.png"  alt="Онлайн редактор dbf файлов"></a-image>
+          <a-image :width="200" src="/assets/dbfshow_online_stat.png"  alt="Статистика"></a-image>
+          <a-image :width="200" src="/assets/dbfshow_codepage.png"  alt="Смена кодировки"></a-image>
+        </a-image-preview-group>
+      </div>
       </div>
     </div>
   </main>
 </template>
+<style>
+.ant-image{
+    margin: 20px;
+}
+div.center{
+  text-align: center;
+}
+</style>

@@ -51,7 +51,7 @@ var uploadFiles = ({ onSuccess, onError, file }) => {
   </a-upload-dragger>
 </template>
 
-<style scoped>
+<style>
 .upload-dbf {
   width: 400px;
   display: block;
@@ -59,5 +59,8 @@ var uploadFiles = ({ onSuccess, onError, file }) => {
   margin-right: auto;
   background-color: white;
   padding-top: 50px;
+}
+.ant-upload.ant-upload-drag{
+  border: 3px dashed #a9b0c1 !important;
 }
 </style>

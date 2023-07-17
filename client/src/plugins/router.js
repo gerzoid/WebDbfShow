@@ -1,11 +1,11 @@
 import {createRouter, createWebHistory} from 'vue-router';
-import NotFoundPage from '../Pages/NotFoundPage.vue'
-import DbfShowPage from '../Pages/DbfShowPage.vue'
-import AboutPage from '../Pages/AboutPage.vue'
-import FormatsPage from '../Pages/FormatsPage.vue'
-import ProgrammsPage from '../Pages/ProgrammsPage.vue'
-import HistoryPage from '../Pages/HistoryPage.vue'
-import FirstPage from '../Pages/FirstPage.vue'
+import NotFoundPage from '../pages/NotFoundPage.vue'
+import DbfShowPage from '../pages/DbfShowPage.vue'
+import AboutPage from '../pages/AboutPage.vue'
+import FormatsPage from '../pages/FormatsPage.vue'
+import ProgrammsPage from '../pages/ProgrammsPage.vue'
+import HistoryPage from '../pages/HistoryPage.vue'
+import FirstPage from '../pages/FirstPage.vue'
 
 
 const routes = [

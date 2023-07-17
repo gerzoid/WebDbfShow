@@ -27,29 +27,25 @@ useHead({
       Существует множество программных редакторов, которые позволяют открывать и
       редактировать DBF файлы. Некоторые из них включают в себя:
     </p>
-    <table>
-      <tr>
-        <td>DBF Viewer Plus</td>
-      </tr>
-      <tr>
-        <td>dBase Plus</td>
-      </tr>
-      <tr>
-        <td>DBF Commander Professional</td>
-      </tr>
-      <tr>
-        <td>DBF Manager</td>
-      </tr>
-      <tr>
-        <td>DBF Explorer</td>
-      </tr>
-    </table>
+        <ul>
+        <li>DBF Viewer Plus</li>
+        <li>DBF Commander Professional</li>
+        <li>DBF Manager</li>
+        <li>DBF Explorer</li>
+        <li>и другие...</li>
+      </ul>
+    Но хочется обратить Ваше внимание на следующую бесплатную программу нашей разработки:
+
     <h2>DBFShow:</h2>
+    <p><a href="http://jobtools.ru/dbfshow/" target='_blank'>http://jobtools.ru/dbfshow/</a></p>
     <p>
       DBFShow - это легковесная программа для просмотра и редактирования DBF файлов. Она
       предоставляет простой и интуитивно понятный интерфейс пользователя, который
       позволяет легко выполнять различные операции с данными в DBF файлах.
     </p>
+    <div class="center">
+          <a-image :width="600" src="/assets/dbfshow.png"  alt="Редактор dbf файлов"></a-image>
+    </div>
     <h3>Особенности DBFShow включают:</h3>
     <ul>
       <li>Открытие и просмотр содержимого DBF файлов в удобном виде таблицы.</li>
