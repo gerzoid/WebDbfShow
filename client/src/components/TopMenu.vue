@@ -6,11 +6,12 @@ const router = useRouter();
 <template>
   <nav class="menu">
     <ul class="menu-list">
+      <li class="menu-item"><router-link to="/">Главная</router-link></li>
       <li class="menu-item"><router-link to="/history">История dbf</router-link></li>
       <li class="menu-item"><router-link to="/formats">Формат dbf</router-link></li>
       <li class="menu-item"><router-link to="/programms">Чем открыть</router-link></li>
       <li class="menu-item special"><router-link to="/dbfshow">Онлайн</router-link></li>
-      <li class="menu-item"><router-link to="/about">О нас</router-link></li>
+      <!--<li class="menu-item"><router-link to="/about">О нас</router-link></li>-->
     </ul>
   </nav>
 </template>

@@ -1,5 +1,22 @@
 <script setup>
 import TopMenu from "../components/TopMenu.vue";
+import { useHead } from "@unhead/vue";
+
+useHead({
+  title: "Формат и структура DBF файлов: Полное руководство",
+  meta: [
+    {
+      name: "description",
+      content:
+        "Узнайте о формате и структуре DBF файлов, популярном формате хранения структурированных данных в таблицах баз данных. Разберем подробности о заголовке и записях DBF файлов, а также предоставим исчерпывающую информацию о размерах полей и типах данных",
+    },
+    {
+      name: "keywords",
+      content:
+        "формат DBF, структура DBF, DBF файлы, таблицы баз данных, заголовок DBF, записи DBF, размеры полей DBF, типы данных DBF",
+    },
+  ],
+});
 </script>
 <template>
   <TopMenu></TopMenu>

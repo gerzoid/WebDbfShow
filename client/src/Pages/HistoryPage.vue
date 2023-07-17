@@ -1,5 +1,22 @@
 <script setup>
 import TopMenu from "../components/TopMenu.vue";
+import { useHead } from "@unhead/vue";
+
+useHead({
+  title: "История формата DBF: Возникновение и эволюция",
+  meta: [
+    {
+      name: "description",
+      content:
+        "Узнайте об истории возникновения и эволюции формата DBF, используемого для хранения структурированных данных в таблицах баз данных. Разберем основные этапы развития формата и его роль в различных системах управления базами данных.",
+    },
+    {
+      name: "keywords",
+      content:
+        "формат DBF, история DBF, развитие DBF, возникновение DBF, файлы DBF, таблицы баз данных, структура DBF",
+    },
+  ],
+});
 </script>
 <template>
   <TopMenu></TopMenu>
